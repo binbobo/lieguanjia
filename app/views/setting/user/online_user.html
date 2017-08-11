@@ -1,0 +1,26 @@
+<h4>在线用户列表</h4>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>用户名</th>
+        <th>姓名</th>
+        <th>IP地址</th>
+        <th>登录时间</th>
+        <th>操作</th>
+    </tr>
+    <tr ng-repeat="user in list">
+        <td>{{user.uid}}</td>
+        <td>{{user.accountName}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.address}}</td>
+        <td>{{user.loginTime | tigerDatetime}}</td>
+        <td>
+            <a ng-if="user.uid!=1" class="cursor-pointer" ng-click="kick(user.uid)">踢出</a>
+        </td>
+    </tr>
+</table>
+<div>
+    <ul uib-pagination total-items="pageState.total" items-per-page="pageState.listLength"
+        ng-model="pageState.page" max-size="5" class="pagination-sm" boundary-link-numbers="true"
+        previous-text="<" next-text=">"></ul>
+</div>

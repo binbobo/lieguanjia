@@ -1,0 +1,6 @@
+<div ng-if="hint.message" ng-bind="hint.message" class="hint-message"></div>
+<img ng-if="hint.picture" ng-src="{{hint.picture}}" class="hint-picture">
+<div class="text-right">
+    <a ng-if="hint.link" ng-href="{{hint.link}}" class="hint-link" target="_blank">查看更多</a>
+    <a ng-if="hint.download" ng-href="{{hint.download}}" class="hint-link" target="_blank">点击下载</a>
+</div>

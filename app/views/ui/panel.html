@@ -1,0 +1,9 @@
+<div class="panel panel-default">
+    <header class="panel-heading"><strong ng-if="label"> {{label}} </strong>
+        <div ng-transclude="header" style="float:right">
+            <span class="pull-right" ng-if="fullscreen"> <i class="fa fa-expand mr-10 cursor-pointer" data-fullscreen-widget=""></i></span>
+        </div>
+    </header>
+    <div class="panel-body" ng-transclude="body"></div>
+    <div class="panel-footer" ng-transclude="footer" ng-if="footer"></div>
+</div>

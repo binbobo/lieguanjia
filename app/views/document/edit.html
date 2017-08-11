@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        文件上传
+    </h3>
+</div>
+
+<div class="modal-body">
+
+    <form class="panel-body" name="documentInfo">
+
+        <custom-form field-list="fields" entity="folderInfo"
+                     class="form-horizontal custom-form-inline"
+                     base-form="documentInfo"></custom-form>
+
+        <div class="row form-group custom-form-group custom-form-inline" ng-class="{'has-error': !documentListValid}">
+            <label class="control-label">
+                <span class="text-red">*</span>
+                附件
+            </label>
+
+            <input type="file" title="选择文件" nv-file-select ui-file-upload uploader="fileUploader"
+                   class="form-field-wrap" multiple>
+
+            <uib-progressbar value="onFileUpload"
+                             ng-if="onFileUpload >=0 && onFileUpload < 100"></uib-progressbar>
+            <ul ng-if="!documentListValid || uploadError"
+                class="error-hint">
+                <li class="error-required" ng-if="!uploadError">
+                    请选择附件
+                </li>
+                <li class="error-required" ng-if="uploadError">
+                    {{uploadError}}
+                </li>
+            </ul>
+            <p>支持格式：doc、docx 、wps 、html、mht 、</p>
+            <p>pdf、zip、jpg等格式</p>
+        </div>
+
+        <!-- todo 统一attachment -->
+        <div class="list-group panel-body attachment-list">
+            <div class="list-group-item" ng-repeat="attachmentItem in documentList">
+                <img class="pull-left" ng-src="/images/icon/{{config.fileMime2Icon[attachmentItem.fileType]}}.png"
+                     ng-if="config.fileMime2Icon[attachmentItem.fileType]">
+
+                <div class="list-group-item-heading mr-5" title="{{attachmentItem.fileName}}">
+                    <div class="clearfix">
+                        <a target="_blank" ng-href="/api/file/download?id={{attachmentItem.id}}">
+                            {{attachmentItem.fileName}}
+                        </a>
+                    </div>
+
+                    <div class="list-group-item-text clearfix mt-10 mr-5">
+                        <div class="pull-right">
+                            <span class="label label-primary" ng-bind="attachmentItem.subTypeItem | i18n"></span>
+                            <button type="button" class="btn btn-xs btn-success"
+                                    ng-if="config.fileMime2Preview[attachmentItem.fileType]"
+                                    ng-click="previewFile(config.fileMime2Preview[attachmentItem.fileType], attachmentItem.id)">
+                                预览
+                            </button>
+                            <button type="button" class="btn btn-xs btn-danger" ng-click="removeAttachment($index)">删除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer" style="">
+    <button type="button" ng-click="ok()" class="btn btn-success" data-dismiss="modal" ng-disabled="loading">上传
+    </button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal" ng-disabled="loading">取消
+    </button>
+</div>

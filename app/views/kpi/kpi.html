@@ -1,0 +1,87 @@
+<div class="second-menu">
+    <div class="panel panel-default" data-slim-scroll>
+        <div class="menu-title">
+            报表·KPI
+        </div>
+        <div class="panel-heading">
+            <p>
+                <span>KPI</span>
+            </p>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="kpi in kpiList"
+                ng-click="getKpiResult(kpi.id,1,startTime,endTime,departmentId)"
+                ng-class="{active: kpi.id == currentKpiId}">
+                {{kpi.name}}
+            </li>
+        </ul>
+    </div>
+    <span data-second-menu-toggle-collapsed>
+        <i class="iconfont icon-pull"></i>
+    </span>
+</div>
+<div>
+    <div class="panel panel-default">
+        <tiger-loading loading="isLoading" parent=".panel"></tiger-loading>
+        <div ng-if="fieldList.length" style="padding: 10px;">
+            <ul class="nav nav-pills" style="padding-top: 10px">
+                <li ng-class="{active: listType == 1}" role="presentation">
+                    <a class="btn" ng-click="changeListType(1)">
+                        自己
+                    </a>
+                </li>
+                <li ng-class="{active: listType == 2}" role="presentation">
+                    <a class="btn" ng-click="changeListType(2)">
+                        团队 - 按用户
+                    </a>
+                </li>
+                <li ng-class="{active: listType == 3}" role="presentation">
+                    <a class="btn" ng-click="changeListType(3)">
+                        团队 - 按组
+                    </a>
+                </li>
+                <li ng-if="refreshTable" class="pull-right" style="margin-right: 10px">
+                    <tiger-select ng-model="kpiFilter.dateType" item-list="dateType"
+                                  default-value="1" style="display: inline-block; width: 120px"></tiger-select>
+                    <span style="line-height: 32px;vertical-align: top; margin: 0 10px;">
+                            {{startTime | tigerDate}} ~ {{endTime | tigerDate}}
+                        </span>
+                </li>
+            </ul>
+
+            <ul ng-if="define" class="nav nav-pills">
+                <li class="pull-right" style="margin-right: 10px">
+                    <div style="width: 140px;display: inline-block">
+                        <tiger-date ng-model="customDate.startTime" placeholder="开始时间"></tiger-date>
+                    </div>
+                    <div style="width: 140px;display: inline-block">
+                        <tiger-date ng-model="customDate.endTime" placeholder="结束时间"></tiger-date>
+                    </div>
+                    <button type="button" class="btn btn-primary waves-effect waves-button waves-float"
+                            style="vertical-align: top;"
+                            ng-click="changeConditionWithDefinedTime()">
+                        确定
+                    </button>
+                </li>
+            </ul>
+
+            <ul class="nav nav-pills" style="margin-top:10px;margin-bottom: 10px">
+                <li role="presentation" style="margin-left: 10px">共{{dataList.length}}条结果</li>
+                <li class="pull-right" style="margin-right: 10px">
+                        <span style="vertical-align: top; line-height: 32px;margin: 0 10px;">
+                            团队:
+                        </span>
+                    <tiger-select ng-model="kpiFilter.department" item-list="userSubDepartments"
+                                  style="display: inline-block; width: 150px"></tiger-select>
+                </li>
+            </ul>
+        </div>
+
+        <custom-list ng-if="refreshTable" display-field-key-list="fieldInTable"
+                     list-title="列表" field-list="fieldList" data="dataList" on-thead-click="sortBy"
+                     sort-by-field="sortByField" sort-by-type="sortByType" page-state="pageState"
+                     loading="false" list-key="{{listKPIKey}}" kpi-header="kpiDetail"
+                     kpi-score="kpiDetail.kpiList" operation-func="operation">
+        </custom-list>
+    </div>
+</div>

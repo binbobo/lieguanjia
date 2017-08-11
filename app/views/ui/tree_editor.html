@@ -1,0 +1,71 @@
+<!--<t-search-bar ng-model="key" search-func="search"></t-search-bar>-->
+<div ui-tree="options" data-drag-delay="200" ng-style="treeStyle" class="t-ui-tree-editor">
+    <ol ui-tree-nodes data-ng-model="list">
+        <li data-ng-repeat="item in list" ui-tree-node data-ng-include="'items_renderer.html'" collapsed="item.children.length > 0 && collapsedNode"></li>
+    </ol>
+</div>
+
+<script type="text/ng-template" id="items_renderer.html">
+    <div class="angular-ui-tree-handle" ui-tree-handle>
+        <span data-ng-show="item.children.length > 0">
+            <a class="angular-ui-tree-icon" data-nodrag ng-click="toggle(this)">
+                <span class="angular-ui-tree-icon-collapse"
+                      data-ng-class="{'collapsed': collapsed, 'uncollapsed': !collapsed}"></span>
+            </a>
+        </span>
+        <span ng-hide="item.editing" class="item-title" ng-bind-html="item | i18n | highlight : key"></span>
+        <a class="pull-right angular-ui-tree-icon angular-ui-tree-icon-action" data-nodrag
+           ng-click="deleteItem(item,this)" ng-if="canEditNodeFunc(item)">
+            <span class="fa fa-times"></span>
+        </a>
+        <a class="pull-right angular-ui-tree-icon angular-ui-tree-icon-action" data-nodrag ng-click="newSubItem(this)"
+           ng-if="canEditNodeFunc(item)">
+            <span class="fa fa-plus"></span>
+        </a>
+        <a class="pull-right angular-ui-tree-icon angular-ui-tree-icon-action" data-nodrag ng-click="editItem(item)"
+           ng-if="canEditNodeFunc(item)">
+            <span class="fa fa-pencil"></span>
+        </a>
+        <span class="pull-right single-line">
+            <span ng-if="node.creator">
+             创建者:{{item.creator | i18n}}
+            </span>
+            <span ng-if="item.shareInfoList">
+                &nbsp;分享给:
+                <span ng-repeat="shareInfo in item.shareInfoList">
+                    <ng-switch on="shareInfo.shareType">
+                        <span ng-switch-when="1">
+                            所有人
+                            <span ng-if="!$last">,</span>
+                        </span>
+                        <span ng-switch-when="2">
+                            {{shareInfo.teamItems[0] | i18n}}
+                            <span ng-if="!$last">,</span>
+                        </span>
+                        <span ng-switch-when="3">
+                            {{shareInfo.colleagueItem | i18n}}
+                            <span ng-if="!$last">,</span>
+                        </span>
+                    </ng-switch>
+                </span>
+            </span>
+            </span>
+        <div class="form-group" data-nodrag ng-hide="!item.editing">
+            <input type="text" class="editable-has-buttons editable-input form-control" ng-model="item.changed"
+                   focus-this style="float: left;">
+            <span class="editable-buttons">
+                <button type="button" class="btn btn-primary" ng-click="saveItem(item)">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+                <button type="button" class="btn btn-default"
+                        ng-click="!item.title ? deleteItem(item,this) : cancelEditItem(item)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </span>
+            <div class="editable-error help-block ng-binding ng-hide" ng-show="item.error" ng-bind="item.error"></div>
+        </div>
+    </div>
+    <ol ui-tree-nodes="options" data-ng-model="item.children">
+        <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'items_renderer.html'" ng-if="!collapsed" collapsed="item.children.length > 0 && collapsedNode"></li>
+    </ol>
+</script>

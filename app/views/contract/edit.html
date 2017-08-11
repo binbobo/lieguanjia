@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        合同
+    </h3>
+</div>
+
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <attachment-list list="attachmentList" relation-id="contractId" module-id="{{moduleId}}">
+            </attachment-list>
+        </div>
+    </div>
+
+    <form class="panel-body" name="contractInfo">
+        <custom-form field-list="basicForm" entity="contract"
+                     class="form-horizontal custom-form-inline"
+                     base-form="contractInfo"
+                     ng-if="!loading"></custom-form>
+        <div class="row form-group custom-form-group custom-form-inline custom-form-show-group">
+            <label class="control-label">
+                公司
+            </label>
+            <label class="form-field-wrap form-field-show-wrap">
+                {{contract.Fcompany_id | i18n}}
+            </label>
+        </div>
+
+        <div class="row form-group custom-form-group custom-form-inline custom-form-show-group" ng-if="creator">
+            <label class="control-label">
+                创建者
+            </label>
+            <label class="form-field-wrap form-field-show-wrap">
+                {{creator | i18n}}
+            </label>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer" style="">
+    <button type="button" ng-click="ok()" class="btn btn-success" data-dismiss="modal">保存</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

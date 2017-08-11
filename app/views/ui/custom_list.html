@@ -1,0 +1,190 @@
+<div class="panel panel-default">
+    <tiger-loading loading="loading" parent=".panel"></tiger-loading>
+
+    <div class="panel-heading" style="">
+        <tiger-fullscreen class="pull-right"></tiger-fullscreen>
+
+        <span ng-if="!kpiHeader">
+            {{listTitle}} ({{pageState.offset + 1}}
+            -
+            {{pageState.offset + data.length}} / {{pageState.total}})
+        </span>
+        <span ng-if="kpiHeader && kpiScore">
+                <span class="col-sm-2">KPI总分:</span>
+                <span ng-repeat="score in kpiScore">
+                    <span style="color:black;background-color:{{score.level.color}}">{{score.level | i18n}} {{score.scoreLower}}-{{score.scoreUpper}}</span>
+                </span>
+        </span>
+
+        <!--todo temp-->
+        <button type="button" class="btn btn-success btn-sm" style="margin-left:15px"
+                ng-click="operationFunc.document.uploadDocument()" ng-if="listKey == 12">上传
+        </button>
+    </div>
+
+    <div class="panel-body">
+        <label class="ui-checkbox ui-checkbox-sm">
+            <input type="checkbox" ng-model="selectAll">
+            <span>全选 ({{selectCount}})</span>
+        </label>
+
+        <div class="pull-right">
+            <button class="btn btn-default btn-xs" ng-click="exportTable()" ng-if="canExport">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                <span ng-show="!selectCount || selectWhole">导出当页</span>
+                <span ng-show="selectCount && !selectWhole">导出选中条目</span>
+            </button>
+
+            <div class="btn-group table-field-list" uib-dropdown is-open="status.isopen"
+                 auto-close="outsideClick">
+                <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle>显示/隐藏列</button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                    <li class="input-group">
+                        <input type="text" class="form-control input-sm" ng-model="fieldSearchText" focus-this
+                               placeholder="搜索">
+                        <button class="btn btn-link btn-xs addition-btn" ng-click="cleanFieldSearch()"
+                                ng-show="fieldSearchText">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-link btn-xs" title="恢复默认" ng-click="resetFieldList()">
+                            <i class="fa fa-undo"></i>
+                        </button>
+                    </span>
+                    </li>
+                    <li ng-repeat="field in myFieldList | generalItemSearch : fieldSearchText"
+                        class="table-field-list-item">
+                        <label class="ui-checkbox ui-checkbox-sm ui-checkbox-block">
+                            <input type="checkbox" ng-model="field.showTable" ng-true-value="1" ng-false-value="0">
+                            <span ng-bind-html="field | i18n | highlight : fieldSearchText"></span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            <help-hint message="使用“显示隐藏列”按钮可以调整表格中显示的字段列表或者初始化到原始的表格"></help-hint>
+
+            <button class="btn btn-default btn-xs" ng-if="operationFunc.reload" ng-click="operationFunc.reload()"
+                    title="刷新列表">
+                <i class="fa fa-refresh"></i>
+            </button>
+        </div>
+
+        <div ng-switch="listKey" class="batch-operation" ng-if="operationFunc.batch">
+            <div ng-switch-when="1">
+                <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.joinProject(getSelectList())">
+                    加入项目
+                </button>
+                <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.joinFolder(getSelectList())">
+                    设置分组
+                </button>
+                <button class="btn btn-danger btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.deleteCandidate(getSelectList())">
+                    删除
+                </button>
+            </div>
+            <div ng-switch-when="2">
+                <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.joinFolder(getSelectList())">
+                    设置分组
+                </button>
+                <button class="btn btn-danger btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.deleteProject(getSelectList())">
+                    删除项目
+                </button>
+            </div>
+            <div ng-switch-when="3">
+                <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.joinFolder(getSelectList())">
+                    设置分组
+                </button>
+                <button class="btn btn-danger btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.deleteCompany(getSelectList())">
+                    删除公司
+                </button>
+            </div>
+            <!--<div ng-switch-when="9">-->
+                <!--<button class="btn btn-danger btn-xs" ng-disabled="selectCount <= 0"-->
+                        <!--ng-click="operationFunc.batch.deleteInvoice(getSelectList())">-->
+                    <!--删除发票-->
+                <!--</button>-->
+            <!--</div>-->
+            <div ng-switch-when="12">
+                <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.joinFolder(getSelectList())">
+                    设置分组
+                </button>
+                <button class="btn btn-danger btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.deleteDocument(getSelectList())">
+                    删除
+                </button>
+            </div>
+            <div ng-switch-when="recommendedCandidate">
+                <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.joinProject(getSelectList())">
+                    加入项目
+                </button>
+            </div>
+        </div>
+
+        <div ng-if="operationFunc.batchWithoutListKey" class="batch-operation">
+            <button type="button" class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                    ng-repeat="batchOperation in operationFunc.batchWithoutListKey"
+                    ng-click="batchOperation.func(getSelectList())"
+                    ng-bind="batchOperation | i18n"
+            ></button>
+        </div>
+    </div>
+
+    <div ng-if="searchParam && selectCount == data.length && pageState.total > data.length && data.length > 0"
+         ng-init="initSelectWhole()" class="panel-body select-whole">
+        <span ng-if="!selectWhole">
+            已选择当前页面上所有{{selectCount}}个，
+            <span ng-if="pageState.total <= 1000" ng-click="selectWholeItem()" class="select-whole-btn">
+                选择全部{{pageState.total}}个
+            </span>
+            <span ng-if="pageState.total > 1000">无法选择全部（总数超过1000个）</span>
+        </span>
+        <span ng-if="selectWhole">
+            已选择全部{{pageState.total}}个。
+            <span ng-click="clearSelect()" class="select-whole-btn">清除所选选择</span>
+        </span>
+    </div>
+
+    <div class="panel-body panel-body-table" ng-class="{'no-data': data.length == 0}">
+        <custom-table field-list="myFieldList" data="data" on-thead-click="onTheadClick"
+                      sort-by-field="sortByField" sort-by-type="sortByType" module-id="{{moduleId}}"
+                      list-key="{{listKey}}"
+                      operation-func="operationFunc" select-list="selectList"
+                      quick-edit-func="quickEditFunc"></custom-table>
+    </div>
+    <p ng-if="data.length == 0" class="text-center">暂无数据</p>
+
+    <div class="panel-footer">
+        <ul uib-pagination total-items="pageState.totalAvailable" items-per-page="pageState.listLength"
+            ng-model="pageState.page" max-size="5" class="pagination-sm" boundary-link-numbers="true"
+            previous-text="<" next-text=">"></ul>
+        <div ng-if="pageSizeEditable" class="page-size-edit">
+            每页
+            <div style="width: 60px;">
+                <select ng-model="pageState.listLength" ng-options="item for item in [10,25,40]"
+                        class="form-control input-sm">
+                </select>
+            </div>
+            条
+        </div>
+
+        <div class="pull-right" ng-if="hasHighlight">
+            <label class="switch switch-primary switch-xs" title="是否高亮搜索的条件">
+                <input type="checkbox" ng-model="$root.isHighlightInCustomTable">
+                <i></i>
+            </label>
+        </div>
+
+        <span class="pull-right" ng-if="pageState.totalAvailable < pageState.total" style="margin-right: 20px;">
+            只显示前100000条
+        </span>
+    </div>
+</div>

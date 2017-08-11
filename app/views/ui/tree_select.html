@@ -1,0 +1,32 @@
+<t-search-bar ng-model="key"></t-search-bar>
+<div ui-tree="options" style="max-height:{{maxHeight}}px;overflow: scroll">
+    <ol ui-tree-nodes data-ng-model="list">
+        <li data-ng-repeat="item in list" ui-tree-node data-ng-include="'select_items_renderer.html'"
+            ng-if="!item.hidden"></li>
+    </ol>
+</div>
+{{list}}
+
+<script type="text/ng-template" id="select_items_renderer.html">
+    <div class="angular-ui-tree-handle" nodrag style="cursor: default">
+            <span data-ng-show="item.items.length > 0">
+                <a class="angular-ui-tree-icon" ng-click="toggle(this)">
+                <span class="angular-ui-tree-icon-collapse"
+                      data-ng-class="{'collapsed': collapsed, 'uncollapsed': !collapsed}"></span>
+                </a>
+            </span>
+        <div>
+            <label class="ui-checkbox" ng-class="{'has-selected':item.hasSelectedChildren && !item.selected}">
+                <input name="checkbox{{item.id}}" type="checkbox" ng-true-value="true" ng-false-value="false"
+                       ng-model="item.selected" ng-click="selectItem(this)"
+                       ng-disabled="isMaxSelected() && !item.selected">
+                <span>{{item.title}}</span>
+            </label>
+        </div>
+    </div>
+    <ol ui-tree-nodes="options" data-ng-model="item.items" data-ng-class="{hidden: collapsed}" ng-if="!item.hidden">
+        <li data-ng-repeat="item in item.items" ui-tree-node data-ng-include="'select_items_renderer.html'"
+            ng-if="!item.hidden">
+        </li>
+    </ol>
+</script>

@@ -1,0 +1,74 @@
+<div class="panel">
+    <div class="panel-heading">
+        添加/编辑KPI报表
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-2">
+                KPI总分
+                <button ng-click="setScore(kpi.kpiList)" class="btn btn-primary btn-sm">设置</button>
+            </div>
+            <div class="col-sm-4">
+                KPI报表名称
+                <input type="text" placeholder="新KPI报表" ng-model="kpi.name">
+            </div>
+            <div class="col-sm-6">
+                <label class="control-label">
+                    <span class="text-red">*</span>
+                    <span>KPI周期</span>
+                </label>
+                <custom-field entity="kpi" field-info="config.kpiCycle"
+                              class="form-field-wrap"></custom-field>
+            </div>
+        </div>
+        <table ui-tree data-clone-enabled="false" class="table table-responsive">
+            <thead>
+            <tr>
+                <th>默认名称</th>
+                <th>显示名称</th>
+                <th>启用</th>
+                <th>显示</th>
+                <th>{{kpi.cycle.title}}目标</th>
+                <th>{{kpi.cycle.title}}上限</th>
+                <th>权重</th>
+                <th>排序</th>
+            </tr>
+            </thead>
+            <tbody ui-tree-nodes="" ng-model="kpi.itemList">
+            <tr ng-repeat="item in kpi.itemList" ui-tree-node>
+                <td>
+                    {{item.basicItem.name}}
+                </td>
+                <td>
+                    <input type="text" ng-model="item.displayName" placeholder="默认同左侧">
+                </td>
+                <td>
+                    <input type="checkbox" ng-false-value="0" ng-true-value="1" ng-model="item.use">
+                </td>
+                <td>
+                    <input type="checkbox" ng-false-value="0" ng-true-value="1" ng-model="item.display">
+                </td>
+                <td>
+                    <input type="number" ng-model="item.target" placeholder="0">
+                </td>
+                <td>
+                    <input type="number" ng-model="item.upperLimit" placeholder="0">
+                </td>
+                <td>
+                    <input type="number" ng-model="item.weight" placeholder="0">
+                </td>
+                <td>
+                    <span ui-tree-handle>{{item.order}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel-body">
+        <button type="button" class="btn btn-primary waves-effect waves-button waves-float"
+                ng-click="saveKPI()">
+            保存
+        </button>
+    </div>
+</div>

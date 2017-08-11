@@ -1,0 +1,267 @@
+<!-- Menu -->
+<!--===================================================-->
+
+<div class="nav-wrapper">
+    <ul id="nav" class="nav" data-ng-controller="NavCtrl" data-slim-scroll
+        data-collapse-nav>
+
+        <!--Navigation toogle button-->
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+        <li>
+            <a href="" class="toggle-min" id="step3" data-toggle-nav-collapsed-min>
+                <i class="iconfont icon-deploy"></i>
+            </a>
+        </li>
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+        <!--End Navigation toogle button-->
+
+        <li>
+            <a ui-sref="home" ui-sref-active="active" uib-popover="首页"
+               popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
+               popover-append-to-body="true" popover-enable="{{popoverEnable}}">
+                <i class="iconfont icon-home"></i>
+                <span data-i18n="Dashboard"></span>
+            </a>
+        </li>
+
+        <li>
+            <a>
+                <i class="iconfont icon-people"></i>
+                <i class="iconfont icon-arrow-down"></i>
+                <span data-i18n="Candidate"></span>
+            </a>
+
+            <ul>
+
+                <li class="menu-title">
+                    <a href="">
+                        <span data-i18n="Candidate"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="search({ moduleId: 1 })" ui-sref-active="active">
+                        <span data-i18n="Candidate List"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="candidate_add" ui-sref-active="active">
+                        <span data-i18n="Add Candidate"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="candidate_import" ui-sref-active="active">
+                        <span data-i18n="Import Candidate"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="candidate_excel_import" ui-sref-active="active">
+                        <span data-i18n="Import Excel"></span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li>
+            <a>
+                <i class="iconfont icon-company"></i>
+                <i class="iconfont icon-arrow-down"></i>
+                <span data-i18n="Company"></span>
+            </a>
+
+            <ul>
+                <li class="menu-title">
+                    <a href="">
+                        <span data-i18n="Company"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="search({ moduleId: 3 })" ui-sref-active="active">
+                        <span data-i18n="Company List"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="company_add" ui-sref-active="active">
+                        <span data-i18n="Add Company"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a>
+                <i class="iconfont icon-project"></i>
+                <i class="iconfont icon-arrow-down"></i>
+                <span data-i18n="Project"></span>
+            </a>
+
+            <ul>
+                <li class="menu-title">
+                    <a href="">
+                        <span data-i18n="Project"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="search({ moduleId: 2 })" ui-sref-active="active">
+                        <span data-i18n="Project List"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="project_add" ui-sref-active="active">
+                        <span data-i18n="Add Project"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li>
+            <a ui-sref="search({ moduleId: 10 })" ui-sref-active="active" uib-popover="Pipeline"
+               popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
+               popover-append-to-body="true" popover-enable="{{popoverEnable}}">
+                <i class="iconfont icon-p"></i>
+                <span>Pipeline</span>
+            </a>
+        </li>
+
+
+        <li>
+            <a ui-sref="search({ moduleId: 8 })" ui-sref-active="active" uib-popover="合同"
+               popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
+               popover-append-to-body="true" popover-enable="{{popoverEnable}}">
+                <i class="iconfont icon-contract"></i>
+                <span data-i18n="contract"></span>
+            </a>
+        </li>
+
+        <li>
+            <a ui-sref="search({ moduleId: 9 })" ui-sref-active="active" uib-popover="发票"
+               popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
+               popover-append-to-body="true" popover-enable="{{popoverEnable}}">
+                <i class="iconfont icon-invoice"></i>
+                <span data-i18n=invoice></span>
+            </a>
+        </li>
+
+        <li>
+            <a>
+                <i class="iconfont icon-chart"></i>
+                <i class="iconfont icon-arrow-down"></i>
+                <span data-i18n="Report"></span>
+            </a>
+
+            <ul>
+                <li class="menu-title">
+                    <a href="">
+                        <span data-i18n="KPI"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="kpiInfo" ui-sref-active="active">
+                        <span data-i18n="KPI"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="reportProject" ui-sref-active="active">
+                        <span data-i18n="project report"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a ui-sref="search({ moduleId: 12 })" ui-sref-active="active" uib-popover="文档"
+               popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
+               popover-append-to-body="true" popover-enable="{{popoverEnable}}">
+                <i class="iconfont icon-file"></i>
+                <span data-i18n=documents></span>
+            </a>
+        </li>
+
+        <li>
+            <a ui-sref="channel" ui-sref-active="active" uib-popover="渠道"
+               popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
+               popover-append-to-body="true" popover-enable="{{popoverEnable}}">
+                <i class="iconfont icon-trench"></i>
+                <span data-i18n="Channel"></span>
+            </a>
+        </li>
+
+
+        <li>
+            <a>
+                <i class="iconfont icon-cog"></i>
+                <i class="iconfont icon-arrow-down"></i>
+                <span data-i18n="settings"></span>
+            </a>
+
+            <ul>
+                <li class="menu-title">
+                    <a href="">
+                        <span data-i18n="settings"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="setting.form({ moduleId: 1 })" ui-sref-active="active">
+                        <span>自定义字段</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="setting.tree({ listType: 101 })" ui-sref-active="active">
+                        <span>行业/职能/城市</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="setting.generalItem" ui-sref-active="active">
+                        <span>自定义选项</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="setting.comment({ moduleId: 4})" ui-sref-active="active">
+                        <span>自定义备注</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="setting.user" ui-sref-active="active">
+                        <span>用户管理</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="setting.recReport" ui-sref-active="active">
+                        <span>推荐报告</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="setting.kpi" ui-sref-active="active">
+                        <span>KPI设置</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a ui-sref="self_check" ui-sref-active="active">
+                        系统自检
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="divider"></li>
+    </ul>
+</div>

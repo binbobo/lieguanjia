@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div data-ng-controller="companyOperationCtrl">
+                    <div class="btn-group pull-right" uib-dropdown is-open="status.isopen">
+                        <button id="single-button" type="button"
+                                class="btn btn-default btn-xs waves-effect waves-button waves-float pull-right"
+                                uib-dropdown-toggle ng-disabled="disabled">
+                            操作<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu " style="min-width: 100px" uib-dropdown-menu role="menu">
+                            <li><a ui-sref="candidate_add({companyId: companyId, resumeType: 11})">新增人才</a></li>
+                            <li><a ui-sref="project_add({companyId: companyId})">新增项目</a></li>
+                            <li>
+                                <a ng-click="editContract(null, companyId, company.basicInfo.Fcompany_name)">
+                                    新增合同
+                                </a>
+                            </li>
+                            <li><a ng-click="addComment(companyId)">添加备注</a></li>
+                            <li><a ng-click="addTask(company)">添加提醒</a></li>
+                            <li><a ng-click="joinFolder(companyId)">分组</a></li>
+                            <li><a ng-click="deleteCompany(companyId)">删除</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a ui-sref="company_edit({ companyId: companyId })"
+                   class="btn btn-default btn-xs waves-effect waves-button waves-float pull-right">编辑</a>
+                <h4 class="media-heading">
+                    <span ng-bind="company.basicInfo.Fcompany_name"></span>
+                    <small>(公司)</small>
+                </h4>
+                <p>
+                    <span>负责顾问：{{company.basicInfo.Fbd_id | i18n}}</span>
+                    &nbsp;&nbsp;&nbsp;
+                    <span>创建时间：{{company.time | tigerDate}}</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="btn-group panel-body">
+                <a ui-sref="." class="btn btn-default" ui-sref-active-eq="active">基本</a>
+                <a ui-sref=".attachment" class="btn btn-default" ui-sref-active-eq="active">附件
+                    {{company.stats.attachmentCount}}</a>
+                <a ui-sref=".contacts" class="btn btn-default" ui-sref-active-eq="active">人才
+                    <span ng-show="company.stats">
+                    {{company.stats.contactsCandidateCount}}/{{company.stats.onJobCandidateCount}}/{{company.stats.leaveJobCandidateCount}}
+                    </span>
+                </a>
+                <a ui-sref=".project" class="btn btn-default" ui-sref-active-eq="active">项目
+                    {{company.stats.projectCount}}</a>
+                <a ui-sref=".commentList" class="btn btn-default" ui-sref-active-eq="active">备注
+                    {{company.stats.commentCount}}</a>
+                <a ui-sref=".contract" class="btn btn-default" ui-sref-active-eq="active">合同
+                    {{company.stats.contractCount}}</a>
+                <a ui-sref=".update_logs" class="btn btn-default" ui-sref-active-eq="active">
+                    日志
+                </a>
+            </div>
+        </div>
+
+
+        <ui-view>
+            <tiger-include template-path="views/company/view_main.html"></tiger-include>
+        </ui-view>
+    </div>
+</div>

@@ -1,0 +1,144 @@
+<ng-switch on="dataType" data-type="{{dataType}}" class="custom-field custom-field-{{dataType}}">
+
+    <div ng-switch-when="readonly">
+        {{entity[name]}}
+    </div>
+
+    <input ng-switch-when="text" type="text" class="form-control" maxlength="{{maxLength}}"
+           name="{{name}}" ng-model="entity[name]" ng-required="required" placeholder="{{desc}}">
+
+    <input ng-switch-when="password" type="password" class="form-control" maxlength="{{maxLength}}"
+           name="{{name}}" ng-model="entity[name]" ng-required="required" placeholder="{{desc}}">
+
+    <input ng-switch-when="number" type="number" class="form-control" name="{{name}}"
+           ng-model="entity[name]" ng-required="required" max="{{maxLength}}" ng-min="minLength" placeholder="{{desc}}">
+
+    <input ng-switch-when="workExperience" type="number" work-experience class="form-control" name="{{name}}"
+           ng-model="entity[name]" ng-required="required" max="{{maxLength}}" placeholder="{{desc}}">
+
+    <input ng-switch-when="email" type="email" class="form-control" name="{{name}}" placeholder="{{desc}}"
+           maxlength="{{maxLength}}" ng-model="entity[name]" ng-required="required">
+
+    <custom-money ng-switch-when="money" class="input-group" ng-model="entity[name]"></custom-money>
+
+    <textarea ng-switch-when="textarea" class="form-control" name="{{name}}" placeholder="{{desc}}"
+              ng-model="entity[name]" ng-required="required"></textarea>
+
+    <!--<input ng-switch-when="date" type="date" class="form-control" name="{{name}}"-->
+    <!--ng-model="tmp[name]" ng-required="required">-->
+    <tiger-date ng-switch-when="date" ui-name="{{name}}" ui-required="{{required}}" placeholder="{{desc}}"
+                ng-model="entity[name]" append-to-body="needAppendToBody"></tiger-date>
+
+    <!--<input ng-switch-when="datetime" type="datetime" class="form-control" name="{{name}}"-->
+    <!--ng-model="tmp[name]" ng-required="required">-->
+    <tiger-datetime ng-switch-when="datetime" ui-name="{{name}}" ui-required="{{required}}" placeholder="{{desc}}"
+                    ng-model="entity[name]" append-to-body="needAppendToBody"></tiger-datetime>
+
+    <!--<div ng-switch-when="datetimerange">-->
+    <!--<div class="input-group">-->
+    <!--<input type="datetime" class="form-control input-sm" ng-model="entity[name].startTime"-->
+    <!--placeholder="开始时间" ng-required="required">-->
+    <!--<div ng-if="!entity[name].notEnd" class="input-group-addon">~</div>-->
+    <!--<input ng-if="!entity[name].notEnd" type="datetime" class="form-control"-->
+    <!--ng-model="entity[name].endTime" placeholder="结束时间">-->
+    <!--</div>-->
+
+    <!--<label>-->
+    <!--<input type="checkbox" class="input-sm" ng-model="entity[name].notEnd"> 全天-->
+    <!--</label>-->
+    <!--</div>-->
+    <datetime-range ng-switch-when="datetimerange" ng-model="entity[name]"
+                    name="{{name}}" ng-required="required"
+                    append-to-body="needAppendToBody"></datetime-range>
+
+    <daterange ng-switch-when="daterange" ng-model="dateRangeTmp"
+               not-not-ended="{{notNotEnded}}" ng-required="required" name="{{name}}"></daterange>
+
+    <label ng-switch-when="checkbox" class="ui-checkbox">
+        <input type="checkbox" name="{{name}}" ng-model="entity[name]"
+               ng-true-value="1" ng-false-value="0">
+        <span></span>
+    </label>
+
+    <div ng-switch-when="radio">
+        <label ng-repeat="option in itemList" class="radio-item ui-radio ui-radio-sm">
+            <input type="radio" name="{{name}}" ng-value="option.value" ng-model="tmp[name]"
+                   ng-required="required" ng-change="radioUpdate()">
+            <span ng-bind="option | i18n"></span>
+        </label>
+    </div>
+
+    <tiger-select ng-switch-when="select" name="{{name}}" ng-required="required" ng-model="entity[name]"
+                  append-to-body="needAppendToBody" placeholder="{{desc || '请选择'}}"
+                  default-value="defaultValue" item-list="itemList" list-type="listType"
+                  attribute-data="attributeData" item-list-groups="itemListGroups"
+                  union-query="getUnionQueryKey()" can-del="1"></tiger-select>
+
+    <tiger-select ng-switch-when="multiselect" multi="true" limit="{{number > 0 ? number : undefined}}"
+                  name="{{name}}" ng-required="required" ng-model="entity[name]"
+                  append-to-body="needAppendToBody" placeholder="{{desc || '请选择'}}"
+                  default-value="defaultValue" item-list="itemList" list-type="listType"
+                  attribute-data="attributeData" item-list-groups="itemListGroups"
+                  union-query="getUnionQueryKey()"></tiger-select>
+
+    <div ng-switch-when="treeselect">
+        <tree-selector select-limit="number" list-type="listType" name="{{name}}" multi="1" ng-model="entity[name]"
+                       ng-required="{{required}}" append-to-body="needAppendToBody"></tree-selector>
+    </div>
+
+    <div ng-switch-when="multiphone">
+        <div class="multi-item" ng-repeat="item in entity[name] track by $index">
+            <input type="text" ng-model="entity[name][$index]" class="form-control"
+                   ng-required="required" name="{{name}}" maxlength="{{maxLength}}"
+                   placeholder="{{desc}}" ng-if="$index == 0">
+            <input type="text" ng-model="entity[name][$index]" class="form-control"
+                   maxlength="{{maxLength}}" ng-if="$index > 0">
+            <div class="remove-btn" ng-if="$index > 0" ng-click="removeItem($index)">
+                <i class="fa fa-times-circle"></i>
+            </div>
+        </div>
+        <span>
+            ({{entity[name].length || 0}}/{{number}})
+        </span>
+        <button type="button" class="btn btn-link btn-xs" ng-if="!entity[name] || entity[name].length < number"
+                ng-click="addItem()">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+
+    <div ng-switch-when="multiemail">
+        <div class="multi-item" ng-repeat="item in entity[name] track by $index">
+            <input type="email" ng-model="entity[name][$index]" class="form-control"
+                   ng-required="required" name="{{name}}" maxlength="{{maxLength}}"
+                   placeholder="{{desc}}" ng-if="$index == 0">
+            <input type="email" ng-model="entity[name][$index]" class="form-control"
+                   maxlength="{{maxLength}}" ng-if="$index > 0">
+            <div class="remove-btn" ng-if="$index > 0" ng-click="removeItem($index)">
+                <i class="fa fa-times-circle"></i>
+            </div>
+        </div>
+        <span>
+            ({{entity[name].length || 0}}/{{number}})
+        </span>
+        <button type="button" class="btn btn-link" ng-if="!entity[name] ||entity[name].length < number"
+                ng-click="addItem()">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+
+    <div ng-switch-when="tag">
+        <tags-input ng-model="entity[name]" replace-spaces-with-dashes="false" allow-leftover-text="true"
+                    custom-tags name="{{name}}" min-length="1" min-tags="{{required ? 1: 0}}"
+                    max-tags="{{number}}" placeholder="添加标签，最多{{number}}个"></tags-input>
+    </div>
+
+    <div ng-switch-when="percent" class="input-group">
+        <input type="text" class="form-control" name="{{name}}" placeholder="{{desc}}"
+               ng-model="entity[name]" ng-required="required" max="100">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default" disabled>
+                <span>%</span>
+            </button>
+        </div>
+    </div>
+</ng-switch>

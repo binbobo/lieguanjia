@@ -1,0 +1,16 @@
+
+
+<!-- Calender Body Start -->
+<div class="page page-calendar" data-ng-controller="calendarCtrl">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel">
+        <div class="panel-body">
+          <div data-ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar" class="pv-10"></div>
+          <div class="callout callout-info" data-ng-show="alertMessage != undefined && alertMessage != ''"> <span>{{alertMessage}}</span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Calender Body End -->

@@ -1,0 +1,9 @@
+<div ng-if="contentType == 0" ng-bind="content"></div>
+<div ng-if="contentType == 1">
+    <span ng-if="content.operator">
+        操作人：{{content.operator | i18n}}
+    </span>
+    <span ng-bind="content.msg"></span>
+    <a ng-href="{{content.linkHref}}" ng-click="clickNotification()" ng-bind="content.link"
+       ng-attr-target="{{linkNewWindow ? '_blank':''}}"></a>
+</div>

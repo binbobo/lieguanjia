@@ -1,0 +1,40 @@
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-repeat="item in staticModuleItems" ng-class="{active: $index == currentNumber}">
+        <a href="" ng-click="switchTo(null, $index)">
+            <span>{{item | i18n}}</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a class="btn" data-nodrag ng-click="addModuleItem()" style="margin-right: 8px;">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+    </li>
+</ul>
+
+<form name="moduleItemForm">
+    <div class="row form-group custom-form-group custom-form-inline">
+        <label class="control-label">
+            <span class="text-red">*</span>
+            <span>类型</span>
+        </label>
+        <input type="text" class="form-control" ng-model="currentModuleItem.i18n.zh"
+               maxlength="8" ng-required="1" placeholder="中文">
+        <input type="text" class="form-control" ng-model="currentModuleItem.i18n.en"
+               maxlength="8" ng-required="1" placeholder="English">
+    </div>
+    <div class="row form-group custom-form-group custom-form-inline">
+        <label class="control-label">
+            <span>颜色</span>
+        </label>
+        <input type="text" class="form-control" ng-model="currentModuleItem.color"
+               maxlength="8">
+    </div>
+</form>
+
+<ui-view></ui-view>
+
+<div>
+    <!--<button type="button" class="btn btn-primary" ng-click="addField()">添加</button>-->
+    <button type="button" class="btn btn-success" ng-click="saveCommentFields()">保存</button>
+    <button type="button" class="btn btn-danger" ng-click="deleteItem(currentNumber)">删除</button>
+</div>

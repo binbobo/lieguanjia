@@ -1,0 +1,18 @@
+<h4>角色列表</h4>
+<div class="row">
+    <div class="col-sm-3">
+        <ul class="nav nav-pills nav-stacked">
+            <li ng-repeat="role in roleList" ui-sref-active="active">
+                <a ui-sref=".edit({roleId: role.id})">{{role | i18n}}</a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref=".add()">
+                    <i class="glyphicon glyphicon-plus"></i> 添加新角色
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-7">
+        <ui-view></ui-view>
+    </div>
+</div>

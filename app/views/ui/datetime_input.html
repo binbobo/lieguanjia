@@ -1,0 +1,17 @@
+<div class="input-group">
+    <div class="date-input-wrap" style="display: table-cell">
+        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="uiDate" name="{{uiName}}"
+               is-open="datePickerPopup.opened" close-text="关闭" clear-text="清除" current-text="今天"
+               ng-required="uiRequired"
+               placeholder="{{placeholder}}" alt-input-formats="['yyyy-M!-d!']"
+               datepicker-options="dateOptions"
+               datepicker-append-to-body="appendToBody">
+
+        <i class="fa fa-calendar date-picker-btn" ng-click="openDatePicker()"></i>
+    </div>
+
+    <div style="display: table-cell;padding-left: 8px">
+        <input type="text" class="form-control" uib-datepicker-popup="{{timeformat}}" ng-model="uiTime"
+               placeholder="08:00" alt-input-formats="['HH:mm', 'HH:m', 'H:mm', 'H:m', 'H']" style="max-width: 72px;">
+    </div>
+</div>

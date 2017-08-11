@@ -1,0 +1,31 @@
+<div class="preview-wrap preview-wrap-{{showType}}" ng-if="previewShow" ng-style="{'z-index': zIndex}">
+    <div class="preview-header">
+        <button type="button" ng-click="hidePreview()" class="btn btn-default btn-xs">
+            <i class="fa fa-close"></i>
+        </button>
+        <help-hint class="pull-right" append-to-body="false" message="拖动标题栏可以移动预览。在预览的四边可以调整预览大小"></help-hint>
+    </div>
+    <div ng-switch on="showType" class="preview-body panel">
+        <tiger-loading loading="previewLoading" parent=".panel"></tiger-loading>
+
+        <iframe ng-switch-when="iframe" ng-src="{{resouseSrc}}"></iframe>
+        <div ng-switch-when="image" class="preview-image">
+            <img ng-src="{{resouseSrc}}">
+        </div>
+        <!--<div ng-switch-when="resume" class="preview-resume" tiger-include-->
+             <!--template-path="views/candidate/view_main.html"></div>-->
+        <div ng-switch-when="resume" class="preview-resume">
+            <div class="header-panel"></div>
+            <div class="content-panel"></div>
+        </div>
+        <div ng-switch-when="comment" class="preview-resume" tiger-include
+             template-path="views/comment/list.html"></div>
+
+        <div ng-switch-when="demo" class="text-center" style="padding: 100px 0">
+            <img src="images/logo_main.png" width="100">
+            <h3>欢迎使用猎管家</h3>
+        </div>
+    </div>
+    <div class="preview-body-cover" style="display: none;">
+    </div>
+</div>

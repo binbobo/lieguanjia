@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="btn-group" ng-if="typeItemList">
+            <a class="btn btn-default" ng-class="{active: selectType == 0}" ng-click="changeType(0)">
+                所有
+                {{allListMap[0].length}}
+            </a>
+            <a ng-repeat="item in typeItemList" class="btn btn-default" ng-class="{active: selectType == item.id}"
+               ng-click="changeType(item.id)">
+                {{item | i18n}}
+                {{allListMap[item.id] ? allListMap[item.id].length : 0}}
+            </a>
+        </div>
+
+        <button type="button" class="pull-right btn btn-primary btn-xs" ng-click="edit(-1)">
+            <i class="fa fa-plus"></i>
+            添加备注
+        </button>
+    </div>
+
+    <ul class="panel-body comment-list">
+        <li ng-repeat="comment in allListMap[selectType]" class="comment-item row">
+            <div class="col-sm-3 left-side">
+                <h4>{{comment.time * 1000 | date : 'HH:mm'}}</h4>
+                <p>
+                    {{comment.time | tigerDate}}
+                </p>
+                <p>{{comment.creatorItem | i18n}}</p>
+                <p ng-repeat="item in comment.participantItemList" ng-bind="item | i18n"></p>
+            </div>
+
+            <div class="col-sm-9 right-side">
+                <div class="comment-type-title" style="margin-bottom: 12px;">
+                    <div class="pull-right comment-operation" ng-if="edit">
+                        <button class="btn btn-success btn-xs" type="button" ng-click="edit(comment.id)">编辑</button>
+                        <button class="btn btn-danger btn-xs" type="button" ng-click="delete(comment.id)">删除</button>
+                    </div>
+                    <span class="label label-yellow label-lg">{{comment.typeItem | i18n}}</span>
+                    <span class="label label-yellow label-lg">{{comment.subtypeItem | i18n}}</span>
+                </div>
+                <custom-form-show field-list="customForm[comment.typeItem.title]"
+                                  entity="comment.commentCustomData"></custom-form-show>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,116 @@
+<div class="modal-header">
+    <h3 class="modal-title">签订Offer</h3>
+</div>
+
+<div class="modal-body">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>类型</th>
+            <th>月薪</th>
+            <th>月数</th>
+            <th>总计</th>
+            <th>备注</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="items in obj.salaryList">
+            <td>
+                <select class="form-control input-sm" ng-model="items.type" convert-to-number>
+                    <option ng-repeat="option in salaryTypes" value="{{option.id}}">
+                        {{option.label}}
+                    </option>
+                </select>
+            </td>
+            <td>
+                <input type="number" class="form-control input-sm" ng-model="items.salary" style="width: 80px;">
+            </td>
+            <td>
+                <input type="number" class="form-control input-sm" ng-model="items.count" style="width: 60px;">
+            </td>
+            <td style="width: 80px">
+                {{(items.salary || 0) * (items.count || 0)}}
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm" ng-model="items.comment" style="width: 120px;">
+            </td>
+            <td>
+                <button class="btn btn-link btn-xs" ng-click="addSalaryItem()">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-link btn-xs" ng-click="delSalaryItem($index)" ng-if="$index > 0">
+                    <i class="fa fa-close"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">合计薪资</label>
+        <div class="col-sm-10 input-group">
+            {{obj.totalSalary | number : 0}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">收费金额</label>
+        <div class="col-sm-4 input-group">
+            <input type="number" class="form-control" ng-model="obj.fee">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Offer状态</label>
+        <div class="col-sm-9 input-group">
+            <label class="ui-radio ui-radio-sm">
+                <input type="radio" ng-value="0" ng-model="obj.offerStatus">
+                <span>待定</span>
+            </label>
+
+            <label class="ui-radio ui-radio-sm">
+                <input type="radio" ng-value="1" ng-model="obj.offerStatus">
+                <span>接受</span>
+            </label>
+
+            <label class="ui-radio ui-radio-sm">
+                <input type="radio" ng-value="2" ng-model="obj.offerStatus">
+                <span>拒绝</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="obj.offerStatus == 0">
+        <label class="control-label col-sm-2">待定时间</label>
+        <div class="col-sm-4 input-group">
+            <tiger-date ng-model="obj.waitTime" append-to-body="true"></tiger-date>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="obj.offerStatus == 1">
+        <label class="control-label col-sm-2">预计入职</label>
+        <div class="col-sm-4 input-group">
+            <tiger-date ng-model="obj.planEntryTime" append-to-body="true"></tiger-date>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="obj.offerStatus == 1">
+        <label class="control-label col-sm-2">签订时间</label>
+        <div class="col-sm-4 input-group">
+            <tiger-date ng-model="obj.signTime" append-to-body="true"></tiger-date>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="obj.offerStatus == 2">
+        <label class="control-label col-sm-2">拒绝时间</label>
+        <div class="col-sm-4 input-group">
+            <tiger-date ng-model="obj.rejectTime" append-to-body="true"></tiger-date>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="">
+    <button type="button" ng-click="ok(obj)" class="btn btn-success" data-dismiss="modal">确定</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

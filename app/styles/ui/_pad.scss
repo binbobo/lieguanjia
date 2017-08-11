@@ -1,0 +1,57 @@
+.app.nav-collapsed-min {
+    .top-header {
+        .logo {
+            width: 220px;
+        }
+
+        .top-nav {
+            padding: 0 0 0 50px;
+        }
+    }
+
+    #nav-container {
+        width: 50px;
+    }
+
+    #content {
+        margin-left: 50px;
+    }
+}
+
+#content {
+    padding: 0 0px;
+}
+
+@for $i from 1 to 13 {
+
+    .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i} {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}
+
+.panel {
+    margin-bottom: 4px;
+}
+
+.page {
+    padding: 4px 4px;
+}
+
+.dropdown-menu > li > a {
+    padding: 10px 16px;
+}
+
+.condition-edit-list-item > .btn {
+    font-size: 13px;
+    padding: 6px 5px;
+    margin-right: 10px;
+}
+
+.condition-list-item .remove-btn {
+    padding: 2px 4px;
+}
+
+.table-field-list .table-field-list-item {
+    margin: 6px 0;
+}

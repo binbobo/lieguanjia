@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        基本信息
+    </div>
+    <div class="panel-body">
+        <custom-form-show field-list="basicForm" entity="project.basicInfo" class="custom-form-inline"
+                          module-item="basicInfo" save-edit-func="quickEditFunc"></custom-form-show>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            项目成员
+        </div>
+        <div class="panel-body">
+            <label class="danger col-sm-2">项目成员:</label>
+            <div ng-repeat="item in projectMemberData track by $index">
+                <label class="danger col-sm-2" data-ng-if="$index> 0"></label>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label>{{item.memberType | i18n}}</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>{{item.member | i18n}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

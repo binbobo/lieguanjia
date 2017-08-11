@@ -1,0 +1,9 @@
+<div class="modal-body" style="text-align: center">
+    <h4 ng-if="custom.title" ng-bind="custom.title"></h4>
+    <p ng-if="custom.content" ng-bind-html="custom.content"></p>
+    <input type="text" ng-model="content" class="form-control" focus-this>
+</div>
+<div class="modal-footer" style="">
+    <button type="button" ng-click="ok(content)" class="{{custom.okBtnClass}}" data-dismiss="modal">确定</button>
+    <button type="button" ng-click="cancel()" class="{{custom.cancelBtnClass}}" data-dismiss="modal">取消</button>
+</div>

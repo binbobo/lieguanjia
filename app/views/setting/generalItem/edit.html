@@ -1,0 +1,38 @@
+<script type="text/ng-template" id="form_field_nodes.html">
+    <div class="tree-node">
+        <div class="pull-left tree-handle" ui-tree-handle>
+            <span class="glyphicon glyphicon-list"></span>
+        </div>
+        <div class="tree-node-content">
+            <div>
+                <label>
+                    中文<input ng-model="node.i18n.zh">
+                </label>
+                <label>
+                    英文<input ng-model="node.i18n.en">
+                </label>
+                <button class="btn btn-danger btn-xs" ng-click="deleteItem($index)">删除</button>
+            </div>
+
+        </div>
+    </div>
+</script>
+
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-default" ng-class="{'panel-loading':loading}">
+            <div class="panel-body">
+                <div ui-tree data-clone-enabled="false" class="angular-ui-tree">
+                    <ol ui-tree-nodes="" ng-model="treeData" class="field-nodes">
+                        <li ng-repeat="node in treeData" ui-tree-node class="field-node"
+                            ng-include="'form_field_nodes.html'"></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary" ng-click="addItem()">添加</button>
+                <button type="button" class="btn btn-success" ng-click="saveList()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

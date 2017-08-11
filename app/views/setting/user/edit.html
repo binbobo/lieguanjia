@@ -1,0 +1,178 @@
+<form class="form-horizontal" name="editAccountForm">
+    <h4>
+        基本信息
+        <small ng-if="accountId && accountId!=1">（密码不修改请留空）</small>
+    </h4>
+
+    <div class="form-group"
+         ng-class="{'has-error': editAccountForm.accountName.$invalid && (editAccountForm.accountName.$touched || editAccountForm.$submitted)}">
+        <label class="col-sm-2 control-label">
+            <span class="text-red">*</span> 用户名
+        </label>
+        <div class="col-sm-4" ng-if="!accountId">
+            <input type="text" class="form-control" ng-model="account.accountName"
+                   name="accountName" ng-required="true">
+        </div>
+        <div class="col-sm-4" ng-if="accountId">
+            <div class="form-control no-border" style="border: transparent">{{account.accountName}}</div>
+        </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': editAccountForm.password.$invalid && (editAccountForm.password.$touched || editAccountForm.$submitted)}"
+         ng-if="accountId!=1">
+        <label class="col-sm-2 control-label">
+            <span ng-if="!accountId" class="text-red">*</span> 密码
+        </label>
+        <div class="col-sm-4">
+            <input type="password" class="form-control" ng-model="account.password"
+                   name="password" ng-required="!accountId">
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="accountId!=1">
+        <label class="col-sm-2 control-label">
+            <span ng-if="!accountId" class="text-red">*</span> 密码（重复输入）
+        </label>
+        <div class="col-sm-4">
+            <input type="password" class="form-control" ng-model="account.repeat">
+        </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': editAccountForm.status.$invalid && (editAccountForm.status.$touched || editAccountForm.$submitted)}">
+        <label class="col-sm-2 control-label">状态</label>
+        <div class="col-sm-4">
+            <ui-select theme="bootstrap" ng-model="account.status" name="status" ng-required="true">
+                <ui-select-match placeholder="请选择">
+                    <span>{{$select.selected | i18n}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="option in userStatus | filter: $search.search"
+                                   value="{{option}}">
+                    {{option | i18n | highlight: $select.search}}
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">
+            <span class="text-red">*</span> 角色</label>
+        <div class="col-sm-4">
+            <ui-select theme="bootstrap" ng-model="account.role" name="role" ng-required="true">
+                <ui-select-match placeholder="请选择">
+                    <span>{{$select.selected | i18n}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="option in roleList | filter: $search.search"
+                                   value="{{option}}">
+                    {{option | i18n | highlight: $select.search}}
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+
+    <h4>用户资料</h4>
+
+    <div class="form-group"
+         ng-class="{'has-error': editAccountForm.name.$invalid && (editAccountForm.name.$touched || editAccountForm.$submitted)}">
+        <label class="col-sm-2 control-label">
+            <span class="text-red">*</span> 姓名
+        </label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="account.name" name="name"
+                   ng-required="1">
+        </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': editAccountForm.cellphone.$invalid && (editAccountForm.cellphone.$touched || editAccountForm.$submitted)}"
+        ng-show="account.accountName != account.cellphone || !tigerInfo.saas">
+        <label class="col-sm-2 control-label">
+            <span class="text-red">*</span> 手机
+        </label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="account.cellphone" name="cellphone" ng-required="1">
+        </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': editAccountForm.email.$invalid && (editAccountForm.email.$touched || editAccountForm.$submitted)}">
+        <label class="col-sm-2 control-label">
+            <span class="text-red">*</span> 邮箱
+        </label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="account.email" name="email" ng-required="1">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">出生日期</label>
+        <div class="col-sm-4">
+            <tiger-date ng-model="account.birthday" name="birthday">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">办公电话</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="account.telephone" name="telephone">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">入职日期</label>
+        <div class="col-sm-4">
+            <tiger-date ng-model="account.employmentTime" ui-name="employmentTime">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">离职日期</label>
+        <div class="col-sm-4">
+            <tiger-date ng-model="account.dimissionTime" ui-name="dimissionTime">
+        </div>
+    </div>
+
+    <h4>
+        团队信息
+        <span class="text-red">*</span>
+    </h4>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>团队 <span class="text-red">*</span></th>
+            <th>权限 <span class="text-red">*</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="departmentRelation in account.departmentRelationList">
+            <td>
+                <tree-selector select-limit="10" list-type="700"
+                               ng-model="departmentRelation.department"></tree-selector>
+            </td>
+            <td>
+                <label>
+                    <input type="checkbox" ng-model="departmentRelation.leader" ng-true-value="1"
+                           ng-false-value="0"> Leader
+                </label>
+            </td>
+            <td>
+                <button type="button" class="btn btn-link btn-sm" ng-click="deleteDepartment($index)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" class="btn btn-link btn-sm" ng-click="addDepartment()">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    添加
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<button class="btn btn-success" type="button" ng-click="updateAccount()">保存</button>

@@ -1,0 +1,9 @@
+<div class="modal-body" style="text-align: center">
+    <h4 ng-if="custom.title" ng-bind="custom.title"></h4>
+    <p ng-if="custom.content" ng-bind-html="custom.content"></p>
+</div>
+<div class="modal-footer" style="text-align: center">
+    <button type="button" ng-click="ok()" class="{{custom.okBtnClass}}" data-dismiss="modal" focus-this>
+        {{custom.okBtnText}}
+    </button>
+</div>

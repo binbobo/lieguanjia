@@ -1,0 +1,18 @@
+<div class="widgetcomment-item">
+    <em class="close" ng-click="readNotification(notification.id)">×</em>
+
+    <div class="counter-icon icon-sm bg-danger" ng-if="notification.level >= 30">
+        <i class="fa fa-cube"></i>
+    </div>
+    <div class="counter-icon icon-sm bg-warning" ng-if="notification.level >= 20 && notification.level < 30">
+        <i class="fa fa-cube"></i>
+    </div>
+    <div class="counter-icon icon-sm bg-info" ng-if="notification.level >= 10 && notification.level < 20">
+        <i class="fa fa-cube"></i>
+    </div>
+    <div class="counter-icon icon-sm bg-info" ng-if="notification.level < 10">
+        <i class="fa fa-cube"></i>
+    </div>
+    <p class="widgetcomment-head" ng-if="notification.type" ng-bind="notification.type | i18n"></p>
+    <notification-content notification="notification"></notification-content>
+</div>

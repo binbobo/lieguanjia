@@ -1,0 +1,13 @@
+<form class="quick-edit" ng-submit="saveQuickEdit(fieldInfo)" ng-class="{loading: loading}">
+    <custom-field entity="entityTmp" field-info="fieldInfo" class="form-field-wrap" ng-form="quickEdit"></custom-field>
+    <div class="mt-10">
+        <button type="button" ng-click="saveQuickEdit(fieldInfo)"
+                class="btn btn-primary btn-xs">
+            保存
+        </button>
+        <button type="button" ng-click="cancelQuickEdit(fieldInfo)"
+                class="btn btn-default btn-xs">
+            取消
+        </button>
+    </div>
+</form>

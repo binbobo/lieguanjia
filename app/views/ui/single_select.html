@@ -1,0 +1,16 @@
+<t-row label="{{ctrl.label}}" checkers="{{ctrl.checkers}}">
+    <div class="input-group">
+        <ui-select allow-clear ng-model="ctrl.value" theme="bootstrap" checkers="{{ctrl.checkers}}" need-check
+                   custom-checker="{{ctrl.customChecker()}}">
+            <ui-select-match placeholder="{{ctrl.placeholder}}">{{$select.selected.text}}
+            </ui-select-match>
+            <ui-select-choices repeat="item in ctrl.options | filter: $select.search"><span
+                    ng-bind-html="item.text | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+    <span class="input-group-btn">
+    <button ng-click="ctrl.value = undefined" class="btn btn-default"> <span
+            class="glyphicon glyphicon-trash"></span> </button>
+    </span>
+    </div>
+</t-row>

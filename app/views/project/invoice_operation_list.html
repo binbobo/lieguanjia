@@ -1,0 +1,79 @@
+<div class="left-side">
+    <span class="operation-time">{{operation.time | tigerDatetime : 1 }}</span>
+    <br>
+    <a>{{operation.operator | i18n}}</a>
+</div>
+<div class="right-side">
+    <ng-switch on="operation.status.value" class="right-side-main">
+        <div ng-switch-when="0">
+            <h5>
+                {{operation.status | i18n}}
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.achievement.readAchievement(operation.data.achievementId)">查看
+                </button>
+            </h5>
+            <p ng-repeat="member in operation.data.members">
+                {{member.projectMember.member | i18n}}：{{member.revenue | tigerMoney}}
+            </p>
+        </div>
+
+        <div ng-switch-when="1">
+            <h5>
+                {{operation.status | i18n}}
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.invoice.showInvoice(operation.relationId)" ng-if="!operation.invalid">
+                    查看
+                </button>
+            </h5>
+            <p>
+                发票金额：{{operation.data.invoiceAmount | tigerMoney}}
+            </p>
+        </div>
+
+        <div ng-switch-when="2">
+            <h5>
+                {{operation.status | i18n}}
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.invoice.showOperation(operation.relationId, operation.status.value)"
+                        ng-if="!operation.invalid">查看
+                </button>
+            </h5>
+            <p>
+                邮寄日期：{{operation.data.sendTime | tigerDate}}
+            </p>
+            <p>
+                快递单号：{{operation.data.trackingNumber}}
+            </p>
+        </div>
+
+        <div ng-switch-when="3">
+            <h5>
+                {{operation.status | i18n}}
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.invoice.showOperation(operation.relationId, operation.status.value)"
+                        ng-if="!operation.invalid">查看
+                </button>
+            </h5>
+            <p>
+                到款日期：{{operation.data.paymentTime | tigerDate}}
+            </p>
+            <p>
+                到款金额：{{operation.data.paymentAmount | tigerMoney}}
+            </p>
+        </div>
+
+        <div ng-switch-when="4">
+            <h5>
+                {{operation.status | i18n}}
+                </button>
+            </h5>
+            <p>{{operation.data.cancelType}}</p>
+        </div>
+
+        <div ng-switch-default>
+            <h5>
+                {{operation.status | i18n}}
+            </h5>
+        </div>
+    </ng-switch>
+</div>

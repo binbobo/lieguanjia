@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                上传附件
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <attachment-list list="attachmentList" relation-id="companyId" module-id="{{moduleId}}">
+                        </attachment-list>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel panel-default" ng-class="{'panel-loading': !basicForm || loadCompany}">
+            <div class="panel-heading">
+                基本信息
+            </div>
+            <form class="panel-body" name="companyBasicInfo">
+                <custom-form field-list="basicForm" entity="company.basicInfo" class="form-horizontal custom-form-inline"
+                             base-form="companyBasicInfo"></custom-form>
+            </form>
+        </div>
+        <div class="panel panel-default bottom" ng-class="{'panel-loading' : loadCompany}">
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary waves-effect waves-button waves-float"
+                        ng-click="saveCompany()">
+                    保存公司
+                </button>
+                <button type="button" ng-if="companyId>0" class="btn btn-warning waves-effect waves-button waves-float"
+                        ng-click="backView()">
+                    取消编辑
+                </button>
+                <button type="button" class="btn btn-danger waves-effect waves-button waves-float"
+                        ng-click="deleteCompany()" ng-if="companyId > 0">
+                    删除公司
+                </button>
+
+                <form-error-hint tiger-form="companyBasicInfo" ng-if="companyBasicInfo.$submitted"></form-error-hint>
+            </div>
+        </div>
+    </div>
+</div>

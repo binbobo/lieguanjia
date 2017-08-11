@@ -1,0 +1,1087 @@
+<div class="panel panel-default release-panel">
+    <div class="panel-body release-heading">
+        <h3>猎管家 版本说明</h3>
+        <h4>what's new</h4>
+    </div>
+
+    <release-note version-main="2.0.2" version-sub="2017-08-11">
+        <release-part part-name="系统预览窗口">
+            <li>人才预览页面可编人才信息</li>
+            <li>鼠标离开一段时间之后， 窗口自动消失</li>
+            <li>修复预览窗口右上角友情提示框被遮挡的问题</li>
+            <dev>
+                <li>人才信息页面视图封装</li>
+                <li>人才详情页面，优化默认激活第一个子路由的实现方式</li>
+                <li>将附件信息从人才信息中抽离出来，放到单独的控制器</li>
+                <li>优化备注类型处理逻辑，复用已有的控制器</li>
+                <li>窗口拖拽功能替换为jquery-ui提供的方式，避免重复造轮子</li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="2.0.1" version-sub="2017-08-11">
+        <release-part part-name="菜单">
+            <li>优化搜索动画效果</li>
+            <li>优化分组的交互与现实</li>
+            <dev>
+                <li>一级菜单添加收缩动画</li>
+                <li>树形组件交互方式与快速搜索统一</li>
+            </dev>
+        </release-part>
+        <release-part part-name="搜索">
+            <li>备注支持搜索</li>
+        </release-part>
+        <release-part part-name="设置">
+            <li>行业、职能、城市的配置列表默认收缩</li>
+        </release-part>
+        <release-part part-name="邮件">
+            <li>发送面试邀请邮件支持日历提醒</li>
+        </release-part>
+        <release-part part-name="简历导入插件">
+            <li>优化导入流程，提高简历识别度</li>
+        </release-part>
+        <dev>
+            <release-part part-name="权限">
+                <li>权限报错细化</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="2.0.0" version-sub="2017-08-02">
+        <release-part part-name="系统">
+            <li>全新导航菜单
+                <dev>影响：
+                    <ul>
+                        <li>影响顶栏</li>
+                        <li>左侧导航栏</li>
+                        <li>各个模块的列表（搜索列表）和二级菜单收缩按钮</li>
+                        <li>KPI 报表</li>
+                        <li>一级菜单搜索按钮</li>
+                    </ul>
+                </dev>
+            </li>
+            <li>全新首页</li>
+            <li>精简资源文件，提高加载速度
+                <dev>需要全量冒烟测试</dev>
+            </li>
+        </release-part>
+
+        <release-part part-name="简历导入插件">
+            <li>全新的简历导入插件，与系统风格统一</li>
+            <li>支持导入简历时，手动补齐候选人联系方式</li>
+        </release-part>
+
+        <release-part part-name="提醒">
+            <li><a ui-sref="task_calendar">日历</a>中，周和日的视图增加小时的显示</li>
+            <dev>
+                <li>重构了日历页面单条提醒的渲染</li>
+            </dev>
+        </release-part>
+
+        <release-part part-name="项目">
+            <li>新增复制项目</li>
+        </release-part>
+
+        <release-part part-name="设置">
+            <li><a ui-sref="setting.kpi">KPI设置</a>合并到相关设置中</li>
+            <li>限制用户个数</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>列表的日期范围搜索支持选择到天</li>
+            <li>Pipeline列表，横向导航栏数量根据搜索条件动态化</li>
+            <dev>
+                <li>项目的 Pipeline 的 url 支持指定阶段</li>
+                <li>弹出提醒的添加桌面提醒的旁边增加提示</li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.3.2" version-sub="2017-07-21">
+        <release-part part-name="公司">
+            <li>详情页添加快捷新增人才</li>
+            <li>详情页添加快捷新增项目</li>
+        </release-part>
+
+        <release-part part-name="备注">
+            <li>未填写的备注字段不显示</li>
+        </release-part>
+
+        <release-part part-name="搜索">
+            <li>修复工作经验搜索问题</li>
+            <li>修复薪水搜索问题</li>
+        </release-part>
+
+        <release-part part-name="设置">
+            <li>修复行业/职能/城市，在某些情况保存错误的问题</li>
+        </release-part>
+
+        <release-part part-name="邮件">
+            <li>修复个别情况查看邮件详情时，UI显示错乱问题</li>
+            <li>修复查看邮件列表时，某些时候提示错误的问题</li>
+        </release-part>
+
+        <release-part part-name="UI">
+            <li>修复表单中长文本的显示问题</li>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.3.1" version-sub="2017-07-18">
+        <release-part part-name="提醒">
+            <li>新增在人才、项目、公司列表及详情处添加提醒的功能</li>
+            <li>修复开了多个页面之后提醒分散的问题</li>
+            <dev>
+                <li>修复新增提醒时没有填写时间丢失报错提示</li>
+            </dev>
+        </release-part>
+
+        <release-part part-name="附件">
+            <li>编辑人才、项目、公司时可以拖拽上传附件</li>
+            <dev>
+                <li>
+                    统一上传按钮样式
+                    <ul>
+                        <li>简历导入</li>
+                        <li>Excel简历导入</li>
+                        <li>文档上传</li>
+                        <li>推荐报告模板</li>
+                        <li>邮件附件</li>
+                    </ul>
+                </li>
+            </dev>
+        </release-part>
+
+        <dev>
+            <release-part part-name="Pipeline">
+                <li>重构面试 Modal</li>
+            </release-part>
+
+            <release-part part-name="UI">
+                <li>调整日期选择器的样式</li>
+                <li>调整日期时间范围选择器的样式</li>
+                <li>调整下拉选择控件的样式</li>
+            </release-part>
+
+            <release-part part-name="其他">
+                <li>重构了心跳的逻辑：请回归测试登出、踢人、提醒等功能</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.3.0" version-sub="2017-07-13">
+        <release-part part-name="Pipeline">
+            <li>增加附件列</li>
+            <li>增加项目进展状态搜索项</li>
+            <li>增加预制的快捷搜索</li>
+        </release-part>
+
+        <release-part part-name="项目">
+            <li>保存项目后跳转至匹配人才页</li>
+            <li>调整加入项目、面试、Offer、淘汰选择框的样式</li>
+        </release-part>
+
+        <release-part part-name="分组">
+            <li>分组只能共享给在职用户</li>
+        </release-part>
+
+        <release-part part-name="提醒">
+            <li>增加提醒到时间之后弹出提示的功能</li>
+            <dev>
+                <li>提醒入口移到右上角</li>
+            </dev>
+        </release-part>
+
+        <dev>
+            <release-part part-name="其他">
+                <li>调整附件列表样式（列表中和人才项目编辑处）</li>
+                <li>老版本ES迁移</li>
+                <li>修复新手引导的文字在mac电脑上的显示问题</li>
+                <li>改善了 iPad 等小屏幕上的显示效果</li>
+            </release-part>
+
+            <release-part part-name="表单">
+                <li>重写了单选多选的控件（不包括树选），影响以下范围：
+                    <ul>
+                        <li>人才公司项目的编辑表单</li>
+                        <li>人才详情页面右侧项目选择</li>
+                        <li>项目的项目成员选项</li>
+                        <li>上传附件的附件类型</li>
+                        <li>加入项目、面试、Offer、淘汰modal</li>
+                        <li>报表 KPI</li>
+                        <li>报表 项目分析</li>
+                        <li>用户活跃度</li>
+                    </ul>
+                </li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.2.4" version-sub="2017-07-06">
+        <release-part part-name="搜索">
+            <li>优化搜索速度</li>
+            <li>公司搜索控件支持同时搜索公司简称和全称</li>
+        </release-part>
+
+        <release-part part-name="分组">
+            <li>分组展示及交互调整</li>
+            <li>分组显示分享信息</li>
+        </release-part>
+
+        <release-part part-name="日历/提醒">
+            <li>修复<a href="#/task/calendar">日历</a>的显示问题</li>
+        </release-part>
+
+        <release-part part-name="邮件">
+            <li>新增邮件签名</li>
+        </release-part>
+
+        <dev>
+            <release-part part-name="其他">
+                <li>接受邀请时，获取手机验证码时会弹出滑块拼图验证</li>
+                <li>右上角菜单的『简历导入插件』去掉 Beta 标识</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.2.3" version-sub="2017-06-23">
+        <release-part part-name="UI">
+            <li>调整控件间距</li>
+        </release-part>
+
+        <release-part part-name="邮件">
+            <li>增加邮件模板</li>
+        </release-part>
+
+        <release-part part-name="设置">
+            <li>用户列表分组，更改样式</li>
+            <li>支持角色删除</li>
+            <li>邀请同伴更改邮件模板</li>
+        </release-part>
+
+        <release-part part-name="项目">
+            <li>新增项目时，客户联系人关联对应客户公司</li>
+        </release-part>
+
+        <dev>
+            <release-part part-name="其他">
+                <li>统计功能</li>
+                <li>分组添加用户提示</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.2.2" version-sub="2017-06-12">
+        <release-part part-name="人才">
+            <li>人才页操作同 Pipeline</li>
+            <dev>
+                <li>工作经历、教育经历、项目经历的编辑优化</li>
+            </dev>
+        </release-part>
+
+        <release-part part-name="搜索">
+            <li>修复批量删除数据后列表没有更新的bug</li>
+            <li>修复批量操作分组后分组列表计数不变问题</li>
+            <li>修复从项目中移除人才项目统计未更新问题</li>
+            <dev>
+                <li>修复搜索最近经历特殊字符造成搜索异常的bug</li>
+                <li>减少同搜索条件最大返回条目数（10w -> 5w）</li>
+            </dev>
+        </release-part>
+
+        <release-part part-name="备注">
+            <li>人才备注同步修改人才状态</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>左侧菜单的展开/收回状态刷新后会保持</li>
+            <dev>
+                <li>导入预置数据增加提示</li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.2.1" version-sub="2017-06-01">
+        <release-part part-name="搜索">
+            <li>行业城市等字段支持搜索空值
+                <dev>暂时交互上搜索空值不会自动 disable 输入框</dev>
+            </li>
+            <dev>
+                <li>优化批量操作前端的部分逻辑</li>
+            </dev>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>修复人选流程（Pipeline）弹出框中日期输入控件显示的问题</li>
+            <li ng-if="!!tigerInfo.saas">增加新手引导功能</li>
+            <li ng-if="!!tigerInfo.saas">增加预置试用数据</li>
+            <dev>
+                <li>优化简历去重算法</li>
+                <li>优化未配置邮箱时的提示</li>
+                <li>整理项目编辑的代码</li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.2.0" version-sub="2017-05-19">
+        <release-part part-name="人才">
+            <li>工作经验展示为年限</li>
+        </release-part>
+
+        <release-part part-name="项目">
+            <li>新增项目添加用户只显示在职用户</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>薪水控件默认单位改为“万”</li>
+            <li>快速编辑增加自动焦点和回车保存功能</li>
+        </release-part>
+
+        <dev>
+            <release-part part-name="其他">
+                <li>重写树选择器，修复弹框中显示的问题</li>
+                <li>树选择器搜索功能增强</li>
+                <li>任务模块提醒的日期编辑控件从daterange改为两个date控件</li>
+                <li>快速编辑保存增加过渡效果</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.1.9" version-sub="2017-05-08">
+        <release-part part-name="人才">
+            <li>支持rtf格式预览</li>
+            <li>查看详情不再弹出新页面，也不会自动弹出预览页啦</li>
+            <li>导入人才时，增加对不合法简历的过滤</li>
+            <li>简历解析和批量导入时，优化去重策略</li>
+        </release-part>
+
+        <release-part part-name="推荐报告">
+            <li>时间显示改为年/月</li>
+        </release-part>
+
+        <release-part part-name="报表">
+            <li>增加项目分析报表</li>
+            <li>优化时间输入框</li>
+        </release-part>
+
+        <release-part part-name="文档">
+            <li>增加批量删除和加入分组功能</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>优化工作经历中时间的选择、输入功能</li>
+        </release-part>
+
+        <dev>
+            <release-part part-name="设置">
+                <li>修改了行业、城市、职能相关的底层代码实现，不影响使用</li>
+            </release-part>
+
+            <release-part part-name="ES列表">
+                <li>修改了删除公司后，相关合同的脏数据依然还在列表中的bug</li>
+            </release-part>
+
+            <release-part part-name="KPI">
+                <li>前端交互重构</li>
+            </release-part>
+
+            <release-part part-name="其他">
+                <li>时间输入框手动输入的格式放宽(允许如：2017-05-03，这样带0的格式)</li>
+                <li>手机号和邮箱的交互修改 添加和删除项时会自动焦点到最后一个元素</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.1.8" version-sub="2017-04-13" ng-if="!!tigerInfo.saas">
+        <release-part part-name="用户管理">
+            <li>以邀请的形式添加用户</li>
+        </release-part>
+        <dev>
+            <release-part part-name="Elasticsearch">
+                <li>修改 SaaS 环境下 ES 的数据结构</li>
+            </release-part>
+            <release-part part-name="简历解析">
+                <li>单份简历上传时，不再做本地文本化处理</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.1.7" version-sub="2017-03-26">
+        <release-part part-name="备注">
+            <li>调整备注页的样式</li>
+        </release-part>
+
+        <release-part part-name="设置">
+            <li>非admin移除用户活跃度</li>
+            <li>非admin移除后台任务</li>
+            <li>非admin无法修改admin信息</li>
+        </release-part>
+
+        <dev>
+            <release-part part-name="推荐报告">
+                <li>优化推荐报告交互</li>
+            </release-part>
+            <release-part part-name="KPI">
+                <li>优化执行效率</li>
+                <li>SaaS 取消内部cron方式 改为接口调用</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.1.6" version-sub="2017-03-20">
+
+        <release-part part-name="邮件">
+            <li>优化邮件收发流程</li>
+        </release-part>
+        <release-part part-name="推荐报告">
+            <li>在原有基础上增加对所有字段的支持</li>
+        </release-part>
+        <release-part part-name="设置">
+            <li>新增查看<a ui-sref="setting.user_online">在线用户</a></li>
+            <li>用户列表增加团队信息</li>
+        </release-part>
+        <release-part part-name="Pipeline">
+            <li>人选流程状态显示面试次数</li>
+            <li>人选流程显示操作的信息</li>
+            <li>加入项目下添加移除人才操作</li>
+        </release-part>
+        <dev>
+            <release-part part-name="登陆">
+                <li>重构session管理，并把session存redis</li>
+            </release-part>
+        </dev>
+        <release-part part-name="其他">
+            <dev>
+                <li>提示弹框的位置从顶部改为垂直居中</li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.1.5" version-sub="2017-03-10">
+
+        <release-part part-name="简历解析">
+            <li>支持语言等级解析</li>
+            <li>支持实习经历解析，归为工作经历</li>
+            <li>优化简历解析技能及证书部分</li>
+        </release-part>
+
+        <release-part part-name="全局搜索">
+            <li>新增全局搜索功能</li>
+        </release-part>
+
+        <release-part part-name="项目">
+            <li>增加项目批量新增人选功能</li>
+            <li>查看项目默认显示项目人才列表页面</li>
+            <li>项目下的人才列表修改为按最后操作时间排序</li>
+        </release-part>
+
+        <release-part part-name="公司">
+            <li>公司下的项目列表修改为按修改时间排序</li>
+        </release-part>
+
+        <release-part part-name="设置">
+            <li>新增用户活跃度统计</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>修复bug</li>
+            <dev>
+                <li>优化业绩分配弹框的样式</li>
+                <li>前端库升级（angularjs: 1.6.2, etc...）</li>
+            </dev>
+        </release-part>
+
+    </release-note>
+
+    <release-note version-main="1.1.4" version-sub="2017-02-24">
+        <release-part part-name="设置">
+            <li>整理设置顺序</li>
+            <li>更新行业、职能、城市的<a href="#/setting/tree/101">编辑器</a></li>
+            <li>修复行业、职能、城市、团队保存问题</li>
+        </release-part>
+
+        <release-part part-name="分组">
+            <li>更新分组的编辑控件</li>
+        </release-part>
+
+        <release-part part-name="KPI">
+            <li>新增修复某段时间内统计数据接口</li>
+        </release-part>
+
+        <release-part part-name="推荐报告">
+            <li>新增字段:学历 自我评价 工作年限 婚姻状态
+                <help-hint message="需要上传新的模板哦"
+                           download="http://support.lieguanjia.com/wp-content/uploads/2017/02/%E7%8C%8E%E7%AE%A1%E5%AE%B6%E6%8E%A8%E8%8D%90%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF_%E4%B8%AD%E6%96%87.docx"></help-hint>
+            </li>
+        </release-part>
+
+        <release-part part-name="后台任务">
+            <li>新增解析所有简历任务</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>修复相关控件的 bug</li>
+            <dev>
+                <li>修复多选控件换行的bug Bug #1125</li>
+                <li>修复普通用户无法修改登录密码的bug</li>
+                <li>修复项目下的人才列表，无法快速编辑的问题</li>
+                <li>增加第三方友盟的统计</li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.1.3.1" version-sub="2017-02-17">
+        <release-part part-name="附件">
+            <li>修复了附件创建者错误的问题</li>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.1.3" version-sub="2017-02-13">
+        <dev>
+            <release-part part-name="异步任务">
+                <li>恢复saas版异步任务</li>
+                <li>恢复saas版定时任务</li>
+            </release-part>
+        </dev>
+
+        <dev>
+            <release-part part-name="简历小插件">
+                <li>修改导入简历附件命名规则</li>
+            </release-part>
+        </dev>
+
+        <release-part part-name="搜索器">
+            <li>部分字段支持搜索空值</li>
+            <li><a href="#/search/10">Pipeline</a> 列表支持快速编辑</li>
+        </release-part>
+
+        <release-part part-name="设置">
+            <li><a href="#/setting/comment/4">自定义备注设置</a>和其他设置合并到一起</li>
+        </release-part>
+
+        <release-part part-name="表格">
+            <li>附件支持在表格中查看、编辑</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>优化在平板上的显示效果和交互</li>
+            <li>修复 bug</li>
+            <dev>
+                <li>修复显示的 弹出框 遮挡的bug</li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="1.1.2" version-sub="2017-01-12">
+        <release-part part-name="搜索器">
+            <li>搜索结果支持全屏</li>
+        </release-part>
+
+        <release-part part-name="设置">
+            <li>用户列表支持按用户名搜索</li>
+        </release-part>
+
+        <release-part part-name="项目">
+            <li>支持匹配人才</li>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>优化 <a style="cursor: pointer" ng-click="previewFile('demo', 0)">预览</a> 功能的尺寸缩放功能</li>
+            <li>修复 <a href="#/search/9">发票模块</a> 人选搜索不高亮的 bug</li>
+        </release-part>
+
+        <dev>
+            <release-part part-name="Release Note">
+                <li>更换样式</li>
+            </release-part>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.1.1" version-sub="2017-01-09">
+        <h4>其他</h4>
+        <ol>
+            <li>公司详情、项目详情支持快速编辑</li>
+            <li>修复 bug</li>
+        </ol>
+    </release-note>
+
+    <release-note version-main="1.1.0 'altaica'" version-sub="2017-01-06">
+        <h4>人才详情</h4>
+        <ol>
+            <li>全部字段支持快速编辑</li>
+        </ol>
+
+        <h4>搜索器</h4>
+        <ol>
+            <li><a target="_blank" href="/#/search/1">人才</a> 、
+                <a target="_blank" href="/#/search/3">公司</a>、
+                <a target="_blank" href="/#/search/2">项目</a>的列表部分字段支持快速编辑
+            </li>
+            <li>公司、项目等字段支持跳转</li>
+        </ol>
+
+        <h4>项目 Pipeline</h4>
+        <ol>
+            <li>
+                从人才库增加人选的功能会自动使用项目的城市、职能作为筛选条件
+            </li>
+        </ol>
+
+        <dev>
+            <release-part part-name="Release Note">
+                <li>新版本增加打点提示</li>
+                <li>折叠旧的 release note</li>
+            </release-part>
+
+            <h4>其他</h4>
+            <ol>
+                <li>加入帮助提示
+                    <help-hint message="就是这样"></help-hint>
+                </li>
+                <li>搜索器的字段列表的搜索加入清除功能</li>
+                <li>右上角菜单加入帮助中心入口</li>
+            </ol>
+        </dev>
+    </release-note>
+
+    <release-note version-main="1.0.10" version-sub="2016-12-27">
+        <h4>Excel 人才导入</h4>
+        <ol>
+            <li>
+                <a href="/#/candidate/excelImport" target="_blank">Excel 人才导入</a>支持备注导入
+            </li>
+        </ol>
+
+        <h4>Pipeline</h4>
+        <ol>
+            <li>加入项目下添加面试操作</li>
+            <li>面试下添加推荐操作</li>
+        </ol>
+
+        <h4>合同</h4>
+        <ol>
+            <li>新增<a href="/#/search/8" target="_blank">合同列表</a></li>
+        </ol>
+
+        <h4>其他</h4>
+        <ol>
+            <li>表头排序优化及 bug 修复</li>
+            <li>修复 bug</li>
+        </ol>
+    </release-note>
+
+    <div class="panel-body release-body">
+        <h3>1.0.9
+            <small>(2016-12-22)</small>
+        </h3>
+
+        <h4>搜索器</h4>
+        <ol>
+            <li>
+                <a href="/#/search/1?k=%E5%B7%A5%E7%A8%8B%E5%B8%88" target="_blank">搜索</a>结果高亮
+            </li>
+        </ol>
+
+        <h4>项目、人选</h4>
+        <ol>
+            <li>人选加入项目时会显示已经加入的项目</li>
+        </ol>
+
+        <h4>其他</h4>
+        <ol>
+            <li>只允许管理员导出表格</li>
+        </ol>
+
+        <dev>
+            <h4>Release Note</h4>
+            <ol>
+                <li>
+                    修改 Release Note 的样式
+                </li>
+            </ol>
+        </dev>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.8
+            <small>(2016-12-19)</small>
+        </h3>
+
+        <h4>搜索器</h4>
+        <ol>
+            <li>修复搜索条件的问题</li>
+            <li>修复
+                <a href="/#/search/10?page=1&quick=-1&pipeline=join" target="_blank">Pipeline</a>
+                搜索选取阶段刷新丢失的 bug
+            </li>
+        </ol>
+
+        <h4>用户行为记录</h4>
+        <ol>
+            <li>后台记录用户行为（查看、预览、下载）</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.7
+            <small>(2016-12-15)</small>
+        </h3>
+
+        <h4>权限设置</h4>
+        <ol>
+            <li>增加人才、公司、项目<a href="/#/setting/permission/resume" target="_blank">权限共享设置</a></li>
+            <li>增加项目权限访问设置</li>
+        </ol>
+
+        <h4>KPI</h4>
+        <ol>
+            <li>KPI 准实时统计，增加数据修复机制</li>
+        </ol>
+
+        <h4>文档</h4>
+        <ol>
+            <li>上传时支持多选</li>
+        </ol>
+
+        <h4>搜索速度优化</h4>
+
+        <dev>
+            <h4>搜索速度优化，涉及到以下功能</h4>
+            <ol>
+                <li>分组列表及count</li>
+                <li>快捷搜索count</li>
+            </ol>
+        </dev>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.6
+            <small>(2016-12-08)</small>
+        </h3>
+
+        <h4>项目 Pipeline</h4>
+        <ol>
+            <li>
+                增加快速从人才库增加人选的功能
+            </li>
+        </ol>
+
+        <h4>交互</h4>
+        <ol>
+            <li>
+                增加全新的日期输入控件
+            </li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.5
+            <small>(2016-12-02)</small>
+        </h3>
+
+        <h4>通知</h4>
+        <ol>
+            <li>加入渠道职位导入的通知</li>
+        </ol>
+
+        <h4>自定义字段</h4>
+        <ol>
+            <li>增加"显示到表格"和"可搜索"选项</li>
+        </ol>
+
+        <h4>修复若干已知 Bug</h4>
+
+        <dev>
+            <h4>样式</h4>
+            <ol>
+                <li>增加了好看的载入 Loading</li>
+            </ol>
+
+            <h4>批量导入简历重构</h4>
+            <ol>
+                <li>涉及模块: 批量导入简历， 后台批量导入简历， 简历插件导入简历</li>
+            </ol>
+        </dev>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.4
+            <small>(2016-11-24)</small>
+        </h3>
+
+        <h4>新增简历导入插件</h4>
+
+        <h4>KPI</h4>
+        <ol>
+            <li>支持自定义时间</li>
+            <li>交互优化</li>
+        </ol>
+
+        <h4>自定义表格</h4>
+        <ol>
+            <li>优化表格渲染速度</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.3
+            <small>(2016-11-17)</small>
+        </h3>
+
+        <h4>自定义表格、表单</h4>
+        <ol>
+            <li>增加表格导出功能</li>
+        </ol>
+
+        <h4>公司</h4>
+        <ol>
+            <li>公司人才页添加新增客户联系人快捷入口</li>
+        </ol>
+
+        <h4>修复若干已知 Bug</h4>
+
+        <dev>
+            <h4>发票</h4>
+            <ol>
+                <li>优化表格内容的显示：金额去掉￥；类型、成员多条时会显示分别的金额</li>
+            </ol>
+
+            <h4>自定义表格、表单</h4>
+            <ol>
+                <li>修改渲染方式（除编辑状态以外的各处字段显示）</li>
+            </ol>
+
+            <h4>版本说明</h4>
+            <ol>
+                <li>去掉了版本说明dev，dev内容合并到版本说明中</li>
+            </ol>
+        </dev>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.2
+            <small>(2016-11-11)</small>
+        </h3>
+        <h4>搜索器</h4>
+        <ol>
+            <li>增加可自行选择每页显示几条数据</li>
+        </ol>
+
+        <h4>设置</h4>
+        <ol>
+            <li>增加自定义推荐报告</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.1
+            <small>(2016-11-09)</small>
+        </h3>
+        <h4>搜索器</h4>
+        <ol>
+            <li>增加人才及文档模块对附件搜索的支持</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>1.0.0
+            <small>(2016-11-03)</small>
+        </h3>
+        <h4>人才</h4>
+        <ol>
+            <li>增加 Excel 人才导入入口</li>
+            <li>优化批量导入人才重复处理方式（发现重复可选择是否将附件存到旧简历上，包括后台导入简历）</li>
+            <li>新增简历时，上传附件且表单未填写时，自动解析附件</li>
+        </ol>
+
+        <h4>发票</h4>
+        <ol>
+            <li>增加发票模块入口</li>
+            <li>更改发票列表权限（查看权限增加了发票中所选财务）</li>
+            <li>列表中增加列：人选、类型、公司、项目成员、人才状态</li>
+        </ol>
+
+        <h4>其他</h4>
+        <ol>
+            <li>公司、项目增加修改日志页面</li>
+            <li>公司、项目、人才编辑页面将保存、编辑、删除按钮浮动在底部</li>
+            <li>进入搜索页面默认选择第一个快捷搜索项</li>
+            <li>完善所有操作后的相关反馈</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>0.9.7
+            <small>(2016-10-19)</small>
+        </h3>
+
+        <dev>
+            <h4>搜索引擎</h4>
+            <ol>
+                <li>优化：数据同步流程</li>
+            </ol>
+        </dev>
+
+        <h4>搜索器</h4>
+        <ol>
+            <li>优化搜索功能，工作经历、教育经历支持最近、所有的搜索</li>
+            <li>行业、城市、职能改为使用多选框选择相关数据搜索</li>
+            <li>全文检索、支持空格分词</li>
+            <li>手机号、邮箱、qq、支持模糊搜索</li>
+            <li>优化了纯本文搜索的结果，过滤掉大量不匹配的数据</li>
+            <li>极大程度的优化了索引更新的过程，减少了很多数据更新不及时的问题</li>
+        </ol>
+        <h4>简历</h4>
+        <ol>
+            <li>优化:简历解析</li>
+            <li>人才列表预览简历改为悬停的方式</li>
+            <li>预览框支持 ESC 键关闭</li>
+        </ol>
+
+        <dev>
+            <h4>表格调整</h4>
+            <ol>
+                <li>所有备注 修改为hover方式</li>
+            </ol>
+
+
+            <h4>自定义字段</h4>
+            <ol>
+                <li>money 字段，默认值由0改为空</li>
+            </ol>
+        </dev>
+
+        <h4>部分bug修复</h4>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>0.9.5
+            <small>(2016-09-06)</small>
+        </h3>
+
+        <h4>表格优化</h4>
+        <ol>
+            <li>增加批量删除功能， 可最多同时操作1000条数据</li>
+            <li>增加批量加入项目</li>
+            <li>增加横向滚动条，并修复了表格换行的问题</li>
+        </ol>
+
+        <h4>搜索器</h4>
+        <ol>
+            <li>修复：排序会丢失的错误</li>
+            <li>修复：全文检索时，搜索条件丢失的问题</li>
+            <li>新增：添加搜索条件输入框会自动获得焦点</li>
+        </ol>
+
+        <h4>UI 调整</h4>
+        <ol>
+            <li>必填项的星号改为红色</li>
+            <li>修改了搜索框的按钮文案</li>
+            <li>修改了全文检索的 placeholder 文案</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>0.9.3
+            <small>(2016-09-06)</small>
+        </h3>
+
+        <h4>文档模块</h4>
+        <ol>
+            <li>增加的文档模块，再也不用担心找不到从前的List库了</li>
+            <li>增加了文件的上传和删除的权限控制，可以在角色中配置</li>
+        </ol>
+
+        <h4>搜索器</h4>
+        <ol>
+            <li>增加了默认的搜索器，可以轻松查看只属于你的数据列表了</li>
+            <li>搜索条件中一同增加了创建者的选项</li>
+        </ol>
+
+        <h4>发票</h4>
+        <ol>
+            <li>发票新增了更好的流转信息展示，仅需鼠标移动到发票状态上即可体验</li>
+        </ol>
+
+        <h4>交互优化</h4>
+
+        <h4>部分bug修复</h4>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>0.9.2
+            <small>(2016-08-24)</small>
+        </h3>
+
+        <h4>紧急修复</h4>
+        <ol>
+            <li>无法登出的问题</li>
+            <li>邮箱绑定失败的问题</li>
+            <li>顾问账户无法搜索项目的问题</li>
+        </ol>
+
+        <h4>KPI</h4>
+        <ol>
+            <li>KPI 增加详细的权限配置</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+    <div class="panel-body release-body">
+        <h3>0.9.1
+            <small>(2016-08-16)</small>
+        </h3>
+
+        <h4>批量导入简历</h4>
+        <ol>
+            <li>增加批量导入简历时，批量填充简历信息功能</li>
+        </ol>
+
+        <h4>分组</h4>
+        <ol>
+            <li>简历及公司中的分组共享功能，去掉编辑和查看权限，默认为编辑权限</li>
+            <li>项目中的分组取消共享功能</li>
+        </ol>
+
+        <h4>渠道</h4>
+        <ol>
+            <li>增加绑定好猎友、猎必得的功能</li>
+            <li>增加渠道职位的职位详情页</li>
+        </ol>
+
+        <h4>用户权限</h4>
+        <ol>
+            <li>人才、公司、项目、Pipeline用户查看及编辑权限调整</li>
+        </ol>
+
+        <i class="fa fa-cloud-upload background-icon"></i>
+    </div>
+
+</div>
+

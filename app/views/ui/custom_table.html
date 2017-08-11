@@ -1,0 +1,389 @@
+<table class="table custom-table">
+    <thead class="list-table">
+    <tr ui-sortable="uiSortableOptions" ng-model="fieldList">
+        <th ng-if="selectList" class="not-sortable"></th>
+
+        <th ng-repeat="fieldItem in tableFieldList" ng-dblclick="onTheadClick(fieldItem)"
+            ng-class="{'has-sort': !!onTheadClick}">
+            {{fieldItem | i18n}}
+            <span ng-if="onTheadClick" class="table-sort-sign">
+                <em ng-if="sortByField.name == fieldItem.name">
+                    {{sortByType > 0 ? '↑':'↓'}}
+                </em>
+                <em ng-if="sortByField.name != fieldItem.name">
+                    -
+                </em>
+            </span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="rowItem in data" class="custom-table-row" ng-class="{choose: selectList[rowItem.id]}">
+        <td ng-if="selectList">
+            <label class="ui-checkbox ui-checkbox-sm">
+                <input type="checkbox" ng-model="selectList[rowItem.id]">
+                <span></span>
+            </label>
+        </td>
+        <!--<td ng-bind="::rowItem.id"></td>-->
+        <td ng-repeat="fieldItem in tableFieldList">
+            <div ng-if="::fieldItem | canShowValueByFieldItem"
+                 ng-bind-html="::rowItem | entityByFieldItem : fieldItem | showValueByFieldItem : fieldItem  | highlight4table : fieldItem : rowItem._highlight"></div>
+            <ng-switch on="::fieldItem.tableDataType" ng-if="::!(fieldItem | canShowValueByFieldItem)">
+                <div ng-switch-when="resume" class="inline-block">
+                    <a href="/#/candidate/{{::(rowItem | entityIdByFieldItem : fieldItem)}}{{::rowItem.projectId ? '?project_id=' + rowItem.projectId : null}}"
+                       a-link-target
+                       tiger-timeout-hover="$root.previewFile('resume', (rowItem | entityByFieldItem : fieldItem).Fid)"
+                       tiger-timeout-hover-delay='1000'>
+                        <small class="no-name" ng-if="::!(rowItem | entityValueByFieldItem : fieldItem)">(没有姓名)</small>
+                        <span
+                            ng-bind-html="::rowItem | entityValueByFieldItem : fieldItem | highlight4table : fieldItem : rowItem._highlight"></span>
+                    </a>
+                </div>
+
+                <div ng-switch-when="resumeGeneralItem">
+                    <a href="/#/candidate/{{::(rowItem | entityByFieldItem : fieldItem).Fresume_id.id}}"
+                       a-link-target
+                       tiger-timeout-hover="$root.previewFile('resume', (rowItem | entityByFieldItem : fieldItem).Fresume_id.id)"
+                       tiger-timeout-hover-delay='1000'>
+                        <span
+                            ng-bind-html="::rowItem | entityValueByFieldItem : fieldItem | highlight4table : fieldItem : rowItem._highlight"></span>
+                    </a>
+                </div>
+
+                <div ng-switch-when="company">
+                    <a ng-if="::rowItem | entityIdByFieldItem : fieldItem"
+                       href="/#/company/{{::(rowItem | entityIdByFieldItem : fieldItem)}}"
+                       a-link-target
+                       ng-bind-html="::rowItem | entityValueByFieldItem : fieldItem | highlight4table : fieldItem : rowItem._highlight">
+                    </a>
+                    <span ng-if="::!(rowItem | entityIdByFieldItem : fieldItem)"
+                          ng-bind-html="::rowItem | entityValueByFieldItem : fieldItem | highlight4table : fieldItem : rowItem._highlight"></span>
+                </div>
+
+                <div ng-switch-when="project">
+                    <a href="/#/project/{{::(rowItem | entityIdByFieldItem : fieldItem)}}"
+                       a-link-target
+                       ng-bind-html="::rowItem | entityValueByFieldItem : fieldItem | highlight4table : fieldItem : rowItem._highlight">
+                    </a>
+                </div>
+
+                <div ng-switch-when="projectGeneralItem">
+                    <a href="/#/project/{{::(rowItem | entityByFieldItem : fieldItem).Fproject_id.id}}"
+                       a-link-target
+                       ng-bind-html="::(rowItem | entityByFieldItem : fieldItem).Fproject_id.title | highlight4table : fieldItem : rowItem._highlight"></a>
+                </div>
+
+                <div ng-switch-when="commentCount" class="comment-count">
+                    <div class="btn btn-link" tiger-timeout-hover="operationFunc.comment.previewList(rowItem)"
+                         tiger-timeout-hover-delay='1000' ng-click="operationFunc.comment.previewList(rowItem)">
+                        <i class="glyphicon glyphicon-comment"></i>
+                        <span ng-bind="::(rowItem | entityValueByFieldItem : fieldItem)"></span>
+                    </div>
+                </div>
+
+                <div ng-switch-when="attachmentCount" class="attachment-count">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-link btn-sm attachment-count-btn"
+                                ng-click="attachmentEdit.toggle(rowItem)">
+                            <i class="glyphicon glyphicon-paperclip"></i>
+                            <span ng-bind="::(rowItem | entityValueByFieldItem : fieldItem)"></span>
+                        </button>
+                        <div ng-class="{opened: attachmentEdit.opened.id == rowItem.id}"
+                             uib-popover-template="'views/attachment/attachment_pop.html'"
+                             popover-class="attachment-edit-popover"
+                             popover-trigger="{'none' : 'outsideClick'}"
+                             popover-is-open="attachmentEdit.opened.id == rowItem.id"
+                             popover-append-to-body="true"
+                             style="max-width: 500px">
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-switch-when="document">
+                    <a ng-if="::config.fileMime2Preview[rowItem.file.fileType]"
+                       ng-click="$root.previewFile(config.fileMime2Preview[rowItem.file.fileType], rowItem.file.id)"
+                       ng-bind-html="::rowItem | entityValueByFieldItem : fieldItem | highlight4table : fieldItem : rowItem._highlight"
+                       class="file-preview-a">
+                    </a>
+                    <span ng-if="::!config.fileMime2Preview[rowItem.file.fileType]"
+                          ng-bind-html="::rowItem | entityValueByFieldItem : fieldItem | highlight4table : fieldItem : rowItem._highlight"></span>
+                </div>
+
+                <div ng-switch-when="email">
+                    <a href="/#/email/detail/{{::(rowItem | entityByFieldItem : fieldItem).id}}">
+                        <custom-field-show entity="::rowItem | entityByFieldItem : fieldItem" field-info="::fieldItem"
+                                           class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                    </a>
+                </div>
+
+                <div ng-switch-when="pipelineOperation">
+                    <div class="btn-group" uib-dropdown is-open="status.isopen" dropdown-append-to-body="true">
+                        <button type="button" class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                uib-dropdown-toggle>
+                            操作 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu operation-menu" uib-dropdown-menu role="menu">
+                            <li><a ng-click="operationFunc.mail.composeMail(rowItem, 2)">发邮件 - 候选人</a></li>
+                            <li><a ng-click="operationFunc.mail.composeMail(rowItem, 3)">发邮件 - 客户联系人</a></li>
+                            <li><a ng-click="operationFunc.comment.addComment(rowItem.resume)">添加备注</a></li>
+                            <li>
+                                <a ng-click="operationFunc.task.addTask(rowItem, config.moduleMap.pipeline)">添加提醒</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/#/candidate/{{::rowItem.resume.id}}/edit">编辑人选</a></li>
+                            <li role="separator" class="divider"
+                                ng-if="::rowItem.lastStatus.value >= 1 && rowItem.lastStatus.value <= 4"></li>
+                            <li><a ng-click="operationFunc.pipeline.recommend(rowItem)"
+                                   ng-if="::rowItem.lastStatus.value == 1 || rowItem.lastStatus.value == -1 || rowItem.lastStatus.value == 3">推荐</a>
+                            </li>
+                            <li><a ng-click="operationFunc.pipeline.interview(rowItem)"
+                                   ng-if="::rowItem.lastStatus.value >= 1 && rowItem.lastStatus.value < 4">面试</a></li>
+                            <li><a ng-click="operationFunc.pipeline.offer(rowItem)"
+                                   ng-if="::rowItem.lastStatus.value > 1 && rowItem.lastStatus.value < 4">Offer</a></li>
+                            <li><a ng-click="operationFunc.pipeline.entry(rowItem)"
+                                   ng-if="::rowItem.lastStatus.value == 4">入职</a></li>
+                            <li role="separator" class="divider" ng-if="rowItem.lastStatus.value != -1"></li>
+                            <li><a ng-click="operationFunc.pipeline.reject(rowItem)"
+                                   ng-if="::rowItem.lastStatus.value != -1">淘汰</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a ng-click="operationFunc.achievement.addAchievement(rowItem.projectId, rowItem.resumeId)">业绩分配</a>
+                            </li>
+                            <li role="separator" ng-if="::rowItem.lastStatus.value == 1" class="divider"></li>
+                            <li><a ng-click="operationFunc.pipeline.remove(rowItem)"
+                                   ng-if="::rowItem.lastStatus.value == 1">从项目中移除</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-switch-when="resumeOperation">
+                    <div class="btn-group" uib-dropdown is-open="status.isopen" dropdown-append-to-body="true">
+                        <button type="button" class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                uib-dropdown-toggle>
+                            操作 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu operation-menu" uib-dropdown-menu role="menu">
+                            <li><a href="/#/candidate/{{::rowItem.id}}/edit">编辑人选</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a ng-click="operationFunc.pipeline.join(rowItem.id)">加入项目</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a ng-click="operationFunc.comment.addComment(rowItem)">添加备注</a></li>
+                            <li><a ng-click="operationFunc.task.addTask(rowItem, config.moduleMap.candidate)">添加提醒</a>
+                            </li>
+                            <li><a ng-click="operationFunc.mail.composeMail(rowItem, 1)">发送邮件</a></li>
+                            <li><a ng-click="operationFunc.folder.addFolder(rowItem)">分组</a></li>
+                            <li><a ng-click="operationFunc.candidate.editRecReport({}, rowItem)">生成推荐报告</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-switch-when="projectOperation">
+                    <div class="btn-group" uib-dropdown is-open="status.isopen" dropdown-append-to-body="true">
+                        <button type="button" class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                uib-dropdown-toggle>
+                            操作 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu operation-menu" uib-dropdown-menu role="menu">
+                            <li><a href="/#/project/{{::rowItem.id}}/edit">编辑项目</a></li>
+                            <li><a ui-sref="project_add({copyId:rowItem.id})">复制项目</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a ng-click="operationFunc.comment.addComment(rowItem)">添加备注</a></li>
+                            <li><a ng-click="operationFunc.task.addTask(rowItem, config.moduleMap.project)">添加提醒</a>
+                            </li>
+                            <li><a ng-click="operationFunc.folder.addFolder(rowItem)">分组</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-switch-when="companyOperation">
+                    <div class="btn-group" uib-dropdown is-open="status.isopen" dropdown-append-to-body="true">
+                        <button type="button" class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                uib-dropdown-toggle>
+                            操作 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu operation-menu" uib-dropdown-menu role="menu">
+                            <li><a href="/#/company/{{::rowItem.id}}/edit">编辑公司</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a ng-click="operationFunc.comment.addComment(rowItem)">添加备注</a></li>
+                            <li><a ng-click="operationFunc.task.addTask(rowItem, config.moduleMap.company)">添加提醒</a>
+                            </li>
+                            <li><a ng-click="operationFunc.contract.addContract(rowItem)">新增合同</a></li>
+                            <li><a ng-click="operationFunc.folder.addFolder(rowItem)">分组</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-switch-when="contractOperation">
+                    <div class="btn-group" uib-dropdown is-open="status.isopen" dropdown-append-to-body="true">
+                        <button type="button" class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                uib-dropdown-toggle>
+                            操作 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu operation-menu" uib-dropdown-menu role="menu">
+                            <li><a ng-click="operationFunc.contract.editContract(rowItem)">编辑</a></li>
+                            <li><a ng-click="operationFunc.contract.deleteContract(rowItem)">删除</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-switch-when="invoiceOperation">
+                    <div class="btn-group" uib-dropdown is-open="status.isopen" dropdown-append-to-body="true">
+                        <button type="button" class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                uib-dropdown-toggle>
+                            操作 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu operation-menu" uib-dropdown-menu role="menu">
+                            <li>
+                                <a ng-click="operationFunc.achievement.readAchievement(rowItem.invoice.Fachievement_id)"
+                                   ng-if="::rowItem.invoice.Fachievement_id">查看业绩</a>
+                            </li>
+                            <li>
+                                <a ng-click="operationFunc.achievement.editAchievement(rowItem.invoice.Fachievement_id)"
+                                   ng-if="::(rowItem.invoice.Fstatus.value == 0 || rowItem.invoice.Fstatus.value == 4)&& rowItem.invoice.Fachievement_id">编辑业绩</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a ng-click="operationFunc.invoice.editInvoice(rowItem.id)"
+                                   ng-if="::rowItem.invoice.Fstatus.value == 0 || rowItem.invoice.Fstatus.value == 4">申请发票</a>
+                            </li>
+                            <li><a ng-click="operationFunc.invoice.editInvoice(rowItem.id)"
+                                   ng-if="::rowItem.invoice.Fstatus.value != 0 && rowItem.invoice.Fstatus.value != 4 && (!rowItem.invoice.Fsend_time || !rowItem.invoice.Fpayment_time)">编辑发票</a>
+                            </li>
+                            <li><a ng-click="operationFunc.invoice.sendInvoice(rowItem.id)"
+                                   ng-if="::rowItem.invoice.Fstatus.value != 0 && rowItem.invoice.Fstatus.value != 4 && rowItem.sendStates == 0">寄出</a>
+                            </li>
+                            <li><a ng-click="operationFunc.invoice.paymentInvoice(rowItem.id)"
+                                   ng-if="::rowItem.invoice.Fstatus.value != 0 && rowItem.invoice.Fstatus.value != 4 && rowItem.paymentStates == 0">到款</a>
+                            </li>
+                            <li><a ng-click="operationFunc.invoice.cancelInvoice(rowItem.id)"
+                                   ng-if="::rowItem.invoice.Fstatus.value != 0 && rowItem.invoice.Fstatus.value != 4">作废</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-switch-when="documentOperation">
+                    <div class="btn-group" uib-dropdown is-open="status.isopen" dropdown-append-to-body="true">
+                        <button type="button" class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                uib-dropdown-toggle>
+                            操作 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu operation-menu" uib-dropdown-menu role="menu">
+                            <li>
+                                <a ng-if="::config.fileMime2Preview[rowItem.file.fileType]"
+                                   ng-click="$root.previewFile(config.fileMime2Preview[rowItem.file.fileType], rowItem.file.id)">预览</a>
+                            </li>
+                            <li>
+                                <a ng-href="/api/file/download?id={{::rowItem.file.id}}&type={{41}}">下载</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a ng-click="operationFunc.folder.addFolder(rowItem)">分组</a>
+                            </li>
+                            <li>
+                                <a ng-click="operationFunc.comment.addComment(rowItem)">添加备注</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                            <li>
+                                <a ng-click="operationFunc.document.deleteDocument(rowItem.id)">删除</a></li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-switch-when="userOperation">
+                    <a ng-if="rowItem.status.value!=4 && (rowItem.id != 1||$root.account.id == 1)"
+                       ui-sref="setting.user_edit({accountId:rowItem.id})">编辑</a>
+                    <a class="cursor-pointer" ng-if="rowItem.status.value === 4"
+                       ng-click="operationFunc.deleteAccount(rowItem.id)">
+                        取消邀请
+                    </a>
+                </div>
+
+                <div ng-switch-when="pipelineStatus" class="pipeline-status" tiger-hover
+                     ng-switch="::rowItem.lastOperation.status.value">
+                    <span ng-switch-when="3" class="label label-yellow">
+                        面试<span ng-if="::rowItem.lastOperation.extra">: {{::rowItem.lastOperation.extra}}面</span>
+                    </span>
+                    <span ng-switch-default class="label label-yellow"
+                          ng-bind="::rowItem | entityValueByFieldItem : fieldItem"></span>
+                    <ul class="dropdown operation-list" tiger-hover-show>
+                        <li ng-repeat="operation in rowItem.operationList">
+                            <tiger-include template-path="views/project/operation_list.html"></tiger-include>
+                        </li>
+                    </ul>
+                </div>
+
+                <div ng-switch-when="invoiceStatus" class="pipeline-status" tiger-hover>
+                    <span class="label label-yellow">{{::rowItem | entityValueByFieldItem : fieldItem}}</span>
+                    <ul class="dropdown operation-list" tiger-hover-show>
+                        <li ng-repeat="operation in rowItem.operationList">
+                            <tiger-include template-path="views/project/invoice_operation_list.html"></tiger-include>
+                        </li>
+                    </ul>
+                </div>
+
+                <div ng-switch-when="invoiceResumeStatus" class="pipeline-status" tiger-hover>
+                    <span class="label label-yellow"
+                          ng-bind="::rowItem.lastProjectResumeOperation.status | i18n"></span>
+                    <ul class="dropdown operation-list" tiger-hover-show>
+                        <li ng-repeat="operation in rowItem.resumeStatusList">
+                            <tiger-include template-path="views/project/operation_list.html"></tiger-include>
+                        </li>
+                    </ul>
+                </div>
+
+                <div ng-switch-when="dateRecent"
+                     ng-bind="::rowItem | entityValueByFieldItem : fieldItem | tigerDateRecent"
+                     title="{{::rowItem | entityValueByFieldItem : fieldItem | tigerDate}}">
+                </div>
+
+                <div ng-switch-when="revenueList">
+                    <div ng-repeat="memberRevenue in rowItem.memberList">
+                        {{::memberRevenue.projectMember.member | i18n}} :
+                        {{::memberRevenue.revenue | tigerMoney : true}}
+                    </div>
+                </div>
+
+                <div ng-switch-when="invoiceTypes">
+                    <div ng-repeat="item in rowItem.typeList">
+                        {{::item.type | i18n}}
+                        <span ng-if="::rowItem.typeList.length > 1">:
+                            {{::item.fee | tigerMoney}}
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-switch-when="systemUserDepartment">
+                    <div ng-repeat="departmentRelation in rowItem.user.departmentRelationList">
+                        {{::departmentRelation.department | i18n}}
+                    </div>
+                </div>
+
+                <div ng-switch-default>
+                    <custom-field-show entity="::rowItem | entityByFieldItem : fieldItem" field-info="::fieldItem"
+                                       class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                </div>
+            </ng-switch>
+
+            <span ng-if="::quickEdit.enabled && fieldItem.generateType > 0 && fieldItem.isArray == 0"
+                  class="quick-edit-btn"
+                  ng-class="{opened: quickEdit.opened.id == rowItem.id && quickEdit.opened.name == (fieldItem | fieldItemKey)}"
+                  uib-popover-template="'views/search/ui/quick_edit.html'" popover-trigger="{'none' : 'outsideClick'}"
+                  popover-is-open="quickEdit.opened.id == rowItem.id && quickEdit.opened.name == (fieldItem | fieldItemKey)"
+                  popover-append-to-body="true" ng-click="quickEdit.toggle(rowItem, (fieldItem | fieldItemKey))">
+                <em class="glyphicon glyphicon-pencil"></em>
+            </span>
+
+        </td>
+    </tr>
+    </tbody>
+</table>

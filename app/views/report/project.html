@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <tiger-loading loading="isLoading" parent=".panel"></tiger-loading>
+            <div ng-if="fieldList.length">
+                <ul class="nav nav-pills" style="padding-top: 10px;padding-left: 10px">
+
+                    <li>
+                        <!--<select ng-model="item"-->
+                        <!--ng-options="x as x.name for x in dateType"-->
+                        <!--ng-change="changeTimeByDateTypeId(item.id)"></select>-->
+
+                        <tiger-select ng-model="reportFilter.dateType" item-list="dateTypeList" default-value="1"
+                                      style="display: inline-block; width: 150px"></tiger-select>
+                        <span style="line-height: 33px;vertical-align: top;margin: 0 10px;">
+                            {{startTime | tigerDate}} ~ {{endTime | tigerDate}}
+                        </span>
+                        <help-hint message="请根据项目的开始时间选择" style="line-height: 33px;vertical-align: top"></help-hint>
+                    </li>
+                </ul>
+
+                <ul ng-if="define" class="nav nav-pills mt-10">
+                    <li style="margin: 10px ">
+                        <div style="width:140px;display: inline-block">
+                            <tiger-date ng-model="customDate.startTime" placeholder="开始时间"></tiger-date>
+                        </div>
+                        <div style="width:140px;display: inline-block">
+                            <tiger-date ng-model="customDate.endTime" placeholder="结束时间"></tiger-date>
+                        </div>
+                        <button type="button" class="btn btn-primary waves-effect waves-button waves-float"
+                                style="vertical-align: top;"
+                                ng-click="changeConditionWithDefinedTime()">
+                            确定
+                        </button>
+                    </li>
+                </ul>
+
+                <ul class="nav nav-pills" style="margin-top:10px;margin-bottom: 10px">
+                    <li role="presentation" style="margin-left: 10px">共{{dataList.length}}条结果</li>
+
+                </ul>
+            </div>
+
+            <custom-list display-field-key-list="fieldInTable"
+                         list-title="列表" field-list="fieldList" data="dataList" on-thead-click="sortBy"
+                         sort-by-field="sortByField" sort-by-type="sortByType" page-state="pageState"
+                         loading="false" list-key="{{listKPIKey}}"
+                         operation-func="operation">
+            </custom-list>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div ng-repeat="item in permissionConfig[type].data" class="permission-item">
+    <h5 class="title">{{item.title}}</h5>
+    <label ng-repeat="option in item.options" class="ui-radio ui-radio-block">
+        <input type="radio" name="{{item.name}}" ng-model="data[item.name]"
+               ng-value="option.value" ng-required="required">
+        <span>{{option.title}}</span>
+    </label>
+
+    <button class="btn btn-success" ng-click="save(item.name, data[item.name])">保存</button>
+</div>

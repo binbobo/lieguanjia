@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                相关设置
+            </div>
+            <div class="panel-body row">
+                <div class="col-sm-3">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>自定义字段</li>
+                        <li role="presentation" ng-repeat="module in settingNav.form" ui-sref-active="active">
+                            <a ui-sref="setting.form({moduleId:module.name})">
+                                {{module | i18n}}
+                            </a>
+                        </li>
+
+                        <li>行业/职能/城市</li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.tree({listType: 101})">行业</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.tree({listType: 102})">职能</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.tree({listType: 100})">城市</a>
+                        </li>
+
+                        <li>自定义选项</li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.generalItem">编辑自定义选项</a>
+                        </li>
+
+                        <li>自定义备注</li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.comment({moduleId: 4})">简历备注</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.comment({moduleId: 5})">项目备注</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.comment({moduleId: 6})">公司备注</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.comment({moduleId: 13})">文档备注</a>
+                        </li>
+
+                        <li>KPI</li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref=".kpi">KPI设置</a>
+                        </li>
+
+                        <li>用户管理</li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.user">用户列表</a>
+                        </li>
+                        <li ui-sref-active="active" ng-if="account.id==1">
+                            <a ui-sref="setting.user_online">在线用户列表</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active" ng-if="!tigerInfo.saas">
+                            <a ui-sref="setting.user_add">新建用户</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active" ng-if="tigerInfo.saas">
+                            <a ui-sref="setting.user_invite">邀请同伴</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.tree({listType: 700})">团队设置</a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="setting.role">角色权限设置</a>
+                        </li>
+                        <li ui-sref-active="active" ng-if="account.id==1">
+                            <a ui-sref="setting.user_report_action">用户活跃度</a>
+                        </li>
+
+                        <li>其他设置</li>
+                        <li role="presentation" ui-sref-active="active" ng-if="account.id==1">
+                            <a ui-sref="setting.mail_template">邮件模板</a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="setting.permission">访问权限设置</a>
+                        </li>
+                        <li role="presentation" ui-sref-active="active">
+                            <a ui-sref="setting.recReport">推荐报告管理</a>
+                        </li>
+                        <li>
+                            <a ui-sref="jobList" ng-if="account.id==1">后台任务</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-9">
+                    <ui-view></ui-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

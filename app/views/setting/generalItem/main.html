@@ -1,0 +1,17 @@
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-repeat="item in settingNav.generalItem"
+        ng-class="{active: moduleId == item.name}">
+        <a href="" ng-click="switchTo(item.name, null)">
+            {{item | i18n}}
+        </a>
+    </li>
+</ul>
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-repeat="type in settingNav.generalItem[moduleId].subItem"
+        ng-class="{active: (listType == type.listType && fieldItem == type.fieldItem)}">
+        <a href="" ng-click="switchTo(null, type.listType, type.fieldItem)">
+            {{type | i18n}}
+        </a>
+    </li>
+</ul>
+<ui-view></ui-view>

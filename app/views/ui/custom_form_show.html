@@ -1,0 +1,31 @@
+<div ng-repeat="field in fieldList"
+     class="row form-group custom-form-group custom-form-show-group custom-form-show-group-{{field.dataType}}"
+     ng-if="field.hideNode != 1 || !!entity[field.name]">
+    <label class="control-label">
+        <span ng-show="field.required">*</span>
+        <span ng-bind="field | i18n"></span>：
+    </label>
+
+    <ng-switch on="field.tableDataType" ng-hide="editing == field.name">
+        <span ng-switch-when="company" class="form-field-wrap form-field-show-wrap">
+            <a ng-if="entity[field.name].value"
+               ui-sref="company_view({companyId:entity[field.name].value})"
+               target="_blank">
+                <span ng-bind-html="entity[field.name] | i18n"></span>
+            </a>
+            <span ng-if="!(entity[field.name].value)"
+                  ng-bind-html="entity[field.name] | i18n"></span>
+        </span>
+        <custom-field-show ng-switch-default entity="entity" field-info="field"
+                           class="form-field-wrap form-field-show-wrap"></custom-field-show>
+    </ng-switch>
+
+    <button ng-if="canQuickEdit && (field | fieldCanQuickEdit)" ng-hide="editing == field.name"
+            ng-click="quickEdit(field)" class="btn btn-link btn-sm quick-edit-btn">
+        <em class="glyphicon glyphicon-pencil"></em>
+    </button>
+
+    <span ng-if="editing == field.name">
+        <quick-edit entity="entity" field-info="field" on-cancel="cancelQuickEdit" on-save="saveQuickEdit"></quick-edit>
+    </span>
+</div>

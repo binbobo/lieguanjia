@@ -1,0 +1,42 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        基本信息
+    </div>
+    <div class="panel-body">
+        <custom-form-show field-list="fieldList.basicInfo" entity="resume.basicInfo" class="custom-form-inline"
+                          module-item="basicInfo" save-edit-func="quickEditFunc"></custom-form-show>
+    </div>
+</div>
+
+<div class="panel panel-default" ng-if="resume.occupationList && resume.occupationList.length > 0">
+    <div class="panel-heading">
+        工作经历
+    </div>
+
+    <div class="panel-body sub-item-body" ng-repeat="work in resume.occupationList">
+        <custom-form-show field-list="fieldList.occupationList" entity="work" class="custom-form-inline"
+                          module-item="occupationList" save-edit-func="quickEditFunc"></custom-form-show>
+    </div>
+</div>
+
+<div class="panel panel-default" ng-if="resume.projectList && resume.projectList.length > 0">
+    <div class="panel-heading">
+        项目经历
+    </div>
+
+    <div class="panel-body sub-item-body" ng-repeat="project in resume.projectList">
+        <custom-form-show field-list="fieldList.projectList" entity="project" class="custom-form-inline"
+                          module-item="projectList" save-edit-func="quickEditFunc"></custom-form-show>
+    </div>
+</div>
+
+<div class="panel panel-default" ng-if="resume.educationList && resume.educationList.length > 0">
+    <div class="panel-heading">
+        教育经历
+    </div>
+
+    <div class="panel-body sub-item-body" ng-repeat="edu in resume.educationList">
+        <custom-form-show field-list="fieldList.educationList" entity="edu" class="custom-form-inline"
+                          module-item="educationList" save-edit-func="quickEditFunc"></custom-form-show>
+    </div>
+</div>

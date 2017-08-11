@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="text-center">
+                    <h3> 提醒 </h3>
+                </div>
+
+                <button type="button" ng-click="addCalendar()" class="btn btn-primary">添加提醒</button>
+
+                <tiger-select ng-model="filterCompleted" item-list="itemList"
+                              class="pull-right" style="width: 100px; display: inline-block"></tiger-select>
+
+                <div data-ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar"
+                     ui-calendar="uiConfig.calendar" class="pv-10"
+                     ng-class="{
+                     'hide-completed': filterCompleted.value == 0,
+                     'hide-uncompleted': filterCompleted.value == 1
+                     }"></div>
+                <div class="callout callout-info" data-ng-show="alertMessage != undefined && alertMessage != ''">
+                    <span>{{alertMessage}}</span></div>
+            </div>
+        </div>
+    </div>
+</div>

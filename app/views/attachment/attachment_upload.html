@@ -1,0 +1,22 @@
+<div class="row">
+    <div ng-if="title" class="col-sm-12">
+        {{title}}：
+    </div>
+    <div class="col-sm-4" ng-if="subTypeFieldInfo">
+        <tiger-select list-type="subTypeFieldInfo.listType" ng-model="subTypeEntity.subType"
+                      default-value="subTypeFieldInfo.defaultValue"></tiger-select>
+    </div>
+    <div class="col-sm-8">
+        <input type="file" title="选择文件" nv-file-select data-ui-file-upload uploader="attachmentUploader">
+    </div>
+    <div class="col-sm-12">
+        <uib-progressbar value="onUpload"
+                         ng-if="onUpload >=0 && onUpload < 100"></uib-progressbar>
+    </div>
+
+    <div class="attachment-drag-zone-wrap">
+        <div class="attachment-drag-zone" nv-file-drop uploader="attachmentUploader">
+            <p>将文件拖到此处</p>
+        </div>
+    </div>
+</div>

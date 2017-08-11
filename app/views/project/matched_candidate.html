@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <custom-list ng-if="fieldList.length" display-field-key-list="fieldInTable"
+                         list-title="匹配人选列表" field-list="fieldList" data="list" on-thead-click="onTheadClick"
+                         sort-by-field="sortByField" sort-by-type="sortByType" page-state="pageState"
+                         loading="loadList" module-id="{{moduleId}}" list-key="recommendedCandidate"
+                         operation-func="operation">
+            </custom-list>
+
+            <div class="panel-body">
+                <button type="button" class="btn btn-success btn-xs waves-effect waves-button waves-float"
+                        ng-click="joinResume()">
+                    筛选
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

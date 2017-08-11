@@ -1,0 +1,10 @@
+<t-row label="{{ctrl.label}}" checkers="{{ctrl.checkers}}" ng-if="!ctrl.disableRow">
+    <div data-ng-include="'t_input.html'"></div>
+</t-row>
+<div data-ng-include="'t_input.html'" ng-if="ctrl.disableRow"></div>
+
+<script type="text/ng-template" id="t_input.html">
+    <input type="{{ctrl.type}}" class="form-control" placeholder="{{ctrl.placeholder}}" checkers="{{ctrl.checkers}}"
+           ng-model="ctrl.value" need-check>
+    <span class="help-block" ng-if="ctrl.help">{{ctrl.help}}</span>
+</script>

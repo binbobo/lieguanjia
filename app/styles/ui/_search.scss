@@ -1,0 +1,220 @@
+.folder-item,
+.quick-search-item {
+    > i {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        height: 40px;
+        line-height: 40px;
+        color: #373D52;
+        opacity: .7;
+        background: transparent;
+        transform: scale(.5);
+        font-size: 13px;
+
+        &:hover {
+            opacity: 1;
+            background: #C0C8CF;
+            height: 80px;
+            margin-top: -20px;
+            margin-left: -8px;
+            line-height: 80px;
+            width: 26px;
+            text-align: center;
+        }
+    }
+}
+
+.folder-item > span,
+.quick-search-item {
+    cursor: pointer;
+}
+
+.folder-item > ul {
+    > .tree-leaf,
+    > .tree-collapsed,
+    > .tree-expanded {
+        border-top: 1px solid #ddd;
+    }
+
+    .tree-leaf,
+    .tree-collapsed,
+    .tree-expanded {
+        padding: 10px 10px;
+
+        & > treeitem > ul {
+            margin-top: 2px;
+            margin-right: -10px;
+            margin-bottom: -10px;
+        }
+    }
+}
+
+.condition-list {
+    padding-top: 0;
+
+    .clear-btn {
+        font-size: 14px;
+        color: #f66;
+    }
+}
+
+.condition-list-item {
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 3px;
+
+    background: #e7f8f9;
+    border: 1px solid #7fd1d2;
+    color: #00a4a5;
+    padding: 4px 5px 5px 5px;
+    font-size: 14px;
+    font-weight: normal;
+
+    .remove-btn {
+        display: inline-block;
+        cursor: pointer;
+        padding: 0 2px;
+        margin-left: 2px;
+        font-size: 14px;
+
+        &:hover {
+        }
+    }
+}
+
+.condition-edit-list {
+    margin-left: -4px;
+    padding-top: 0;
+    padding-bottom: 15px;
+}
+
+.condition-edit-list-item {
+    display: inline-block;
+    position: relative;
+
+    .btn {
+        font-size: 13px;
+    }
+
+    & > .btn {
+        font-size: 12px;
+        margin-right: 6px;
+        padding: 2px 5px;
+    }
+
+    > .condition-edit-form {
+        position: absolute;
+        // left: 30px;
+
+        padding: 10px 100px 10px 10px;
+        min-width: 360px;
+        border: 1px solid #ddd;
+        background: #fff;
+        z-index: 15;
+
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -6px;
+            left: 35px;
+            border-width: 0 6px 6px 6px;
+            border-style: solid;
+            border-color: transparent transparent #ddd transparent;
+        }
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -5px;
+            left: 36px;
+            border-width: 0 5px 5px 5px;
+            border-style: solid;
+            border-color: transparent transparent white transparent;
+        }
+
+        &.right {
+            left: auto;
+            right: 0;
+
+            &:before {
+                left: auto;
+                right: 35px;
+            }
+
+            &:after {
+                left: auto;
+                right: 36px;
+            }
+        }
+    }
+
+    .condition-btn-group {
+        position: absolute;
+        right: 6px;
+        top: 12px;
+
+        .submit-btn {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+
+        .close-btn {
+            font-size: 16px;
+            margin: 2px 2px 2px 6px;
+            padding: 0 1px;
+            line-height: 12px;
+
+            &:hover {
+                color: #fff;
+                text-decoration: none;
+                background: #ffa0a0;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+}
+
+.condition-edit-checkbox {
+    margin-left: 10px;
+
+    label {
+        padding: 2px 6px;
+        font-size: 14px;
+        font-weight: normal;
+    }
+}
+
+.condition-edit-number {
+    input.form-control {
+        width: 100px;
+    }
+}
+
+.file-preview-a {
+    cursor: pointer;
+}
+
+.f-item-daterange {
+    width: 520px;
+}
+
+.f-item-number {
+    width: 400px;
+}
+
+.menu-hover {
+    button {
+        opacity: .7;
+    }
+
+    &:hover button {
+        opacity: 1;
+    }
+}

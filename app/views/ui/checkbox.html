@@ -1,0 +1,10 @@
+<t-row label="{{ctrl.label}}" checkers="{{ctrl.checkers}}">
+    <div checkers="{{ctrl.checkers}}" style="height:auto;padding-left: -5px" need-check custom-checker="{{ctrl.customChecker()}}">
+        <label class="ui-checkbox" ng-repeat="item in ctrl.options" ng-class="{vertical:ctrl.vertical}">
+            <input name="checkbox{{$index}}" type="checkbox" ng-model="ctrl.value[item.value]" ng-true-value="1"
+                   ng-false-value="0">
+            <span>{{item.text}}</span>
+        </label>
+    </div>
+    <span class="help-block" ng-if="ctrl.help">{{ctrl.help}}</span>
+</t-row>

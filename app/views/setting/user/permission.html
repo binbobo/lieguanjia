@@ -1,0 +1,11 @@
+<ul class="nav nav-tabs">
+    <tiger-loading loading="loading" parent=".nav-tabs"></tiger-loading>
+    <li ng-repeat="(type, data) in permissionConfig" role="presentation" ng-class="{active: $state.params.type == type}">
+        <a href="" ng-click="switchTo(type)">
+            {{data.title}}
+        </a>
+    </li>
+</ul>
+
+
+<ui-view></ui-view>

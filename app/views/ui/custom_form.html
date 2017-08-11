@@ -1,0 +1,30 @@
+<div ng-repeat="field in fieldList" class="row form-group custom-form-group custom-form-group-{{field.dataType}}"
+     ng-class="{'has-error': baseForm[field.name].$invalid && (baseForm[field.name].$touched || baseForm.$submitted)}">
+    <label class="control-label" title="{{field.desc}}">
+        <span ng-show="field.required" class="text-red">*</span>
+        <span ng-bind="field | i18n"></span>
+    </label>
+    <custom-field entity="entity" field-info="field" class="form-field-wrap"></custom-field>
+
+    <ul ng-if="(baseForm[field.name].$touched || baseForm.$submitted) && baseForm[field.name].$invalid"
+        class="error-hint">
+        <li ng-if="baseForm[field.name].$error.required" class="error-required">
+            <ng-switch on="field.dataType">
+                <span ng-switch-when="select">请选择</span>
+                <span ng-switch-when="multiselect">请选择</span>
+                <span ng-switch-when="treeselect">请选择</span>
+                <span ng-switch-when="radio">请选择</span>
+                <span ng-switch-when="date">请输入日期</span>
+                <span ng-switch-when="daterange">请选择日期</span>
+                <span ng-switch-default>请输入内容</span>
+            </ng-switch>
+        </li>
+        <li ng-if="baseForm[field.name].$error.min" class="error-number">最小值：{{field.minLength}}</li>
+        <li ng-if="baseForm[field.name].$error.max" class="error-number">最大值：{{field.maxLength}}</li>
+        <li ng-if="baseForm[field.name].$error.maxlength" class="error-number">最大长度：{{field.maxLength}}</li>
+        <li ng-if="baseForm[field.name].$error.date" class="error-email">日期格式错误</li>
+        <li ng-if="baseForm[field.name].$error.email" class="error-email">电子邮箱地址格式错误</li>
+        <li ng-if="baseForm[field.name].$error.minTags" class="error-email">请输入标签</li>
+        <li ng-if="baseForm[field.name].$error.maxTags" class="error-email">最多添加{{field.number}}个</li>
+    </ul>
+</div>

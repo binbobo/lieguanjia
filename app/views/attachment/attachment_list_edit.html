@@ -1,0 +1,64 @@
+<attachment-upload module-id="{{moduleId}}" title="{{title}}"
+                   on-success="onUploadSuccess" on-error="onError"></attachment-upload>
+
+<div class="list-group attachment-list list-panel">
+
+    <div class="list-group-item" ng-repeat="attachmentItem in list">
+        <img ng-src="/images/icon/{{config.fileMime2Icon[attachmentItem.fileType]}}.png"
+             ng-if="config.fileMime2Icon[attachmentItem.fileType]">
+
+        <div class="list-group-item-heading mr-5" title="{{attachmentItem.fileName}}">
+            <div class="clearfix">
+                <span class="label label-primary"
+                      ng-bind="attachmentItem.subTypeItem | i18n"></span>
+                <a target="_blank"
+                   ng-href="/api/file/download?id={{attachmentItem.id}}&type={{31}}&rid={{relationId}}">
+                    {{attachmentItem.fileName}}
+                </a>
+
+                <a class="pull-right text-red" ng-if="attachmentItem.duplicateResumeId"
+                   href="/#/candidate/{{attachmentItem.duplicateResumeId}}" target="_blank">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    附件重复-#{{attachmentItem.duplicateResumeId}}简历
+                </a>
+
+                <span ng-if="attachmentItem.autoAdd" class="pull-right text-primary">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    刚刚添加的附件
+                </span>
+
+                <span ng-if="attachmentItem.exist" class="pull-right text-primary">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    附件已经存在
+                </span>
+
+                <div class="pull-right">{{attachmentItem.time | tigerDatetime:1}}</div>
+            </div>
+
+            <div class="list-group-item-text clearfix mt-10 mr-5">
+                <span>{{attachmentItem.fileSize | fileSize}}</span>
+                <span>创建者：</span>{{attachmentItem.user | i18n}}
+                <div class="pull-right">
+                    <button type="button" class="btn btn-xs btn-success"
+                            ng-if="config.fileMime2Preview[attachmentItem.fileType]"
+                            ng-click="previewFile(config.fileMime2Preview[attachmentItem.fileType], attachmentItem.id,relationId)">
+                        预览
+                    </button>
+                    <a target="_blank" class="btn btn-xs btn-success"
+                       ng-if="!config.fileMime2Preview[attachmentItem.fileType]"
+                       ng-href="/api/file/download?id={{attachmentItem.id}}&type={{31}}&rid={{relationId}}">下载</a>
+                    <button type="button" class="btn btn-xs btn-primary"
+                            ng-click="parseResume(attachmentItem.id)"
+                            ng-if="!!parseResume && attachmentItem.subTypeItem.value==134040112">解析
+                    </button>
+                    <button type="button" class="btn btn-xs btn-danger"
+                            ng-if="!!removeAttachment"
+                            ng-click="removeAttachment($index)">删除
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,12 @@
+<t-row label="{{ctrl.label}}" checkers="{{ctrl.checkers}}">
+    <div class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="ctrl.valueDate"
+               is-open="datePickerPopup.opened" close-text="关闭" clear-text="清除" current-text="今天"
+               placeholder="{{ctrl.placeholder}}" alt-input-formats="['yyyy-M-d']" datepicker-options="dateOptions"
+               checkers="{{ctrl.checkers}}" need-check ng-click="openDatePicker()">
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i
+                class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+    </div>
+</t-row>

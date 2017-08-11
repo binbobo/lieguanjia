@@ -1,0 +1,79 @@
+<div ng-controller="uiController">
+
+
+    <t-panel style="color:black" label="UPLOAD FILE UNFINISHED" footer="false">
+        <t-panel-body>
+            <t-file label="上传文件"></t-file>
+
+
+        </t-panel-body>
+        <t-panel-footer>This is footer.</t-panel-footer>
+    </t-panel>
+
+    <t-panel style="color:black" label="Form" footer="false" fullscreen="true">
+        <t-panel-body>
+            <form ng-submit="submit()">
+                <t-input label="User Name" placeholder="Please input your name." help="English Only."
+                         checkers="require,phone"
+                         ng-model="testModal.name"></t-input>
+                <t-input label="Password" type="password" ng-model="testModal.obj.name" disable-row="1"></t-input>
+                <t-input label="telphone" type="text" ng-model="testModal.obj.telphone" checkers="require,phone" ></t-input>
+                <t-checkbox label="Checkbox" options="checkBoxOptions" help="English Only."
+                            ng-model="testModal.check1"></t-checkbox>
+                <t-checkbox label="Checkbox" options="checkBoxOptions" vertical="true" ng-model="testModal.checked"
+                            checkers="require"></t-checkbox>
+                <t-radio label="Radio" options="checkBoxOptions" ng-model="testModal.radio"
+                         checkers="require"></t-radio>
+                <t-text label="Text" ng-model="testModal.text" checkers="require"></t-text>
+                <t-date label="DatePicker" ng-model="testModal.dt" checkers="require"></t-date>
+                <t-single-select label="Single Select" ng-model="testModal.singleSelect" checkers="require"
+                                 options="checkBoxOptions"></t-single-select>
+                <t-multi-select label="Multi Select" ng-model="testModal.multiSelect" checkers="require"
+                                options="checkBoxOptions"></t-multi-select>
+
+                <button class="btn btn-primary">提交</button>
+            </form>
+        </t-panel-body>
+    </t-panel>
+
+    <t-panel label="Switch" footer="false" fullscreen="true">
+        <t-panel-body>
+            <t-row label="Switch">
+                <t-switch ng-model="testModal.switch" ng-class="switch-danger"></t-switch>
+            </t-row>
+        </t-panel-body>
+    </t-panel>
+
+    <t-panel style="color:black" label="Tab" footer="false">
+        <t-panel-body>
+            <t-tab tabs="tabs" active-index="activeIndex">
+                <div ng-if="activeIndex==0">11111</div>
+                <div ng-if="activeIndex==1">bbbbb</div>
+                <div ng-if="activeIndex==2">ccccc</div>
+            </t-tab>
+            <t-tab tabs="tabs" justified="true" active-index="activeIndex">
+                <div ng-if="activeIndex==0">aaaaa</div>
+                <div ng-if="activeIndex==1">bbbbb</div>
+                <div ng-if="activeIndex==2">ccccc</div>
+            </t-tab>
+        </t-panel-body>
+    </t-panel>
+
+    <t-panel style="color:black" label="TREE" footer="false">
+        <t-panel-body>
+            <div class="row">
+                <div class="col-lg-4">
+                    <t-tree-select ng-model="list" selected-item="selectedResult" link="true"
+                                   max-select-count="3" max-height="200"></t-tree-select>
+                    {{selectedResult}}
+                </div>
+                <div class="col-lg-4">
+                    <t-tree-editor max-height="150"></t-tree-editor>
+                </div>
+            </div>
+        </t-panel-body>
+    </t-panel>
+
+
+</div>
+

@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="panel panel-default">
+        <ul class="nav nav-pills">
+            <li ng-class="{active:dateType==1}" role="presentation">
+                <a class="btn" ng-click="changeDateType(1)">今天</a>
+            </li>
+            <li ng-class="{active:dateType==2}" role="presentation">
+                <a class="btn" ng-click="changeDateType(2)">本周</a>
+            </li>
+            <li ng-class="{active:dateType==3}" role="presentation">
+                <a class="btn" ng-click="changeDateType(3)">本月</a>
+            </li>
+            <li ng-class="{active:dateType==4}" role="presentation">
+                <a class="btn" ng-click="changeDateType(4)">本年</a>
+            </li>
+            <li ng-class="{active:dateType==5}" role="presentation">
+                <a class="btn" ng-click="changeDateType(5)">自定义</a>
+            </li>
+
+            <li ng-if="!define" class="pull-right" style="margin-right: 10px;margin-top: 10px">
+                {{startTime | tigerDate}}~{{endTime | tigerDate}}
+            </li>
+            <li ng-if="define" class="pull-right" style="margin-right: 10px; margin-top: 8px">
+                <tiger-date ng-model="customStartTime" placeholder="开始时间"
+                            style="display:inline-block; width:140px;"></tiger-date>
+                <span>~</span>
+                <tiger-date ng-model="customEndTime" placeholder="结束时间"
+                            style="display:inline-block; width:140px;"></tiger-date>
+                <button type="button" class="btn btn-primary waves-effect waves-button waves-float"
+                        style="height:32px;line-height: 5px; vertical-align: top;"
+                        ng-click="changeConditionWithDefinedTime(customStartTime, customEndTime)">
+                    确定
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <custom-list display-field-key-list="fieldInTable"
+                 list-title="列表" field-list="fieldList" data="dataList" on-thead-click="sortBy"
+                 sort-by-field="sortByField" sort-by-type="sortByType" page-state="pageState"
+                 loading="false" list-key="ActionReport" operation-func="operation">
+    </custom-list>
+
+</div>

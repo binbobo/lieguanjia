@@ -1,0 +1,28 @@
+<div class="modal-body" style="text-align: center">
+    <h4>选择一个项目：</h4>
+    <tiger-select item-list="itemList" ng-model="projectSelected" append-to-body="true"></tiger-select>
+</div>
+<div class="modal-body" ng-if="resumeId">
+    <div class="panel panel-default" style="border: 1px solid #e9e9e9">
+        <div class="panel-heading">
+            已加入项目:
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li ng-repeat="joinedProject in joinedProjectList">
+                    <a ng-href="/#/project/{{joinedProject.projectItem.id}}"
+                       target="_blank">{{joinedProject.projectItem.title}}</a>
+                    &nbsp;&nbsp;-&nbsp;&nbsp;
+                    <a ng-if="joinedProject.companyItem.id" ng-href="/#/company/{{joinedProject.companyItem.id}}"
+                       target="_blank">{{joinedProject.companyItem.title}}</a>
+                    <a ng-if="!joinedProject.companyItem.id">无</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="">
+    <button type="button" ng-click="ok()" class="btn btn-success" data-dismiss="modal">确定</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

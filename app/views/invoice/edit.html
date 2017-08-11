@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        {{isNew?'新增':'编辑'}}发票
+    </h3>
+</div>
+
+<div class="modal-body">
+
+    <form class="panel-body" name="invoiceInfo">
+
+        <div class="panel-heading">
+            项目信息
+        </div>
+        <div class="row form-group custom-form-group custom-form-inline custom-form-show-group">
+            <label class="control-label">
+                项目:
+            </label>
+            <label class="form-field-wrap form-field-show-wrap">
+                <span ng-if="!isNew">{{invoiceData.invoice.Fproject_id | i18n }}</span>
+                <span ng-if="isNew">{{projectName}}</span>
+            </label>
+        </div>
+
+        <div class="row form-group custom-form-group custom-form-inline custom-form-show-group">
+            <label class="control-label">
+                候选人:
+            </label>
+            <label class="form-field-wrap form-field-show-wrap">
+                <span ng-if="!isNew">{{invoiceData.invoice.Fresume_id | i18n}}</span>
+                <span ng-if="isNew">{{resumeName}}</span>
+            </label>
+        </div>
+
+        <div class="panel-heading">
+            客户信息
+        </div>
+
+        <div class="row form-group custom-form-group custom-form-inline custom-form-show-group">
+            <label class="control-label">
+                发票金额
+            </label>
+            <label class="form-field-wrap form-field-show-wrap">
+                {{invoiceData.invoice.Finvoice_amount}}
+            </label>
+        </div>
+        <custom-form field-list="clientInfoForm" entity="invoiceData.invoice"
+                     class="form-horizontal custom-form-inline"
+                     base-form="invoiceInfo" ng-if="!loading"></custom-form>
+
+        <div class="panel-heading">
+            内部信息
+        </div>
+        <custom-form field-list="internalForm" entity="invoiceData.invoice"
+                     class="form-horizontal custom-form-inline"
+                     base-form="invoiceInfo" ng-if="!loading"></custom-form>
+    </form>
+</div>
+
+<div class="modal-footer" style="">
+    <button type="button" ng-click="ok()" class="btn btn-success" data-dismiss="modal">保存</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

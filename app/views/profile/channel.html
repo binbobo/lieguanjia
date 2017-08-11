@@ -1,0 +1,28 @@
+<h4>绑定渠道
+    <button type="button" class="btn btn-xs btn-default pull-right" ng-click="newAccount()">
+        绑定新账号
+    </button>
+</h4>
+
+<table class="table panel" ng-class="{'panel-loading':loading}">
+    <tr>
+        <th>渠道</th>
+        <th>账号</th>
+        <th>同步职位</th>
+        <th>操作</th>
+    </tr>
+    <tr ng-repeat="account in list">
+        <td>{{account.typeItem | i18n}}</td>
+        <td>{{account.account}}</td>
+        <td>
+            <span ng-if="!account.importing">{{account.jobCount}}</span>
+            <span ng-if="account.importing">同步中...</span>
+        </td>
+        <td>
+            <span ng-if="account.importing">同步 / 解绑</span>
+            <span ng-if="!account.importing">
+                <a ng-click="import(account)">同步</a> /<a ng-click="unBind(account.id)">解绑</a>
+            </span>
+        </td>
+    </tr>
+</table>

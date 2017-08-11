@@ -1,0 +1,21 @@
+<div class="input-group" ng-class="{'fixed-input-group' : !attr.canDel}">
+    <ui-select theme="bootstrap" limit="{{attr.limit}}"
+               on-select="uiSelectChange($item, $model)" ng-model="tmp.value"
+               append-to-body="appendToBody" ng-click="selectClick()">
+        <ui-select-match placeholder="{{placeholder || '请选择'}}">
+            <span ng-if="!multi">{{$select.selected | i18n}}</span>
+            <span ng-if="multi">{{$item | i18n}}</span>
+        </ui-select-match>
+        <ui-select-choices repeat="option in itemList | filter: $select.search"
+                           value="{{option.value}}" group-by="uiGroupBy" refresh="selectRefresh($select.search)">
+            <span ng-if="option.hint.length > 0">{{option.hint}}</span>
+            <div ng-bind-html="option | i18n | highlight: $select.search"></div>
+        </ui-select-choices>
+    </ui-select>
+
+    <span class="input-group-btn" ng-if="attr.canDel">
+        <button type="button" class="btn btn-default" ng-click="removeSelect()">
+            <i class="fa fa-trash"></i>
+        </button>
+    </span>
+</div>

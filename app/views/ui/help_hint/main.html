@@ -1,0 +1,18 @@
+<ng-switch on="helpType" class="help-hint">
+    <i ng-switch-when="1" class="fa fa-question-circle"
+       uib-popover="{{hint.message}}"
+       popover-trigger="{'mouseenter': 'mouseleave'}" popover-popup-close-delay="300"
+       popover-placement="{{placement}}" popover-append-to-body="{{hint.appendToBody}}"></i>
+    <i ng-switch-when="2" class="fa fa-question-circle" title="点击查看帮助"
+       uib-popover-template="'views/ui/help_hint/hint_popup.html'"
+       popover-trigger="'outsideClick'" popover-popup-close-delay="300"
+       popover-placement="{{placement}}" popover-append-to-body="true"></i>
+    <i ng-switch-when="3" class="fa fa-question-circle" title="点击查看帮助"
+       uib-popover-template="'views/ui/help_hint/hint_popup.html'"
+       popover-trigger="'outsideClick'" popover-popup-close-delay="300"
+       popover-placement="{{placement}}" popover-append-to-body="true"></i>
+    <i ng-switch-when="4" class="fa fa-question-circle" title="点击查看帮助"
+       uib-popover-template="'views/ui/help_hint/hint_popup.html'"
+       popover-trigger="'outsideClick'" popover-popup-close-delay="300"
+       popover-placement="{{placement}}" popover-append-to-body="true"></i>
+</ng-switch>

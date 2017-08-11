@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-sm-8">
+        <tiger-include template-path="views/candidate/view_detail.html"></tiger-include>
+
+        <ui-view>
+            <!--<tiger-include template-path="views/candidate/view_main.html"></tiger-include>-->
+        </ui-view>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default resume-relate-project" ng-controller="candidateProjectCtrl">
+            <div class="panel-heading">
+                相关项目
+            </div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-default" ng-click="operationFunc.project.joinProject()">加入新项目
+                </button>
+
+                <tiger-select ng-model="selectedProject" item-list="joinedProjectList"
+                              style="margin-top: 10px;"></tiger-select>
+            </div>
+            <div class="panel-body" ng-if="projectId">
+                <p>
+                    <a href="/#/project/{{projectCandidateDetail.projectId}}" target="_blank">
+                        {{projectCandidateDetail.project.basicInfo.Fproject_name}}
+                    </a> -
+                    <a href="/#/company/{{projectCandidateDetail.project.basicInfo.Fcompany_id.value}}" target="_blank">
+                        {{projectCandidateDetail.project.basicInfo.Fcompany_id | i18n}}
+                    </a>
+                </p>
+                <p>
+                    当前状态：<span class="label label-yellow">{{projectCandidateDetail.lastStatus | i18n}}</span>
+                </p>
+                <div>
+                    <button type="button" ng-click="operationFunc.pipeline.recommend(rowItem)"
+                            ng-if="rowItem.lastStatus.value == 1 ||
+                            rowItem.lastStatus.value == -1 ||
+                            rowItem.lastStatus.value == 3"
+                            class="btn btn-default btn-sm">推荐
+                    </button>
+                    <button type="button" ng-click="operationFunc.pipeline.interview(rowItem)"
+                            ng-if="rowItem.lastStatus.value >= 1 && rowItem.lastStatus.value < 4"
+                            class="btn btn-default btn-sm">面试
+                    </button>
+                    <button type="button" ng-click="operationFunc.pipeline.offer(rowItem)"
+                            ng-if="rowItem.lastStatus.value > 1 && rowItem.lastStatus.value < 4"
+                            class="btn btn-default btn-sm">Offer
+                    </button>
+                    <button type="button" ng-click="operationFunc.pipeline.entry(rowItem)"
+                            ng-if="rowItem.lastStatus.value == 4"
+                            class="btn btn-default btn-sm">入职
+                    </button>
+                    <button type="button" ng-click="operationFunc.pipeline.reject(rowItem)"
+                            ng-if="rowItem.lastStatus.value != -1"
+                            class="btn btn-default btn-sm">淘汰
+                    </button>
+                    <button type="button" ng-click="operationFunc.project.remove(rowItem)"
+                            ng-if="rowItem.lastStatus.value == 1"
+                            class="btn btn-default btn-sm">从项目中移除
+                    </button>
+                </div>
+                <ul class="operation-list">
+                    <li ng-repeat="operation in projectCandidateDetail.operationList">
+                        <tiger-include template-path="views/project/operation_list.html"></tiger-include>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

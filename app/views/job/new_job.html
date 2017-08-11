@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h3 class="modal-title">新增任务</h3>
+</div>
+
+<div class="modal-body">
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-3">
+                    任务类型
+                </div>
+
+                <div class="col-xs-7">
+                    <label ng-repeat="jobType in jobTypes" class="ui-radio ui-radio-sm">
+                        <input type="radio"
+                               name="jobType"
+                               ng-model="selectedJobType.value"
+                               ng-value="jobType.value">
+                        <span>{{jobType|i18n}}</span>
+                    </label>
+                </div>
+            </div>
+            <div ng-if="selectedJobType" class="row">
+                <div class="col-xs-3">
+                    任务子类型
+                </div>
+                <div class="col-xs-7">
+                    <label ng-repeat="jobSubType in jobSubtypes" class="ui-radio ui-radio-sm">
+                        <input type="radio"
+                               name="jobSubtype"
+                               ng-model="selectedJobSubtype.value"
+                               ng-value="jobSubType.value">
+                        <span>{{jobSubType|i18n}}</span>
+                    </label>
+                </div>
+            </div>
+            <div style="margin-top: 10px" ng-if="selectedJobType" class="row">
+                <div class="col-xs-3">
+                    其他信息
+                </div>
+
+                <div class="col-xs-7">
+                    <label ng-repeat="jobOtherInfo in jobOtherInfos" class="ui-radio ui-radio-sm">
+                        <input type="radio"
+                               name="jobOtherInfo"
+                               ng-model="selectedJobOtherInfo.value"
+                               ng-click="cancelCheck(jobOtherInfo)"
+                               ng-value="jobOtherInfo.value">
+                        <span>{{jobOtherInfo|i18n}}</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="" ng-if="!readOnly">
+    <button type="button" ng-click="ok(obj)" class="btn btn-success" data-dismiss="modal">保存</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>
+

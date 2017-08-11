@@ -1,0 +1,43 @@
+<div class="quick-search">
+    <label ng-click="openQuickSearch()" ng-class="{expanded:expanded}">
+        <i class="iconfont icon-search"></i>
+        <input type="text" ng-model="searchQuery" ng-model-options="{debounce: 200}" placeholder="可搜索人才、公司、项目关键词"
+               ng-keydown="inputKeydown($event)">
+    </label>
+    <div class="quick-search-popup" ng-if="expanded && isPopup">
+        <ul>
+            <li ng-repeat="item in result.resume.list" ng-click="toItem('resume', item.id)"
+                ng-class="{selected: selected.id == item.id}" ng-mouseenter="hoverThis(item)">
+                <span ng-if="$index == 0" class="sub-title">简历</span>
+                <span class="item-id">#{{item.id}}</span>
+                {{item.basicInfo.Fname}}
+                <span class="item-sub-message"
+                      ng-if="item.basicInfo.Fcity.length">({{item.basicInfo.Fcity | i18n}})</span>
+                <div ng-if="item.occupationList | firstItem" class="item-sub-message">
+                    {{item.occupationList[0].Ftitle}} |
+                    {{item.occupationList[0].Fcompany_id | i18n}}
+                </div>
+            </li>
+
+            <li ng-repeat="item in result.company.list" ng-click="toItem('company', item.id)"
+                ng-class="{selected: selected.id == item.id}" ng-mouseenter="hoverThis(item)">
+                <span ng-if="$index == 0" class="sub-title">公司</span>
+                <span class="item-id">#{{item.id}}</span>
+                {{item.basicInfo.Fcompany_name}}
+            </li>
+
+            <li ng-repeat="item in result.project.list" ng-click="toItem('project', item.id)"
+                ng-class="{selected: selected.id == item.id}" ng-mouseenter="hoverThis(item)">
+                <span ng-if="$index == 0" class="sub-title">项目</span>
+                <span class="item-id">#{{item.id}}</span>
+                {{item.basicInfo.Fproject_name}}
+                -
+                <span class="item-sub-message">{{item.basicInfo.Fcompany_id | i18n}}</span>
+            </li>
+
+            <li ng-if="result.resume.total + result.company.total + result.project.total == 0" class="miss-result">
+                找不到和 “<span ng-bind="searchQuery" class="search-query"></span>” 相符的数据
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="login-page" ng-controller="loginCtrl">
+    <div class="black-mask"></div>
+
+    <form name="loginForm" class="login-box" ng-show="!isInvite" role="form" ng-submit="login()">
+        <div class="header">
+            <div class="logo">
+                <img src="/images/logo.png"> 猎管家
+                <small>请登录后访问您的账户</small>
+            </div>
+        </div>
+        <div class="iconic-input">
+            <input type="text" placeholder="{{'用户名'}}"
+                   class="form-control"
+                   ng-model="username" name="username" required="required">
+            <i class="fa fa-user"></i>
+        </div>
+        <div class="iconic-input">
+            <input type="password" placeholder="密码" class="form-control"
+                   required="required" ng-model="password" name="password">
+            <i class="fa fa-lock"></i>
+        </div>
+
+        <div class="square-blue">
+            <label class="ui-checkbox">
+                <input name="checkbox1" type="checkbox" value="option1" ng-model="remember"
+                       ng-true-value="1" ng-false-value="0">
+                <span> <strong> 记住我 </strong> </span> </label>
+        </div>
+        <button type="submit" class="btn btn-block btn-primary submit-btn">登录</button>
+    </form>
+    <div class="invite-box" ng-show="isInvite">
+        <form name="inviteForm" class="form-horizontal invite-form" role="form" ng-submit="acceptInvite()">
+            <div class="header">
+                <h3>邀请您加入猎管家</h3>
+                <small>您将使用此手机号和密码登录猎管家</small>
+            </div>
+            <div class="mobile-input">
+                <input type="text" class="form-control" ng-model="mobile" name="mobile"
+                       placeholder="手机号" required="required">
+            </div>
+            <div id="t-captcha"></div>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="verifyCode" ng-model="verifyCode"
+                           placeholder="验证码" required="required">
+                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-default send-verify-code-btn"
+                                        style="margin-left: 8px;margin-bottom: 15px" ng-click="sendVerifyCode()">
+                                    <span ng-if="sendVerifyColdDownCount == 0">获取验证码</span>
+                                    <span ng-if="sendVerifyColdDownCount > 0">重新发送 （{{sendVerifyColdDownCount}})s</span>
+                                </button>
+                            </span>
+                </div>
+
+            <div class="mobile-input">
+                <input type="password" class="form-control" ng-model="newPassword" name="newPassword"
+                       placeholder="设置密码" required="required">
+            </div>
+
+            <button type="submit" class="btn btn-block btn-primary submit-btn">接受邀请</button>
+        </form>
+    </div>
+
+</div>

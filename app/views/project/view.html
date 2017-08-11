@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <div class="pull-right">
+                    <a ui-sref="project_edit({ projectId: projectId })"
+                       class="btn btn-default btn-xs waves-effect waves-button waves-float">编辑</a>
+
+                    <div class="btn-group pull-right" uib-dropdown is-open="status.isopen"
+                         ng-controller="projectOperationCtrl">
+                        <button type="button"
+                                class="btn btn-default btn-xs waves-effect waves-button waves-float"
+                                uib-dropdown-toggle ng-disabled="disabled">
+                            操作<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" style="min-width: 100px" uib-dropdown-menu role="menu">
+                            <li>
+                                <a ui-sref="project_add({copyId:projectId})">复制项目</a>
+                            </li>
+                            <li>
+                                <a ng-click="addComment(projectId)">添加备注</a>
+                            </li>
+                            <li>
+                                <a ng-click="addTask(project)">添加提醒</a>
+                            </li>
+                            <li>
+                                <a ng-click="joinFolder(projectId)">分组</a>
+                            </li>
+                            <li>
+                                <a ng-click="deleteProject(projectId)">删除</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-right" style="margin-top: 10px;">
+                        <help-hint message="点击查看关于项目详情页面的帮助"
+                                   link="http://support.lieguanjia.com/support/%E9%A1%B9%E7%9B%AE%E8%AF%A6%E6%83%85/"></help-hint>
+                    </div>
+                </div>
+                <h4 class="media-heading">
+                    <span ng-bind="project.basicInfo.Fproject_name"></span>
+                    <small>
+                        <a href="/#/company/{{project.basicInfo.Fcompany_id.id}}" target="_blank">
+                            {{project.basicInfo.Fcompany_id | i18n}}
+                        </a>
+                    </small>
+
+                    <span class="label label-primary state-label" ng-show="!!project.basicInfo.Fstatus">
+                        {{project.basicInfo.Fstatus | i18n}}
+                    </span>
+                    <span class="label label-primary state-label" ng-show="!!project.basicInfo.Fpriority">
+                        {{project.basicInfo.Fpriority | i18n}}
+                    </span>
+                </h4>
+                <p>
+                    创建时间：{{project.time | tigerDate}}
+                </p>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="btn-group panel-body">
+                <a ui-sref=".info" class="btn btn-default" ui-sref-active-eq="active">基本</a>
+                <a ui-sref=".attachment" class="btn btn-default" ui-sref-active-eq="active">附件
+                    {{project.stats.attachmentCount}}</a>
+                <a ui-sref=".pipeline" class="btn btn-default" ui-sref-active-eq="active">人才
+                    {{project.stats.resumeCount}}</a>
+                <a ui-sref=".matched_candidate" class="btn btn-default" ui-sref-active-eq="active">匹配人才
+                    {{matchedCandidateCount}}</a>
+                <a ui-sref=".invoice" class="btn btn-default" ui-sref-active-eq="active">发票
+                    {{project.stats.invoiceCount}}</a>
+                <a ui-sref=".commentList" class="btn btn-default" ui-sref-active-eq="active">备注
+                    {{project.stats.commentCount}}</a>
+                <a ui-sref=".update_logs" class="btn btn-default" ui-sref-active-eq="active">
+                    日志
+                </a>
+            </div>
+        </div>
+
+        <ui-view></ui-view>
+    </div>
+</div>

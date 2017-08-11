@@ -1,0 +1,33 @@
+<form class="panel-body" name="mailConfigForm">
+
+    <div class="row form-group custom-form-group custom-form-inline custom-form-show-group custom-form-group-select">
+        <label class="control-label pv-5">
+            邮箱类型
+        </label>
+        <ui-select name="emailType" theme="bootstrap" ng-model="emailType"
+                   on-select="uiSelectChange($item, $model)" class="pv-5">
+            <ui-select-match placeholder="请选择">
+                <span>{{$select.selected}}</span>
+            </ui-select-match>
+            <ui-select-choices repeat="option in emailTypeList | filter: $select.search"
+                               value="{{option}}">
+                <div data-ng-bind-html="option"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+
+    <custom-form field-list="config.emailConfigFields" entity="emailConfig" class="form-horizontal custom-form-inline"
+                 base-form="mailConfigForm"></custom-form>
+
+    <div class="panel-body">
+        <p class="text-danger">{{emailConfig.hint}}</p>
+        <p>我们可能会用您的邮箱给您自己发送一份邮件用来验证</p>
+        <button type="button" class="btn btn-primary waves-effect waves-button waves-float"
+                ng-click="saveEmailConfig()" ng-disabled="loading">
+            验证并保存
+        </button>
+    </div>
+
+</form>
+
+

@@ -1,0 +1,49 @@
+<h4 ng-if="!roleId">新建角色</h4>
+<form class="form-horizontal" name="editRoleForm">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">
+            <span class="text-red">*</span> 角色名称
+        </label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" ng-model="role.title" name="title" ng-required="true">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">角色描述</label>
+        <div class="col-sm-9">
+            <textarea class="form-control" ng-model="role.desc" name="desc"></textarea>
+        </div>
+    </div>
+</form>
+
+<h4>权限设置</h4>
+<ul class="list-group">
+    <li ng-repeat="permissionL1 in permissionList" class="list-group-item"
+        ng-class="{active: myPermissionList[permissionL1.id]}">
+        <label>
+            <input type="checkbox" ng-model="myPermissionList[permissionL1.id]"> {{permissionL1 | i18n}}
+        </label>
+        <div class="pull-right">
+            <button class="btn btn-link btn-small" ng-click="permissionListTmp[permissionL1.id] = true"
+                ng-if="!permissionListTmp[permissionL1.id]">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+            <button class="btn btn-link btn-small" ng-click="permissionListTmp[permissionL1.id] = false"
+                ng-if="permissionListTmp[permissionL1.id]">
+                <i class="glyphicon glyphicon-minus"></i>
+            </button>
+        </div>
+        <ul class="list-group" ng-if="permissionListTmp[permissionL1.id]">
+            <li ng-repeat="permissionL2 in permissionL1.children" class="list-group-item"
+                ng-class="{active: myPermissionList[permissionL1.id] || myPermissionList[permissionL2.id]}">
+                <label>
+                    <input type="checkbox" ng-model="myPermissionList[permissionL2.id]" ng-disabled="myPermissionList[permissionL1.id]"> {{permissionL1 | i18n}} {{permissionL2 | i18n}}
+                </label>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<button class="btn btn-success" type="button" ng-click="updateRole()">保存</button>
+<button class="btn btn-danger" ng-if="roleId" type="button" ng-click="shiftRole()">删除</button>

@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="menu-title" ng-if="!!menuTitle">
+                {{menuTitle}}
+            </div>
+            <div class="panel-heading" ng-if="!!moduleTitle">
+                <span>{{moduleTitle}}</span>
+            </div>
+            <tiger-include template-path="views/project/pipeline_nav.html" class="panel-body"
+                           style="padding: 0"></tiger-include>
+        </div>
+        <div class="panel panel-default">
+            <custom-list ng-if="fieldList.length" display-field-key-list="fieldInTable"
+                         list-title="项目人选列表" field-list="fieldList" data="list" on-thead-click="onTheadClick"
+                         sort-by-field="sortByField" sort-by-type="sortByType" page-state="pageState"
+                         loading="loadList" module-id="{{moduleId}}" list-key="pipeline" operation-func="operation"
+                         quick-edit-func="quickEditFunc">
+            </custom-list>
+
+            <div class="panel-body">
+                <button type="button" class="btn btn-success btn-xs waves-effect waves-button waves-float"
+                        ng-click="joinResume()">
+                    <i class="fa fa-search"></i>
+                    从人才库添加
+                </button>
+                <a class="btn btn-success btn-xs waves-effect waves-button waves-float"
+                   ui-sref="candidate_import({projectId: projectId})">
+                    <i class="fa fa-plus"></i>
+                    批量新增人选
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

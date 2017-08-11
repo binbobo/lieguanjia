@@ -1,0 +1,75 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        个人设置
+    </div>
+    <div class="panel-body row">
+        <ul class="nav nav-pills nav-stacked col-sm-3">
+            <li ui-sref-active-eq="active">
+                <a ui-sref=".">个人信息</a>
+            </li>
+            <li ui-sref-active-eq="active" ng-if="account.id!=1||!tigerInfo.saas">
+                <a ui-sref=".password" ui-sref-active="active">修改密码</a>
+            </li>
+            <li ng-class="{active: $state.current.name.indexOf('profile.mail')>-1}">
+                <a ui-sref=".mail.account">邮件设置</a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref=".channel">绑定渠道</a>
+            </li>
+            <!-- <li>
+                <a ui-sref=".">邮件模板设置</a>
+            </li>
+            <li>
+                <a ui-sref=".">短信模板设置</a>
+            </li>
+            <li>
+                <a ui-sref=".">系统语言设置</a>
+            </li> -->
+        </ul>
+        <div class="col-sm-9">
+            <ui-view>
+                <h4>个人信息</h4>
+                <dl class="dl-horizontal">
+                    <dt>姓名</dt>
+                    <dd>{{account.name}}</dd>
+                    <dt>团队</dt>
+                    <dd>
+                        <span ng-repeat="department in account.departmentRelationList"
+                              ng-bind="department.department | i18n" style="margin-right: 10px;"></span>
+                    </dd>
+                    <dt>生日</dt>
+                    <dd>{{account.birthday | tigerDate}}</dd>
+                    <dt>手机</dt>
+                    <dd>{{account.cellphone}}</dd>
+                    <dt>办公电话</dt>
+                    <dd>{{account.telephone}}</dd>
+                    <dt>邮箱</dt>
+                    <dd>{{account.email}}</dd>
+                    <dt>入职日期</dt>
+                    <dd>{{account.employmentTime | tigerDate}}</dd>
+                    <dt>状态</dt>
+                    <dd>{{account.status | i18n}}</dd>
+                </dl>
+
+                <h4>
+                    个人设置
+                    <small>（当前电脑、浏览器有效）</small>
+                </h4>
+
+                <div style="margin: 20px 0">
+                    <div class="form-group">
+                        <label class="ui-checkbox">
+                            <input type="checkbox" ng-model="userConfig.openLinkInNewWindow"
+                                   ng-true-value="1" ng-false-value="0">
+                            <span>在新窗口打开列表中的人才、公司、项目</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-sm btn-primary" ng-click="saveConfig()">保存</button>
+                    </div>
+                </div>
+            </ui-view>
+        </div>
+    </div>
+</div>

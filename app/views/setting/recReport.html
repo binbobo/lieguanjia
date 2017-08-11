@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            推荐报告
+        </div>
+        <span class="panel-body">
+                <li>注意：自定义推荐报告模板需要包含标准模板中的参数才可正常使用，仅支持doc、docx格式。</li>
+        </span>
+        <div class="panel-body">
+            <form class="col-sm-4" name="recReportForm">
+                <custom-form field-list="fields" entity="languageTemplate" base-form="recReportForm"
+                             class="custom-form-inline"></custom-form>
+            </form>
+            <div class="col-sm-2 custom-form-group custom-form-inline">
+                <label class="control-label">上传模板：</label>
+                <input type="file" title="选择文件" nv-file-select="" ui-file-upload="" uploader="uploader">
+            </div>
+            <div class="recReport-table">
+                <table class="table">
+                    <tr>
+                        <td>语言</td>
+                        <td>名称</td>
+                        <td>上传时间</td>
+                        <td>操作</td>
+                    </tr>
+                    <tr ng-repeat="recReport in list">
+                        <td>{{languageShow[recReport.language]}}</td>
+                        <td>
+                            <a class="cursor-pointer"
+                               ng-click="previewFile(config.fileMime2Preview[recReport.file.fileType],recReport.file.id)">
+                                {{recReport.file.fileName}}
+                            </a>
+                        </td>
+                        <td>{{recReport.time | tigerDatetime}}</td>
+                        <td>
+                            <a class="cursor-pointer" target="_blank"
+                               ng-href="/api/file/download?id={{recReport.file.id}}">下载</a>
+                            |
+                            <a class="cursor-pointer" ng-click="deleteRecReport(recReport.tid)">删除</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <ul uib-pagination total-items="pageState.total" items-per-page="pageState.listLength"
+                    ng-model="pageState.page" max-size="5" class="pagination-sm"
+                    boundary-link-numbers="true"
+                    previous-text="<" next-text=">"></ul>
+            </div>
+        </div>
+    </div>
+</div>

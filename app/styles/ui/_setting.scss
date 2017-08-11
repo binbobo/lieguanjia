@@ -1,0 +1,48 @@
+.field-nodes {
+    li {
+    }
+}
+
+.recReport-table {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.table-head {
+    background-color: #ddd;
+    text-align: center;
+    font-weight: bold;
+}
+
+.permission-item {
+    margin-bottom: 40px;
+    margin-left: 10px;
+    margin-top: 20px;
+    .title {
+        margin-bottom: 10px;
+    }
+    button {
+        margin-top: 5px;
+        margin-left: 10px;
+    }
+}
+
+.error-text {
+    list-style: none;
+    margin: 2px 1px 4px;
+    padding: 3px 6px 3px 1px;
+    font-size: 10px;
+    color: #bc2d16;
+}
+
+.invite-result {
+    padding-top: 80px;
+
+    .invite-success {
+        font-size: 30px;
+        color: #00a4a5;
+    }
+    .tips {
+        font-size: 18px;
+    }
+}

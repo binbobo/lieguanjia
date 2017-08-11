@@ -1,0 +1,9 @@
+<div class="row attachment-edit-panel">
+    <attachment-list ng-if="moduleId!=10" module-id="{{moduleId}}" relation-id="rowItem.id" list parse-resume
+                     on-success on-error></attachment-list>
+    <attachment-list ng-if="moduleId==10" module-id="{{moduleId}}" relation-id="rowItem.resume.id" list parse-resume
+                     on-success on-error></attachment-list>
+</div>
+<span class="close" ng-click="attachmentEdit.closeAttachmentEdit()">
+    <i class="fa fa-times"></i>
+</span>

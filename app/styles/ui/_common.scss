@@ -1,0 +1,372 @@
+#content {
+    //padding: 0 5px;
+    padding: 0px;
+}
+
+@media (min-width: 1400px) {
+    #content {
+        & > .row {
+            //max-width: 1714px;
+            margin: 0 auto;
+        }
+    }
+}
+
+body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    background: #f5f8fb;
+
+    &.modal-open {
+        #app, .login-page {
+            overflow-y: scroll;
+        }
+    }
+}
+
+#nav {
+    > li {
+        > a {
+            cursor: default;
+
+            &[href] {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.header-container > .top-header {
+    .logo {
+        cursor: pointer;
+
+        > .logo-title {
+            font-size: 24px;
+        }
+
+        img {
+            height: 24px;
+            margin-bottom: 5px;
+        }
+    }
+
+    .dropdown-menu {
+        &.panel {
+            a {
+                color: $link-color;
+
+                &:hover {
+                    color: #23527c;
+                    background: none !important;
+                }
+            }
+        }
+    }
+}
+
+footer {
+    display: block;
+    margin-left: 220px;
+    padding: 15px;
+
+    color: #999;
+    text-align: center;
+    font-size: 12px;
+
+    .version {
+    }
+}
+
+.app.nav-collapsed-min footer {
+    margin-left: 70px;
+}
+
+.body-wide {
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    &.app.nav-collapsed-min footer {
+        margin-left: 0;
+    }
+}
+
+a {
+    color: $link-color;
+}
+
+.btn-link {
+    color: $link-color;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.dropdown-menu {
+    &.dropdown-menu-right {
+        left: inherit;
+        right: 0;
+
+        &.with-arrow {
+            &:before {
+                left: inherit;
+                right: 14px;
+            }
+
+            &:after {
+                left: inherit;
+                right: 15px;
+            }
+        }
+    }
+}
+
+.pagination {
+    margin: 0;
+}
+
+.table-field-list {
+    .dropdown-menu {
+        height: 300px;
+        overflow-y: scroll;
+    }
+}
+
+.list-table {
+    th {
+        &.drop-hover {
+            border-left: 2px solid #ddd;
+        }
+    }
+}
+
+.batch-operation {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+}
+
+.select-whole {
+    background: #ffe789;
+    text-align: center;
+    padding: 5px;
+
+    .select-whole-btn {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}
+
+.panel-body-table {
+    overflow-x: auto;
+    margin: 0 4px;
+    padding: 5px;
+
+    &.no-data {
+        overflow-x: hidden;
+    }
+}
+
+.page-size-edit {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 20px;
+
+    div {
+        display: inline-block;
+        width: 60px;
+    }
+}
+
+.table {
+    margin-bottom: 10px;
+
+    & > thead > tr > th {
+        font-size: 110%;
+        font-weight: normal;
+        color: #333;
+        white-space: nowrap;
+        padding: 7px 26px 7px 7px;
+    }
+
+    th.has-sort {
+        position: relative;
+        margin-right: 12px;
+    }
+
+    .table-sort-sign {
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+    }
+
+    td {
+        white-space: nowrap;
+
+        .custom-form-show-textarea {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        p {
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .btn-link {
+            padding: 4px 0;
+        }
+
+        .comment-count {
+            white-space: nowrap;
+        }
+    }
+}
+
+.label {
+    &.label-yellow {
+        background: #ffe789;
+        color: #d48636;
+    }
+
+    &.label-white {
+        background: #fff;
+        color: #767676;
+        border: 1px solid #dee5e7;
+    }
+
+    &.label-lg {
+        font-size: 100%;
+    }
+}
+
+.dropdown-menu {
+    font-size: 13px;
+
+    & > li > a {
+        padding: 3px 16px;
+        cursor: pointer;
+    }
+
+    .divider {
+        margin: 4px 0;
+    }
+}
+
+.search-condition-group {
+    margin-right: 20px;
+    display: inline-block;
+
+    .form-control {
+        display: inline-block;
+    }
+}
+
+.tiger-ui-group {
+    display: table;
+
+    .tiger-ui-input {
+        display: table-cell;
+    }
+}
+
+mark {
+    color: inherit;
+    background: transparent;
+    padding: 0;
+
+    mark {
+        padding: 0;
+    }
+
+    .custom-table-highlight-enable & {
+        background: yellow;
+        padding: 0 0.2em;
+    }
+}
+
+.notice-point {
+    &:before {
+        content: '';
+        display: inline-block;
+        vertical-align: 10%;
+        width: 8px;
+        height: 8px;
+
+        border-radius: 50%;
+        background-color: #ff2c2c;
+    }
+}
+
+.sub-item-body {
+    transition: background-color 0.5s;
+    &:hover {
+        background-color: #f4fafa;
+    }
+}
+
+.modal-dialog.modal-sm {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+
+    &,
+    .modal.in & {
+        transform: translate(-50%, -50%);
+    }
+    .modal.fade & {
+        transform: translate(-50%, -100%);
+    }
+}
+
+.modal-dialog {
+
+    .modal-center & {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+    }
+
+    .modal-center.modal.in & {
+        transform: translate(-50%, -50%);
+    }
+
+    .modal-center.modal.fade & {
+        transform: translate(-50%, -100%);
+    }
+}
+
+.modal .modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+@for $i from 1 to 13 {
+
+    .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i} {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+.panel {
+    margin-bottom: 10px;
+}
+
+.single-line {
+    width: 280px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

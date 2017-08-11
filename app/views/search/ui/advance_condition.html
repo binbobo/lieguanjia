@@ -1,0 +1,28 @@
+<!--TODO 默认值-->
+<div ng-init="tmpSearchType[fieldItem.name].latest = 1" style="margin-top: 8px;">
+    <label class="ui-radio" title="仅在最新一次的工作、项目、教育经历中搜索">
+        <input type="radio" ng-model="tmpSearchType[fieldItem.name].latest" ng-value="1">
+        <span>最近</span>
+    </label>
+
+    <label class="ui-radio" title="在全部的工作、项目、教育经历中搜索">
+        <input type="radio" ng-model="tmpSearchType[fieldItem.name].latest" ng-value="0">
+        <span>所有</span>
+    </label>
+
+    <help-hint message="“最近”仅在最新一次的工作、项目、教育经历中搜索"></help-hint>
+</div>
+
+<!--<div ng-init="tmpSearchType[fieldItem.name].fuzzy = 1">-->
+<!--<label>-->
+<!--<input type="radio"-->
+<!--ng-model="tmpSearchType[fieldItem.name].fuzzy"-->
+<!--class="" value="1"> 模糊搜索-->
+<!--</label>-->
+
+<!--<label>-->
+<!--<input type="radio"-->
+<!--ng-model="tmpSearchType[fieldItem.name].fuzzy"-->
+<!--class="" value="0"> 精确搜索-->
+<!--</label>-->
+<!--</div>-->

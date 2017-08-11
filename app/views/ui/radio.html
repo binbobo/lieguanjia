@@ -1,0 +1,8 @@
+<t-row label="{{ctrl.label}}" checkers="{{ctrl.checkers}}">
+    <div need-check custom-checker="{{ctrl.customChecker()}}" checkers="{{ctrl.checkers}}">
+        <label class="ui-radio vertical" ng-repeat="item in ctrl.options">
+            <input name="radio{{$index}}" type="radio" value="{{item.value}}" ng-model="ctrl.value">
+            <span>{{item.text}}</span></label>
+    </div>
+    <span class="help-block" ng-if="ctrl.help">{{ctrl.help}}</span>
+</t-row>

@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-sm-10">
+                    <h4 class="row list-group-item-heading">
+                        {{job.jobName}}
+                    </h4>
+                    <p>预计佣金:
+                        <span style="color:#f60">
+                            {{job.predictMinCommission | tigerMoney}}-{{job.predictMaxCommission | tigerMoney}}
+                        </span>
+                        <span ng-show="!!job.guaranteePeriod">保证期:{{job.guaranteePeriod}}</span>
+                    </p>
+                    <p>
+                        年薪:{{job.predictMinSalary | tigerMoney}}-{{job.predictMaxSalary | tigerMoney}} |
+                        工作地:{{job.city}} |
+                        学历:{{job.degree}} |
+                        招聘人数:{{job.recruitNum}}人
+                    </p>
+                    <p>渠道:{{channelTypes[job.type-1]}}</p>
+                </div>
+                <div class="col-sm-2">
+
+                    <a ng-if="job.type==2"
+                       href="http://wa.hunteron.com/#/positions/detail/{{job.jobId}}?sourceId=0&positionSourceId=0"
+                       target="_blank">
+                        <button type="button" class="btn btn-block btn-default"> 去猎上网查看</button>
+                    </a>
+
+                    <a ng-if="job.type==1"
+                       href="http://www.goodhunter.com/v/job/detail?job_id={{job.jobId}}"
+                       target="_blank">
+                        <button type="button" class="btn btn-block btn-default"> 去好猎友查看</button>
+                    </a>
+
+                    <a ng-if="job.type==4"
+                       href="http://www.liebide.com/Job/{{job.jobId}}"
+                       target="_blank">
+                        <button type="button" class="btn btn-block btn-default"> 去猎必得查看</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        基本信息
+                    </div>
+                    <div class="panel-body">
+                        <custom-form-show field-list="fieldList.basic" entity="job"
+                                          class="custom-form-inline"></custom-form-show>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        岗位要求
+                    </div>
+                    <div class="panel-body">
+                        <custom-form-show field-list="fieldList.requires" entity="job"
+                                          class="custom-form-inline"></custom-form-show>
+                    </div>
+                </div>
+
+                <div class="panel panel-default" ng-show="!!job.tags || !!job.jobLights">
+                    <div class="panel-heading">
+                        职位亮点
+                    </div>
+                    <div class="panel-body">
+                        <div style="padding-left:50px;"
+                             class="row form-group custom-form-group custom-form-inline custom-form-show-group custom-form-show-group-textarea"
+                             ng-show="!!job.tags">
+                            <span class="label label-yellow" ng-repeat="tag in job.tags">{{tag}}</span>
+                        </div>
+
+                        <div style="padding-left:50px;"
+                             class="row form-group custom-form-group custom-form-inline ustom-form-show-group custom-form-show-group-textarea"
+                             ng-show="!!job.jobLights">
+                            <custom-field-show field-info="fieldList.lights.jobLights" entity="job"
+                                               class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        职位描述
+                    </div>
+                    <div class="panel-body">
+                        <div style="padding-left:50px;"
+                             class="row form-group custom-form-inline custom-form-group custom-form-show-group custom-form-show-group-textarea">
+                            <custom-field-show field-info="fieldList.desc.jobDesc" entity="job"
+                                               class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default"
+                     ng-show="!!job.jobRequirements || !!job.targetEnterprise || !!job.interview || !!job.others">
+                    <div class="panel-heading">
+                        其他要求
+                    </div>
+                    <div class="panel-body">
+                        <custom-form-show field-list="fieldList.others" entity="job"
+                                          class="custom-form-inline"></custom-form-show>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4 align="center">{{job.channelCompany.companyName}}</h4>
+                        <custom-form-show field-list="fieldList.company" class="custom-form-inline"
+                                          entity="job.channelCompany"></custom-form-show>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

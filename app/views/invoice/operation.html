@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        {{title}}
+    </h3>
+</div>
+
+<div class="modal-body">
+
+    <form class="panel-body" name="invoiceInfo">
+
+        <div class="row form-group custom-form-group custom-form-inline" ng-if="operationType==3">
+            <label class="control-label">
+                发票金额
+            </label>
+            <label class="form-field-wrap form-field-show-wrap">
+                {{invoice.Finvoice_amount}}
+            </label>
+        </div>
+
+        <custom-form field-list="basicForm" entity="invoice"
+                     class="form-horizontal custom-form-inline"
+                     base-form="invoiceInfo"
+                     ng-if="!isShow&&!!invoice"></custom-form>
+
+        <custom-form-show field-list="basicForm" entity="invoice"
+                          class="form-horizontal custom-form-inline"
+                          ng-if="isShow&&!!invoice"></custom-form-show>
+    </form>
+</div>
+
+<div class="modal-footer" style="">
+    <button type="button" ng-click="ok()" class="btn btn-success" data-dismiss="modal" ng-if="!isShow">保存</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal" ng-if="!isShow">取消</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal" ng-if="isShow">返回</button>
+</div>

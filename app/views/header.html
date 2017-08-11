@@ -1,0 +1,235 @@
+<!-- Top Header -->
+<!--===================================================-->
+<div class="top-header clearfix">
+
+    <!--Brand logo & name-->
+    <!--================================-->
+    <div class="logo {{admin.logo}}" ui-sref="home">
+        <div class="logo-title">
+            <img src="images/logo.png">
+            猎管家
+        </div>
+        <div class="logo-icon">
+            <img src="images/logo.png">
+        </div>
+    </div>
+    <!--================================-->
+    <!-- End Brand logo & name-->
+
+    <!-- needs to be put after logo to make it working-->
+    <div class="menu-button" data-toggle-off-canvas>
+        <a href="javascript:void(0)">
+            <i class="fa fa-fw fa-dedent"></i>
+        </a>
+    </div>
+
+    <!--Navbar Dropdown-->
+    <!--================================-->
+    <div class="top-nav">
+        <!--<ul class="nav-left list-unstyled">-->
+
+        <!--&lt;!&ndash;Profile toogle button&ndash;&gt;-->
+        <!--&lt;!&ndash;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~&ndash;&gt;-->
+        <!--<li class="hidden-xs hide" data-toggle-profile=""></li>-->
+        <!--&lt;!&ndash;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~&ndash;&gt;-->
+        <!--&lt;!&ndash;End Profile toogle button&ndash;&gt;-->
+
+
+        <!--<li>-->
+        <!--<a href="javascript:void(0)" ng-click="back()" title="返回上一页">-->
+        <!--<i class="fa fa-chevron-left fa-lg"></i>-->
+        <!--</a>-->
+        <!--</li>-->
+
+        <!--</ul>-->
+
+
+        <ul class="nav-right pull-right list-unstyled">
+
+            <li>
+                <quick-search></quick-search>
+            </li>
+
+            <!--Fullscreen Toggle Button-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--<li class="hidden-xs hidden-sm" data-fullscreen-Mode></li>-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--End Fullscreen Toggle Button-->
+
+            <li class="dropdown" data-on-toggle="toggled(open)" uib-dropdown>
+                <a href="javascript:void(0)" uib-dropdown-toggle>
+                    <i class="iconfont icon-add"></i>
+                </a>
+                <ul class="dropdown-menu with-arrow pull-right" uib-dropdown-menu>
+                    <li>
+                        <a href="/#/candidate/add">
+                            新增人才
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/#/company/add">
+                            新增公司
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/#/project/add">
+                            新增项目
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!--Language Selector-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <li class="dropdown langs text-normal" data-ng-controller="LangCtrl" uib-dropdown
+                data-on-toggle="toggled(open)" ng-show="false">
+                <a href="javascript:void(0)" class="dropdown-toggle" uib-dropdown-toggle> {{lang}} </a>
+
+                <!--Language Selector Submenu-->
+                <ul class="dropdown-menu with-arrow pull-right list-langs" role="menu"
+                    uib-dropdown-menu>
+                    <li data-ng-show="lang !== 'English' ">
+                        <a href="javascript:void(0)" data-ng-click="setLang('English')">English</a>
+                    </li>
+                    <li data-ng-show="lang !== '中文' ">
+                        <a href="javascript:void(0)" data-ng-click="setLang('中文')">中文</a>
+                    </li>
+                </ul>
+                <!--End Language Selector Submenu-->
+
+            </li>
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--End Language Selector-->
+
+            <!--Notification Dropdown-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <li class="dropdown notification-dropdown" uib-dropdown data-on-toggle="toggled(open)"
+                auto-close="outsideClick" is-open="notificationDropdown.isOpen">
+                <a href="javascript:void(0)" class="dropdown-toggle" uib-dropdown-toggle>
+                    <i class="iconfont icon-remind"></i>
+                    <span class="badge badge-header badge-success"
+                          ng-if="notification.total > 0">{{notification.total}}</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right panel with-arrow animated animate-fast fadeInDown"
+                     uib-dropdown-menu is-open="status.isopen">
+                    <div class="panel-heading">通知</div>
+                    <div data-slim-scroll="" data-scroll-height="330px">
+                        <div class="widget-comments">
+                            <notification-card notification="notification"
+                                               ng-repeat="notification in notification.list"></notification-card>
+                        </div>
+                        <p class="text-center" ng-if="notification.total == 0">没有通知</p>
+                    </div>
+                    <!-- Notification Footer-->
+                    <div class="panel-footer" style="text-align: center">
+                        <a href="/#/notification" ng-click="hideNotificationDropdown()">显示所有通知</a>
+                    </div>
+                </div>
+            </li>
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--End Notification Dropdown-->
+
+            <li class="dropdown" uib-dropdown data-on-toggle="toggled(open)"
+                auto-close="disabled" is-open="taskDropdown.isOpen">
+                <a ui-sref="task_calendar">
+                    <i class="iconfont icon-date" ng-click="taskDropdown.isOpen = false"></i>
+                    <span class="badge badge-header badge-success"
+                          ng-if="task.total > 0">{{task.total}}</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right panel with-arrow animated animate-fast fadeInDown"
+                     uib-dropdown-menu is-open="status.isopen">
+                    <div class="panel-heading">
+                        <i class="fa fa-close pull-right" ng-click="taskDropdown.isOpen = false"
+                           style="padding: 4px; cursor: pointer"></i>
+
+                        提醒
+                        <button type="button" class="btn btn-primary btn-xs"
+                                style="vertical-align: baseline; margin-left: 10px;"
+                                ng-if="!task.canPush && task.canRequirePush"
+                                ng-click="requestPushPermission()">添加桌面提醒
+                        </button>
+                        <help-hint ng-if="!task.canPush && task.canRequirePush"
+                                   message="添加桌面提醒（需使用谷歌的 Chrome 浏览器）后，您只要用电脑登录着猎管家系统，无论您在电脑上操作其他任何界面，都不会再错过提醒通知了！"></help-hint>
+                    </div>
+                    <div data-slim-scroll="" data-scroll-height="330px">
+                        <div class="widget-comments">
+                            <task-item ng-repeat="task in task.showList" event="task" no-checkbox="1"
+                                       ng-click="toCalendar($event)"></task-item>
+                        </div>
+                    </div>
+                    <!-- Notification Footer-->
+                    <div class="panel-footer" style="text-align: center">
+                        <a ui-sref="task_calendar" ng-click="hideTaskDropdown()">查看更多</a>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <a ui-sref="mail.inbox({ type: 1 })">
+                    <i class="iconfont icon-email"></i>
+                    <!--<span data-i18n="Mail"></span>-->
+                </a>
+            </li>
+
+            <!--User Dropdown-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <li class="dropdown text-normal nav-profile" uib-dropdown data-on-toggle="toggled(open)">
+                <a href="javascript:void(0)" class="dropdown-toggle" uib-dropdown-toggle>
+                    <!--<i class="fa fa-user"></i>-->
+                    <span>{{account.name}}</span>
+                    <i class="iconfont icon-arrow-down"></i>
+                    <!--<i class="notice-point" ng-if="$root.hasNotice()"></i>-->
+                </a>
+
+                <!--User Dropdown Submenu-->
+                <ul class="dropdown-menu with-arrow pull-right" uib-dropdown-menu>
+                    <li>
+                        <a ui-sref="profile">
+                            <span data-i18n="My Profile"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ui-sref="release_note">
+                            <span data-i18n="release note"></span>
+                            <i class="notice-point" ng-if="$root.notice.updatedVersion"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://support.lieguanjia.com/support/%E7%AE%80%E5%8E%86%E4%B8%8B%E8%BD%BD%E6%8F%92%E4%BB%B6/"
+                           target="_blank">
+                            <span data-i18n="resume helper"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://support.lieguanjia.com" target="_blank">
+                            <span data-i18n="help center"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="logout()">
+                            <span data-i18n="Log Out"></span>
+                        </a>
+                    </li>
+                </ul>
+                <!--End User Dropdown Submenu-->
+
+            </li>
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--End User Dropdown-->
+
+            <!--Right Sidebar Button-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--<li class="hidden-xs"><a href="javascript:void(0)" data-right-Sidebar><i class="fa fa-indent fa-lg"></i></a></li>-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--End Right Sidebar Button-->
+
+        </ul>
+    </div>
+    <!--================================-->
+    <!--End Navbar Dropdown-->
+
+</div>
+<!-- End Top Header -->
+<!--===================================================-->

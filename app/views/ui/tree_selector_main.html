@@ -1,0 +1,12 @@
+<div ng-if="editing" class="tree-selector-main">
+    <div class="tree-selector-filter">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input type="text" ng-model="treeFilter">
+    </div>
+    <treecontrol class="tree-classic" tree-model="dataForTheTree" options="treeOptions"
+                 on-selection="updateSelected(node, selected)" expanded-nodes="expandedNodes"
+                 selected-nodes="selectedNodes" filter-expression="treeFilter">
+        <input type="checkbox" ng-checked="selectedMap[node.id]">
+        <span ng-bind-html="node | i18n | highlight : treeFilter"></span>
+    </treecontrol>
+</div>

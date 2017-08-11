@@ -1,0 +1,17 @@
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-repeat="form in settingNav.form[moduleId].subForm"
+        ng-class="{active: $state.params.formName == form.name}">
+        <a href="" ng-click="switchTo(form.name)">
+            {{form | i18n}}
+        </a>
+    </li>
+</ul>
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-repeat="type in settingNav.form[moduleId].subType"
+        ng-class="{active: ($state.params.type == type.name && (!$state.params.fieldGroup || $state.params.fieldGroup == type.fieldGroup))}">
+        <a href="" ng-click="switchTo(null, type.name, type.fieldGroup)">
+            {{type | i18n}}
+        </a>
+    </li>
+</ul>
+<ui-view></ui-view>

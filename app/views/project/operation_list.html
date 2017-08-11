@@ -1,0 +1,118 @@
+<div class="left-side">
+    <span class="operation-time">{{operation.time | tigerDatetime : 1 }}</span>
+    <br>
+    <a>{{operation.operator | i18n}}</a>
+</div>
+<div class="right-side">
+    <ng-switch on="operation.status.value" class="right-side-main">
+        <div ng-switch-when="1">
+            <h5>
+                {{operation.status | i18n}}
+            </h5>
+        </div>
+
+        <div ng-switch-when="3">
+            <!-- 面试 -->
+            <h5>
+                {{operation.status | i18n}} -
+                <em ng-if="operation.data.interviewCount" class="addition">
+                    {{operation.data.interviewCount}}面
+                </em>
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.pipeline.interview(rowItem, operation)"
+                        ng-if="listKey!=9&&listKey!='projectInvoice'">编辑
+                </button>
+            </h5>
+            <p ng-if="operation.data.interviewTime">
+                面试时间：{{operation.data.interviewTime | tigerDatetime}}
+            </p>
+            <p ng-if="operation.data.interviewer">
+                面试官：{{operation.data.interviewer}}
+            </p>
+            <p ng-if="operation.data.place">
+                面试地点：{{operation.data.place}}
+            </p>
+        </div>
+
+        <div ng-switch-when="4">
+            <!-- Offer -->
+            <h5>
+                {{operation.status | i18n}} -
+                <ng-switch on="operation.data.offerStatus" class="addition">
+                    <em ng-switch-when="0">待定</em>
+                    <em ng-switch-when="1">接受</em>
+                    <em ng-switch-when="2">拒绝</em>
+                </ng-switch>
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.pipeline.offer(rowItem, operation)"
+                        ng-if="listKey!=9&&listKey!='projectInvoice'">编辑
+                </button>
+            </h5>
+            <p>
+                薪资结构：(总计 {{operation.data.salary | tigerMoney : true}})<br>
+            </p>
+            <ul>
+                <li ng-repeat="salary in operation.data.salaryList">
+                    {{config.salaryType[salary.type]}}: {{salary.salary | tigerMoney : true}} × {{salary.count}}
+                </li>
+            </ul>
+            <p>
+                收费金额：{{operation.data.fee | tigerMoney : true}}
+            </p>
+            <p ng-if="operation.data.waitTime">
+                待定时间：{{operation.data.waitTime | tigerDate}}
+            </p>
+            <p ng-if="operation.data.planEntryTime">
+                预计入职时间：{{operation.data.planEntryTime | tigerDate}}
+            </p>
+            <p ng-if="operation.data.signTime">
+                签订时间：{{operation.data.signTime | tigerDate}}
+            </p>
+            <p ng-if="operation.data.rejectTime">
+                拒绝时间：{{operation.data.rejectTime | tigerDate}}
+            </p>
+        </div>
+
+        <div ng-switch-when="5">
+            <!-- 入职 -->
+            <h5>
+                {{operation.status | i18n}}
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.pipeline.entry(rowItem, operation)"
+                        ng-if="listKey!=9&&listKey!='projectInvoice'">编辑
+                </button>
+            </h5>
+            <p ng-if="operation.data.entryTime">
+                入职时间：{{operation.data.entryTime | tigerDate}}
+            </p>
+            <p ng-if="operation.data.guaranteeEndTime ">
+                保证期结束：{{operation.data.guaranteeEndTime | tigerDate}}
+            </p>
+        </div>
+
+        <div ng-switch-when="-1">
+            <!-- 淘汰 -->
+            <h5>
+                {{operation.status | i18n}} -
+                <ng-switch on="operation.data.rejectType" class="addition">
+                    <em ng-switch-when="0">待定</em>
+                    <em ng-switch-when="1">客户淘汰</em>
+                    <em ng-switch-when="2">候选人拒绝</em>
+                </ng-switch>
+                <button type="button" class="btn btn-xs btn-default pull-right"
+                        ng-click="operationFunc.pipeline.reject(rowItem, operation)"
+                        ng-if="listKey!=9&&listKey!='projectInvoice'">编辑
+                </button>
+            </h5>
+            <p>
+                淘汰原因：{{operation.data.rejectReason}}
+            </p>
+        </div>
+
+        <div ng-switch-default>
+            <h5>
+                {{operation.status | i18n}}
+            </h5>
+        </div>
+    </ng-switch>
+</div>

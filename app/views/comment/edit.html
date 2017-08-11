@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3>备注</h3>
+</div>
+
+<div class="modal-body">
+    <form class="panel-body" name="commentInfo">
+
+        <div class="row form-group custom-form-group"
+             ng-if="config.commentFields.typeFieldInfo.itemList">
+            <label class="control-label">
+                <span class="text-red">*</span>
+                <span>备注类型</span>
+            </label>
+            <custom-field entity="commentData" field-info="config.commentFields.typeFieldInfo"
+                          class="form-field-wrap"></custom-field>
+        </div>
+
+        <div class="row form-group custom-form-group"
+             ng-if="config.commentFields.subtypeFieldInfo.itemList">
+            <label class="control-label">
+                <span>人才状态</span>
+            </label>
+            <custom-field entity="commentData" field-info="config.commentFields.subtypeFieldInfo"
+                          class="form-field-wrap"></custom-field>
+        </div>
+
+        <custom-form field-list="customForm[commentData.typeItem.title]" entity="commentCustomData"
+                     class="form-horizontal"
+                     base-form="commentInfo"></custom-form>
+
+        <div ng-if="commentData[config.commentFields.creatorFieldInfo.name]"
+             class="row form-group custom-form-group custom-form-inline custom-form-show-group custom-form-show-group-{{config.commentFields.creatorFieldInfo.dataType}}">
+            <label class="control-label">
+                <span>创建者</span>
+            </label>
+            <custom-field-show entity="commentData" field-info="config.commentFields.creatorFieldInfo"
+                               class="form-field-wrap form-field-show-wrap"></custom-field-show>
+
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <form-error-hint tiger-form="commentInfo" ng-if="commentInfo.$submitted"></form-error-hint>
+
+    <button type="button" ng-click="ok()" class="btn btn-primary" data-dismiss="modal">保存</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

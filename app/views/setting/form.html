@@ -1,0 +1,61 @@
+<script type="text/ng-template" id="form_field_nodes.html">
+    <div class="tree-node">
+        <div class="pull-left tree-handle" ui-tree-handle>
+            <span class="glyphicon glyphicon-list"></span>
+        </div>
+        <div class="tree-node-content">
+            <div>
+                <span style="min-width:100px;display: inline-block">
+                    {{node | i18n}}({{node.name}})
+
+                    <!--<span ng-if="node.generateType == 2" class="text-muted">-->
+                        <!--({{node.name}})-->
+                    <!--</span>-->
+                </span>
+
+                <label>
+                    <input type="checkbox" ng-model="node.display" ng-true-value="1" ng-false-value="0" ng-disabled="isDisableDisplayNode(node)"> 显示
+                </label>
+                <label>
+                    <input type="checkbox" ng-model="node.required" ng-true-value="1" ng-false-value="0"> 必填
+                </label>
+                <label ng-if="!isCommentForm && (node.generateType == 2 || !node.id)">
+                    <input type="checkbox" ng-model="node.canTable" ng-true-value="1" ng-false-value="0"> 显示到表格
+                </label>
+                <label ng-if="!isCommentForm && (node.generateType == 2 || !node.id)">
+                    <input type="checkbox" ng-model="node.canSearch" ng-true-value="1" ng-false-value="0"> 可搜索
+                </label>
+            </div>
+            <div ng-if="!node.generateType || node.generateType == 2">
+                <button class="btn btn-success btn-xs" ng-click="editField($index)">编辑</button>
+                <button class="btn btn-danger btn-xs" ng-click="deleteField($index)">删除</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-default" ng-class="{'panel-loading':loading}">
+            <div class="panel-body">
+                <div style="padding: 10px 0;">
+                    <button type="button" class="btn btn-primary btn-sm"
+                            ng-click="addField(!isCommentForm ? fieldGroup: null)">
+                        <i class="fa fa-plus"></i>
+                        新增字段
+                    </button>
+                </div>
+                <div ui-tree data-clone-enabled="false" class="angular-ui-tree">
+                    <ol ui-tree-nodes="" ng-model="treeData" class="field-nodes">
+                        <li ng-repeat="node in treeData" ui-tree-node class="field-node"
+                            ng-include="'form_field_nodes.html'"
+                            ng-if="!fieldGroup || node.fieldGroup==fieldGroup"></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel-body" ng-if="!isCommentForm">
+                <button type="button" class="btn btn-success" ng-click="saveForm()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

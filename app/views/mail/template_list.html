@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-sm-2 custom-form-group">
+                <button class="btn btn-primary" ng-click="updateTemplate()">新增模板</button>
+            </div>
+            <table class="table">
+                <thead>
+                <tr class="table-head">
+                    <th>模板名称</th>
+                    <th>邮件主题</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="item in list" class="custom-table-row">
+                    <td>{{item.title}}</td>
+                    <td>{{item.subject}}</td>
+                    <td>
+                        <a class="cursor-pointer" ng-click="updateTemplate(item)">编辑</a>
+                        |
+                        <a class="cursor-pointer" ng-click="deleteTemplate(item.id)">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <ul uib-pagination total-items="pageState.total" items-per-page="pageState.listLength"
+                    ng-model="pageState.page" max-size="10" class="pagination-sm"
+                    boundary-link-numbers="true"
+                    previous-text="<" next-text=">"></ul>
+            </div>
+        </div>
+    </div>
+</div>

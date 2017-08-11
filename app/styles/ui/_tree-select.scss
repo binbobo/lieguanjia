@@ -1,0 +1,107 @@
+tree-selector {
+    display: block;
+}
+
+.tree-selector-wrap {
+    min-width: 300px;
+}
+
+.tree-selector-main {
+    position: absolute;
+    z-index: 100;
+    background: #fff;
+    padding: 10px 0;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+    .tree-classic > ul {
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+}
+
+.custom-form-group .form-control.tree-selector-input {
+    padding: 1px 0;
+}
+
+.tree-selector-input {
+    padding-right: 16px;
+    position: relative;
+
+    height: auto;
+    min-width: 150px;
+    min-height: 28px;
+    // padding: 1px;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #c7d3d6;
+        background-color: #edf1f2;
+    }
+
+    .toggle-button {
+        position: absolute;
+        padding: 3px;
+        right: 6px;
+        top: 0;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        .close-button {
+            font-size: 120%;
+        }
+    }
+
+    .close-button {
+        display: none;
+    }
+
+    &.opened {
+        .open-button {
+            display: none;
+        }
+
+        .close-button {
+            display: inline-block;
+        }
+    }
+}
+
+.tree-selector-filter {
+    position: relative;
+    padding: 0 10px;
+    margin-bottom: 8px;
+
+    .fa {
+        position: absolute;
+        left: 18px;
+        top: 6px;
+    }
+
+    input {
+        display: block;
+        width: 100%;
+        padding-left: 21px;
+
+        line-height: 20px;
+    }
+}
+
+.tree-selector-seleted.label {
+    // height: 24px;
+    // line-height: 24px;
+    // font-size: 12px;
+    // margin: 1px 2px;
+    vertical-align: middle;
+
+    a {
+        font: bold 16px Arial, sans-serif;
+        cursor: pointer;
+        vertical-align: middle;
+        // color: #fff;
+        color: inherit;
+        margin-left: 5px;
+    }
+}

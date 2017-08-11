@@ -1,0 +1,38 @@
+<div class="user-guide" ng-class="{
+shadow: stepNo > 0,
+}" ng-show="stepNo > 0">
+
+    <div ng-show="stepNo == 3" class="full-window-step step-3">
+        <div class="message">
+            <i class="close-btn" ng-click="reject()"></i>
+
+            点击“+”，可快速添加人才、公司、项目
+            <div>
+                <button class="btn btn-primary" ng-click="resolve()">朕知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="stepNo == 4" class="full-window-step step-4">
+        <div class="message">
+            <i class="close-btn" ng-click="reject()"></i>
+
+            点击“搜索图标”，可快速搜索所有人才、公司、项目。
+            <div>
+                <button class="btn btn-primary" ng-click="resolve()">朕知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="stepNo == 5" class="full-window-step step-5">
+        <div class="message">
+            <i class="close-btn" ng-click="reject()"></i>
+
+            点击【设置】→【用户管理】→【邀请同伴】，<br>
+            邀请同伴，成单更轻松。
+            <div>
+                <button class="btn btn-primary" ng-click="resolve()">朕知道了</button>
+            </div>
+        </div>
+    </div>
+</div>

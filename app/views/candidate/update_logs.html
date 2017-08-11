@@ -1,0 +1,31 @@
+<div class="panel panel-default" ng-if="updateLogs.length">
+    <ul class="panel-body update-logs">
+        <li ng-repeat="log in updateLogs">
+            <div class="left-side">
+                <div class="time">
+                    <h4>{{log.time * 1000 | date : 'HH:mm'}}</h4> {{log.time | tigerDate}}
+                </div>
+                <br>
+                <div class="operator">
+                    {{log.operator | i18n}}
+                </div>
+            </div>
+
+            <div class="right-side">
+                <div ng-repeat="(subItemName, subItem) in log.updateMap" class="sub-item">
+                    <h5 class="table-info-title">
+                      {{(subItem | firstItem).tableInfo | i18n}}
+                    </h5>
+
+                    <div ng-repeat="updateItem in subItem" ng-init="fixData(updateItem)" class="update-item">
+                        <span class="field-name">{{updateItem.fieldInfo | i18n}}：</span>
+
+                        <custom-field-show class="old-value" ng-if="updateItem.values.oldValue !== ''"
+                            entity="updateItem.values" field-info="updateItem.fieldInfoOld"></custom-field-show>
+                        <custom-field-show class="new-value" entity="updateItem.values" field-info="updateItem.fieldInfoNew"></custom-field-show>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

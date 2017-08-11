@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default" ng-class="{'panel-loading':loadList}">
+            <div class="panel panel-heading">
+                人选列表 ({{offset}} - {{offset + list_length}} / {{total}})
+                <div class="btn-group pull-right table-field-list" uib-dropdown is-open="status.isopen" auto-close="outsideClick ">
+                    <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle>显示/隐藏字段</button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                        <li ng-repeat="field in tableFieldList">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" ng-model="field.showTable" ng-true-value="1" ng-false-value="0"> {{field | i18n}}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <table class="table panel-body">
+                <thead class="list-table">
+                    <tr>
+                        <th ng-dblclick="sortBy({name: 'id', dataType: 'number'})">
+                            Id
+                            <span ng-if="sortByField.name == 'id'">
+                                {{sortByType > 0? '↑':'↓'}}
+                            </span>
+                            <span ng-if="sortByField.name != 'id'">
+                                -
+                            </span>
+                        </th>
+                        <th ng-repeat="fieldItem in tableFieldList" ng-if="fieldItem.showTable" ng-model="tableFieldList" ng-dblclick="sortBy(fieldItem)" data-drag="true" data-drop="true" jqyoui-draggable="{index: {{$index}}}" jqyoui-droppable="{index: {{$index}}}" data-jqyoui-options="{revert: 'invalid',revertDuration:0, hoverClass: 'drop-hover'}">
+                            {{fieldItem | i18n}}
+                            <span ng-if="sortByField.name == fieldItem.name">
+                              {{sortByType > 0? '↑':'↓'}}
+                            </span>
+                            <span ng-if="sortByField.name != fieldItem.name">
+                                -
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rowItem in list">
+                        <td ng-bind="rowItem.id"></td>
+                        <td ng-repeat="fieldItem in tableFieldList" ng-if="fieldItem.showTable">
+                            <ng-switch on="fieldItem.type">
+                                <div ng-switch-when="resume">
+                                    <a href="/#/candidate/{{rowItem[fieldItem.moduleItem][fieldItem.idField]}}">
+                                        <custom-field-show ng-if="!fieldItem.isArray" entity="rowItem[fieldItem.moduleItem]" field-info="fieldItem" class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                                        <custom-field-show ng-if="fieldItem.isArray" entity="rowItem[fieldItem.moduleItem] | firstItem" field-info="fieldItem" class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                                    </a>
+                                    <span ng-click="previewFile('resume', rowItem[fieldItem.moduleItem][fieldItem.idField])" class="glyphicon glyphicon-search"></span>
+                                </div>
+                                <div ng-switch-default>
+                                    <custom-field-show ng-if="!fieldItem.isArray" entity="rowItem[fieldItem.moduleItem]" field-info="fieldItem" class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                                    <custom-field-show ng-if="fieldItem.isArray" entity="rowItem[fieldItem.moduleItem] | firstItem" field-info="fieldItem" class="form-field-wrap form-field-show-wrap"></custom-field-show>
+                                </div>
+                            </ng-switch>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="panel-footer">
+                <ul uib-pagination total-items="total" items-per-page="list_length" ng-model="page" max-size="5" class="pagination-sm" boundary-link-numbers="true" previous-text="<" next-text=">"></ul>
+            </div>
+        </div>
+    </div>
+</div>

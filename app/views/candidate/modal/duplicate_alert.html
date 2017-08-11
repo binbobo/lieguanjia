@@ -1,0 +1,12 @@
+<div class="modal-body" style="text-align: center">
+    <p>检测到重复附件，是否跳转到已创建简历？</p>
+    <p ng-if="resumeAbstract">
+        姓名: {{resumeAbstract.name}}
+        <br> 电话: {{resumeAbstract.phone}}
+    </p>
+</div>
+<div class="modal-footer" style="text-align: center">
+    <button type="button" ng-click="cancel()" class="btn btn-success" data-dismiss="modal">前往</button>
+    <button type="button" ng-click="ok(true)" class="btn btn-default" data-dismiss="modal">不前往（丢弃当前附件）</button>
+    <button type="button" ng-click="ok(false)" class="btn btn-default" data-dismiss="modal">不前往（继续当前编辑）</button>
+</div>

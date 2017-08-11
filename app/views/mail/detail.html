@@ -1,0 +1,63 @@
+<section class="panel panel-default mail-container">
+    <div class="panel-body">
+        <div class="mail-options">
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <button class="waves-effect waves-button waves-float waves-default" type="button"
+                            ng-click="goBack()">
+                        返回
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mail-info">
+            <div class="media">
+                <!-- <a href="" class="pull-left">
+                        <img alt="" src="images/photos/user2.png" class="img-rounded img40_40" />
+                    </a> -->
+                <span class="pull-right">{{detail.receiveTime | tigerDatetime : 1}}</span>
+                <h5 class="text-primary nm">{{detail.subject}}</h5>
+                <span class="pull-left">
+                        <h6 class="text-muted" ng-if="detail.type==2&&detail.receiver">收件人: {{detail.receiver |
+                            arrayToStr}}</h6>
+                        <h6 class="text-muted" ng-if="detail.sender">发件人: {{detail.sender}}</h6>
+                        <h6 class="text-muted" ng-if="detail.type!=2&&detail.receiver">收件人: {{detail.receiver |
+                            arrayToStr}}</h6>
+                        <h6 class="text-muted" ng-if="detail.ccUser">抄送: {{detail.ccUser | arrayToStr}}</h6>
+                        <h6 class="text-muted" ng-if="detail.bccUser">暗送: {{detail.bccUser | arrayToStr}}</h6>
+                    </span>
+            </div>
+        </div>
+        <iframe id="iframe_content" name="iframe_content" width="100%" onload="this.height=iframe_content.document.body.scrollHeight" frameborder="0" ng-src="{{contentUrl}}" class="mail-content">
+        </iframe>
+
+        <div class="list-group panel-body attachment-list">
+            <div class="list-group-item" ng-repeat="attachmentItem in attachmentList">
+                <img class="pull-left" ng-src="/images/icon/{{config.fileMime2Icon[attachmentItem.fileType]}}.png"
+                     ng-if="config.fileMime2Icon[attachmentItem.fileType]">
+                <h5 class="list-group-item-heading" title="{{attachmentItem.fileName}}">
+                    <a target="_blank" ng-href="/api/file/download?id={{attachmentItem.id}}">
+                        {{attachmentItem.fileName}}
+                    </a>
+                </h5>
+                <p class="list-group-item-text">
+                    <span class="label label-primary" ng-bind="attachmentItem.subTypeItem | i18n"></span>
+                    <button type="button" class="btn btn-xs btn-success" ng-if="config.fileMime2Preview[attachmentItem.fileType]"
+                            ng-click="previewFile(config.fileMime2Preview[attachmentItem.fileType], attachmentItem.id)">
+                        预览
+                    </button>
+                    <a target="_blank" class="btn btn-xs btn-success" ng-href="/api/file/download?id={{attachmentItem.id}}">下载</a>
+                </p>
+            </div>
+        </div>
+        <div class="mail-actions">
+            <a href="javascript:;" data-ng-click="reply()" class="waves-effect waves-button waves-float waves-default"
+               data-ng-if="detail.type!=2">
+                <i class="fa fa-mail-reply"></i> 回复
+            </a>
+            <a href="javascript:;" data-ng-click="forward()" class="waves-effect waves-button waves-float waves-default">
+                <i class="fa fa-mail-forward"></i> 转发
+            </a>
+        </div>
+    </div>
+</section>

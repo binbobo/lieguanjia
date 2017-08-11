@@ -1,0 +1,30 @@
+<div class="page page-table">
+    <div class="row">
+        <div class="col-lg-12" data-ng-controller="taskCtrl">
+            <section class="panel panel-default">
+                <div class="panel-body unseen">
+                    <button data-ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
+                    <p><strong>Sorting:</strong></p>
+                    <!--<table data-ng-table="tableParams" class="table">
+                        <tbody data-ng-repeat="p in $data">
+                            <tr id="tr{{p.id}}" data-ng-class-odd="'odd'" data-ng-class-even="'even'">
+                                <td data-title="'id'" data-sortable="'id'">{{p.id}}</td>
+                                <td data-title="'remark'" data-sortable="'remark'">{{p.remark}}</td>
+                                <td data-title="'reminder_type'" data-sortable="'reminder_type'">{{config.reminder_type[p.reminder_type]}}{{p.reminder_type}}</td>
+                                <td data-title="'advance_time'" data-sortable="'advance_time'">{{p.advance_time}}</td>
+                            </tr>
+                        </tbody>
+                    </table>-->
+                    <table data-ng-table="tableParams" class="table">
+                        <tbody data-ng-repeat="p in $data">
+                            <tr id="tr{{p.id}}" data-ng-class-odd="'odd'" data-ng-class-even="'even'">
+                                <td ng-repeat="field in fields" data-title="field" data-sortable="field">{{p[field]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+        </div>
+    </div>
+</div>

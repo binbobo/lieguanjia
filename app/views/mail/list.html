@@ -1,0 +1,53 @@
+<div class="panel mail-container" ng-class="{'panel-loading':refreshing}">
+    <!--<div class="mail-options">-->
+    <!--<h4>收件箱</h4>-->
+    <!--</div>-->
+    <!-- todo style -->
+    <div class="panel-body" data-ng-controller="TabsDemoCtrl" style="overflow:auto;">
+        <tabset>
+            <tab heading="Primary">
+                <table class="table table-hover table-responsive" data-ng-controller="starrating" ng-class="{'no-data': mails.list.length == 0}">
+
+                    <tr ng-repeat="item in mails.list" ng-class="{1: 'mail-read', 0: 'mail-unread'}[item.readFlag]">
+                        <!--<td class="hidden-md" width="4%">-->
+                        <!--<div class="inbox-star" data-ng-click="starred(item)" data-ng-if="type!=4"><span ng-class="{1: 'fa fa-star', 0: 'fa fa-star-o'}[item.starred]"></span></div>-->
+                        <!--<i class="fa fa-inbox" data-ng-if="type==4" data-ng-click="reTrash(item.id)"></i>-->
+                        <!--</td>-->
+                        <!--<td class="hidden-xs" width="12%"><span class="label label-success"> Primary </span>-->
+                        <!--</td>-->
+                        <td width="15%" ng-click="toDetail(item.id, item.type)">
+                            <span data-ng-if="item.type==2||item.type==3">
+                                {{item.receiver | arrayToStr | fieldNull}}
+                            </span>
+                            <span data-ng-if="item.type!=2&&item.type!=3">
+                                <span ng-if="item.senderNick">{{item.senderNick}}</span>
+                                <span ng-if="!item.senderNick">{{item.sender}}</span>
+                            </span>
+                        </td>
+                        <td width="30%" ng-click="toDetail(item.id, item.type)">{{item.subject | fieldNull}}</td>
+                        <td><i ng-if="item.attCount" class="fa fa-paperclip">
+                            {{item.attCount}}</i></td>
+                        <td>
+                            <span>{{item.receiveTime | tigerDatetime : 1}}</span>
+                        </td>
+                        <td data-ng-if="type==1">
+                            <i class="fa fa-trash-o" data-ng-click="trash(item.id)"></i>
+                        </td>
+                    </tr>
+                </table>
+                <p ng-if="mails.list.length == 0" class="text-center">暂无数据</p>
+            </tab>
+        </tabset>
+    </div>
+    <div class="panel-body">
+        <div class="btn-group pull-right">
+            <button class="waves-effect waves-button waves-float waves-default" type="button"
+                    ng-click="page_mails(-1)"><i class="fa fa-chevron-left"></i></button>
+            <button class="waves-effect waves-button waves-float waves-default" type="button"
+                    ng-click="page_mails(1)"><i class="fa fa-chevron-right"></i></button>
+        </div>
+        <h6 class="pull-left pv-10"> 列表( {{now_offset+1}} -
+            {{(page_size+now_offset)>mails.total?mails.total:(page_size+now_offset)}} / {{mails.total}} )</h6>
+    </div>
+
+</div>

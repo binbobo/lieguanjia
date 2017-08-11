@@ -1,0 +1,81 @@
+<div class="second-menu">
+    <div class="panel panel-default" data-slim-scroll>
+        <div class="menu-title">
+            渠道
+        </div>
+        <div class="panel-heading">
+            <p>
+                <span>渠道</span>
+            </p>
+
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item quick-search-item tiger-list-item" ng-click="changeChannel(0)"
+                ng-class="{active: channelType == 0}">
+                <span class="badge">{{jobCounts.none}}</span> 所有渠道
+            </li>
+            <li class="list-group-item quick-search-item tiger-list-item" ng-click="changeChannel(2)"
+                ng-class="{active: channelType == 2}">
+                <span class="badge">{{jobCounts.hunteron}}</span> 猎上网
+            </li>
+            <li class="list-group-item quick-search-item tiger-list-item" ng-click="changeChannel(1)"
+                ng-class="{active: channelType == 1}">
+                <span class="badge">{{jobCounts.goodhunter}}</span> 好猎友
+            </li>
+            <li class="list-group-item quick-search-item tiger-list-item" ng-click="changeChannel(4)"
+                ng-class="{active: channelType == 4}">
+                <span class="badge">{{jobCounts.liebide}}</span> 猎必得
+            </li>
+        </ul>
+    </div>
+    <span href="" data-second-menu-toggle-collapsed>
+        <i class="iconfont icon-pull"></i>
+    </span>
+</div>
+<div>
+    <div class="panel panel-default" ng-class="{'panel-loading':loading}">
+        <form class="panel-body" ng-submit="updateList(true)">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="关键词" ng-model="keyword">
+                <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                    </span>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="panel panel-heading" style="padding-left: 7px;">
+        <span>共 <span style="color:#FF6600">{{pageState.total}}</span> 个职位</span>
+
+        <div ng-repeat="job in list">
+            <hr>
+            <span class="pull-right">{{job.refreshTime | tigerDate}}更新</span>
+            <!--<span class="pull-left">{{job.id}}-</span>-->
+            <h4 class="list-group-item-heading">
+                <a href="/#/channel/{{job.id}}">{{job.jobName}}</a>
+            </h4>
+
+            <p>预计佣金:
+                <span style="color:#FF6600">
+                        {{job.predictMinCommission | tigerMoney}}-{{job.predictMaxCommission | tigerMoney}}
+                    </span>
+                <span ng-show="!!job.guaranteePeriod">保证期:{{job.guaranteePeriod}}</span>
+            </p>
+            <p>
+                年薪:{{job.predictMinSalary | tigerMoney}}-{{job.predictMaxSalary | tigerMoney}} |
+                工作地:{{job.city}} |
+                学历:{{job.degree}} |
+                招聘人数:{{job.recruitNum}}人</p>
+            <p>渠道:{{channelTypes[job.type-1]}}</p>
+        </div>
+    </div>
+
+
+    <div class="panel-footer">
+        <ul uib-pagination total-items="pageState.totalAvailable" items-per-page="pageState.listLength"
+            ng-model="pageState.page" max-size="5" class="pagination-sm" boundary-link-numbers="true"
+            previous-text="<" next-text=">"></ul>
+        <span class="pull-right" ng-if="pageState.totalAvailable < pageState.total">只显示前100000条</span>
+    </div>
+</div>

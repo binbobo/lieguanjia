@@ -1,0 +1,8 @@
+@import "variable";
+@import "ui/common", "ui/ui_control", "ui/ui_tree", "ui/tree-select", "ui/form", "ui/table", "ui/fix";
+@import "ui/candidate", "ui/project", "ui/search", "ui/mail", "ui/preview", "ui/setting", "ui/comment", "ui/about";
+@import "ui/login", 'ui/quick_search', "ui/dashboard", 'ui/user_guide', 'ui/task', 'ui/second_menu';
+
+@media (max-width: 1200px) {
+    @import "ui/_pad";
+}

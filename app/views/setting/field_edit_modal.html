@@ -1,0 +1,79 @@
+<div class="modal-header">
+    <h4 class="modal-title">编辑字段</h4>
+</div>
+<div class="modal-body row">
+    <ul class="nav nav-pills nav-stacked col-sm-3">
+        <li role="presentation" ng-repeat="dataTypeItem in dataTypeList" ng-click="changeTo(dataTypeItem)"
+            ng-class="{'active':choose == dataTypeItem.name}">
+            <a class="cursor-pointer">{{dataTypeItem | i18n}}</a>
+        </li>
+    </ul>
+    <form class="col-sm-9" name="formFieldEditForm">
+        <div class="form-group"
+             ng-class="{'has-error' : formFieldEditForm.fieldName.$invalid && (formFieldEditForm.$submitted || formFieldEditForm.fieldName.$touched)}">
+            <label class="control-label">字段名称 <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="fieldName" ng-model="fieldItem.title"
+                   placeholder="字段名称（必填）" required>
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="fieldItem.required" ng-true-value="1"
+                       ng-false-value="0"> 必填
+            </label>
+        </div>
+
+        <div class="form-group" ng-if="choose | inArray : ['text', 'email']"
+             ng-class="{'has-error' : formFieldEditForm.fieldLength.$invalid && (formFieldEditForm.$submitted || formFieldEditForm.fieldLength.$touched)}">
+            <label class="control-label">长度 <span class="text-danger">*</span></label>
+            <input type="number" class="form-control" max="100" name="fieldLength" ng-model="fieldItem.maxLength"
+                   required>
+            <span class="error-text"
+                  ng-if="formFieldEditForm.fieldLength.$invalid && (formFieldEditForm.$submitted || formFieldEditForm.fieldLength.$touched)">
+                请输入1-100的数字
+            </span>
+        </div>
+
+        <div class="form-group" ng-if="choose | inArray : ['number']" ng-init="fieldItem.maxLength = null">
+            <label>最大值</label>
+            <input type="number" class="form-control" name="fieldLength" ng-model="fieldItem.maxLength">
+        </div>
+
+        <div class="form-group" ng-if="choose == 'multiselect'">
+            <label>限制</label>
+            <input type="number" class="form-control" name="fieldNumber" ng-model="fieldItem.number"
+                   required value="1">
+        </div>
+
+        <div class="form-group" ng-if="choose | inArray : dataTypeHasItemList"
+             ng-init="fieldItem.itemList = fieldItem.itemList || [{}]">
+            <label>选项</label>
+            <div ng-repeat="item in fieldItem.itemList track by $index" class="row">
+                <span class="col-sm-1">{{$index + 1}}</span>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="item.i18n.zh" class="input-control" placeholder="中文" required>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="item.i18n.en" class="input-control" placeholder="英文">
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-danger btn-xs" ng-click="fieldItem.itemList.splice($index, 1)">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="btn btn-default btn-xs" ng-click="fieldItem.itemList.push({});">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label>描述</label>
+            <textarea class="form-control" ng-model="fieldItem.desc"></textarea>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="ok()">确定</button>
+    <button type="button" class="btn btn-danger" ng-click="cancel()">取消</button>
+</div>

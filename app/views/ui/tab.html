@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs" ng-class="{'nav-justified': justified}">
+    <li ng-repeat="tab in tabs" ng-class="{active: $index==activeIndex, disabled: disabled}" heading="Panel Tab">
+        <a href="" ng-click="select($index)">{{tab}}</a>
+    </li>
+</ul>
+<div class="tab-content" ng-transclude></div>

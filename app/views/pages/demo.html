@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                自定义表单demo
+            </div>
+            <div class="panel-body">
+                <custom-form ng-init="customFormTest = {}"
+                             class="custom-form-inline"
+                             entity="customFormTest"
+                             field-list="config.taskForm"></custom-form>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">单独控件</div>
+            <div class="panel-body" ng-init="datetimeTest = null">
+                <tiger-date ng-model="datetimeTest"></tiger-date>
+                <tiger-date ng-model="datetimeTest" no-day="1"></tiger-date>
+
+                <tiger-datetime ng-model="datetimeTest"></tiger-datetime>
+            </div>
+            <div class="panel-body" ng-init="tigerSelectTest = null;tigerSelectTest2 = null;">
+                <h5>单选</h5>
+                <div style="padding: 10px 0">
+                    <tiger-select ng-model="tigerSelectTest" default-value="1" list-type="2001"></tiger-select>
+                </div>
+                <div style="padding: 10px 0">
+                    <tiger-select ng-model="tigerSelectTest" default-value="1" list-type="2001"
+                                  can-del="1"></tiger-select>
+                </div>
+                <div style="padding: 10px 0">
+                    <tiger-select ng-model="tigerSelectTest2" list-type="2001"></tiger-select>
+                </div>
+            </div>
+            <div class="panel-body" ng-init="tigerMultiSelectTest = []">
+                <h5>多选</h5>
+                <tiger-select ng-model="tigerMultiSelectTest" multi="1" default-value="1"
+                              list-type="2001"></tiger-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">old</div>
+            <div class="panel-body">
+                <span ng-bind="entity | json"></span> ------------------------------
+
+                <div ng-controller="demoController" ng-leave="editing = false" ng-click="editing = true">
+                    <form name="testform">
+                        <tiger-date ng-model="dt" name="test" ui-required="true"></tiger-date>
+                        {{dt}}
+
+                        <daterange class="form-group" ng-model="dt2" not-not-ended="0"
+                                   ui-required="required"></daterange>
+                        {{dt2}}
+                    </form>
+
+                    <!--<p class="input-group">-->
+                    <!--<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="dt" is-open="popup1.opened"-->
+                    <!--datepicker-options="dateOptions" ng-required="true" close-text="Close"/>-->
+                    <!--<span class="input-group-btn">-->
+                    <!--<button type="button" class="btn btn-default" ng-click="open1()"><i-->
+                    <!--class="glyphicon glyphicon-calendar"></i></button>-->
+                    <!--</span>-->
+                    <!--</p>-->
+
+
+                    <custom-form entity="entity" field-list="demoFL"></custom-form>
+                    <custom-form entity="entity" field-list="demoFL" class="custom-form-inline"></custom-form>
+                    {{entity|json}}
+
+                    <div class="row">
+                        <input type="file" nv-file-select="" uploader="fileUploader">
+                        <ul>
+                            <li ng-repeat="item in fileUploader.queue">
+                                {{item.file.name}}
+                                <button type="button" ng-click="myUpload(item)">upload</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ul class="input">
+                        <li ng-repeat="node in selectedNodes" class="label label-success">{{node.parent}} -
+                            {{node.label}}
+                        </li>
+                        <li>编辑</li>
+                    </ul>
+                    <div ng-if="editing">
+                        <input type="text" ng-model="treeFilter">
+                        <treecontrol class="tree-classic" tree-model="dataForTheTree" options="treeOptions"
+                                     on-selection="showSelected(node, selected)" selected-nodes="selectedNodes"
+                                     filter-expression="treeFilter">
+                            {{node.label}}
+                        </treecontrol>
+                    </div>
+                </div>
+
+                <help-hint message="helphelphelphelphelphelphelphelphelphelp" link="http://support.lieguanjia.com"
+                           picture="http://support.lieguanjia.com/wp-content/uploads/2016/12/7E5E52B7F5528C40F0E69DBD6DCF5776.gif"></help-hint>
+
+            </div>
+        </div>
+    </div>
+</div>

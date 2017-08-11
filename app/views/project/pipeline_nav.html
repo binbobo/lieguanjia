@@ -1,0 +1,44 @@
+<ul class="nav nav-pills pipeline-status-list">
+    <li role="presentation" ng-class="{'active': pipelineCurrentStatus == 'all'}">
+        <a ng-click="changePipelineCurrentStatus('all')">
+            全部
+            <span class="badge" ng-if="pipelineCount">{{pipelineCount.allResumeCount}}</span>
+        </a>
+    </li>
+    <li role="presentation" ng-class="{'active': pipelineCurrentStatus == 'join'}">
+        <a ng-click="changePipelineCurrentStatus('join')">
+            加入项目
+            <span class="badge" ng-if="pipelineCount">{{pipelineCount.joinCount}}</span>
+        </a>
+    </li>
+    <li role="presentation" ng-class="{'active': pipelineCurrentStatus == 'recommend'}">
+        <a ng-click="changePipelineCurrentStatus('recommend')">
+            简历推荐
+            <span class="badge" ng-if="pipelineCount">{{pipelineCount.recommendCount}}</span>
+        </a>
+    </li>
+    <li role="presentation" ng-class="{'active': pipelineCurrentStatus == 'interview'}">
+        <a ng-click="changePipelineCurrentStatus('interview')">
+            面试
+            <span class="badge" ng-if="pipelineCount">{{pipelineCount.interviewCount}}</span>
+        </a>
+    </li>
+    <li role="presentation" ng-class="{'active': pipelineCurrentStatus == 'offer'}">
+        <a ng-click="changePipelineCurrentStatus('offer')">
+            Offer
+            <span class="badge" ng-if="pipelineCount">{{pipelineCount.offerCount}}</span>
+        </a>
+    </li>
+    <li role="presentation" ng-class="{'active': pipelineCurrentStatus == 'entry'}">
+        <a ng-click="changePipelineCurrentStatus('entry')">
+            入职
+            <span class="badge" ng-if="pipelineCount">{{pipelineCount.entryCount}}</span>
+        </a>
+    </li>
+    <li role="presentation" ng-class="{'active': pipelineCurrentStatus == 'reject'}">
+        <a ng-click="changePipelineCurrentStatus('reject')">
+            淘汰
+            <span class="badge" ng-if="pipelineCount">{{pipelineCount.refuseCount}}</span>
+        </a>
+    </li>
+</ul>

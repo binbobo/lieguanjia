@@ -1,0 +1,18 @@
+<input type="number" class="form-control" name="{{name}}" ng-model="tmpMoney.value"
+    ng-required="required">
+<div uib-dropdown on-toggle="toggled(open)" class="input-group-btn">
+    <button type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+        <ng-switch on="tmpMoney.valueType">
+            <span ng-switch-when="1">元</span>
+            <span ng-switch-when="10000">万元</span>
+        </ng-switch>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+        <li ng-click="tmpMoney.valueType = 1">
+            <a href>元</a>
+        </li>
+        <li ng-click="tmpMoney.valueType = 10000">
+            <a href>万元</a>
+        </li>
+    </ul>
+</div>

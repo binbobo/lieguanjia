@@ -1,0 +1,27 @@
+<div class="tiger-ui-daterange">
+    <div class="tiger-ui-group">
+        <div class="tiger-ui-input">
+            <tiger-datetime ng-model="dateRange.Fstart_time" placeholder="开始时间" ng-if="!dateRange.wholeDay"
+                            append-to-body="appendToBody"></tiger-datetime>
+            <tiger-date ng-model="dateRange.Fstart_time" placeholder="开始时间" ng-if="dateRange.wholeDay"
+                        append-to-body="appendToBody"></tiger-date>
+        </div>
+        <div class="tiger-ui-input" style="vertical-align: middle">
+            <span style="padding: 0 10px;">到</span>
+        </div>
+        <div class="tiger-ui-input">
+            <tiger-datetime ng-model="dateRange.Fend_time" placeholder="结束时间" ng-if="!dateRange.wholeDay"
+                            append-to-body="appendToBody"></tiger-datetime>
+            <tiger-date ng-model="dateRange.Fend_time" placeholder="结束时间" ng-if="dateRange.wholeDay"
+                        append-to-body="appendToBody"></tiger-date>
+        </div>
+    </div>
+
+    <div class="tiger-ui-input" style="margin-top: 8px">
+        <label class="ui-checkbox">
+            <input name="checkbox1" type="checkbox" ng-model="dateRange.wholeDay" ng-true-value="1"
+                   ng-false-value="0">
+            <span>全天</span>
+        </label>
+    </div>
+</div>

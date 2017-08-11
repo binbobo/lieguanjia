@@ -1,0 +1,29 @@
+<div class="form-control tree-selector-input" ng-click="openTree($event)"
+     ng-class="{opened: editing}">
+    <div ng-repeat="node in selectedNodes track by $index" class="label label-white tree-selector-seleted">
+        {{node.title}}
+        <a class="remove-button" ng-click="removeNode($event,$index)">×</a>
+    </div>
+    <span>&nbsp;</span>
+    <div ng-click="toggleTree($event)" class="toggle-button" style="display: inline-block">
+        <i class="caret open-button"></i>
+        <span class="close-button">×</span>
+    </div>
+</div>
+
+<script type="text/ng-template" id="tree_selector_main.html">
+    <div class="tree-selector-wrap">
+        <div ng-if="editing" class="tree-selector-main">
+            <div class="tree-selector-filter">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" ng-model="treeControl.treeFilter">
+            </div>
+            <treecontrol class="tree-classic" tree-model="dataForTheTree" options="treeOptions"
+                         on-selection="updateSelected(node, selected)" expanded-nodes="expandedNodes"
+                         selected-nodes="selectedNodes" filter-expression="treeControl.treeFilter">
+                <input type="checkbox" ng-checked="selectedMap[node.id]">
+                <span ng-bind-html="node | i18n | highlight : treeControl.treeFilter"></span>
+            </treecontrol>
+        </div>
+    </div>
+</script>

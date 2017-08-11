@@ -1,0 +1,207 @@
+<script type="text/ng-template" id="choose_group.html">
+    <div class="tree-node">
+        <div class="tree-node-content">
+            <span class="collapse-btn fa" ng-class="{
+                'fa-chevron-right': collapsed,
+                'fa-chevron-down': !collapsed
+                }"
+                  ng-click="collapsed = !collapsed" ng-init="collapsed = false"
+                  ng-show="node.children.length"></span>
+
+            <label ng-click="updateSelection(node.id)" class="tiger-ui-checkbox">
+                <ng-switch on="selected[node.id]" class="tiger-checkbox" ng-if="node.permissionType > 0">
+                    <i class="fa fa-check tiger-checkbox-item tiger-checkbox-checked" ng-switch-when="1"></i>
+                    <i class="fa fa-minus tiger-checkbox-item" ng-switch-when="2"></i>
+                    <i class="tiger-checkbox-item" ng-switch-default></i>
+                </ng-switch>
+                {{node | i18n}}
+            </label>
+            <span class="pull-right single-line">
+            <span>
+             创建者:{{node.creator | i18n}}
+            </span>
+            <span ng-if="node.shareInfoList">
+                &nbsp;分享给:
+                <span ng-repeat="shareInfo in node.shareInfoList">
+                    <ng-switch on="shareInfo.shareType">
+                        <span ng-switch-when="1">
+                            所有人
+                            <span ng-if="!$last">,</span>
+                        </span>
+                        <span ng-switch-when="2">
+                            {{shareInfo.teamItems[0] | i18n}}
+                            <span ng-if="!$last">,</span>
+                        </span>
+                        <span ng-switch-when="3">
+                            {{shareInfo.colleagueItem | i18n}}
+                            <span ng-if="!$last">,</span>
+                        </span>
+                    </ng-switch>
+                </span>
+            </span>
+            </span>
+
+            <!--<label class="ui-checkbox">-->
+            <!--<input type="checkbox" ng-id={{node.id}} ng-checked="selected[node.id] == 1"-->
+            <!--ng-click="updateSelection(node.id)">-->
+
+
+            <!--<span>-->
+            <!--{{node | i18n}}-->
+            <!--</span>-->
+            <!--</label>-->
+        </div>
+    </div>
+    <ul ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.children"
+            ng-include="'choose_group.html'"
+            class="angular-ui-tree-node">
+        </li>
+    </ul>
+</script>
+
+<div class="modal-header" ng-if="isEdit">
+    <h3>
+        分组
+        <a class="pull-right btn btn-primary btn-sm" ng-click="newItem(treeData)" style="margin-right: 8px;">
+            <span class="glyphicon glyphicon-plus"></span>
+            添加新分组
+        </a>
+    </h3>
+</div>
+<div class="modal-header" ng-if="!isEdit">
+    <h3>
+        加入分组
+        <a class="pull-right btn btn-primary btn-sm" ng-click="edit()" style="margin-right: 8px;">
+            <span class="glyphicon glyphicon-edit"></span>
+            编辑分组
+        </a>
+    </h3>
+    <div style="padding-top: 10px;padding-left: 3px">
+        <b style="padding-right: 10px">提示:</b>
+        <span ng-repeat="type in [1,2,0]" ng-switch="type">
+        <label class="tiger-ui-checkbox">
+        <span class="tiger-checkbox">
+            <i class="fa fa-check tiger-checkbox-item tiger-checkbox-checked" ng-switch-when="1"></i>
+            <i class="fa fa-minus tiger-checkbox-item" ng-switch-when="2"></i>
+            <i class="tiger-checkbox-item" ng-switch-when="0"></i>
+        </span>
+        </label>
+        <label style="padding-right: 15px">
+        <span>
+            <b ng-switch-when="1">表示全选</b>
+            <b ng-switch-when="2">表示部分选中</b>
+            <b ng-switch-when="0">表示全部未选</b>
+        </span>
+        </label>
+    </span>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div ng-if="loading">Loading</div>
+
+    <div ng-if="isEdit && treeData.length > 0">
+        <t-tree-editor list="treeData" edit-node-func="editFolder" save-node-func="saveList"
+                       can-edit-node="checkPermission"></t-tree-editor>
+    </div>
+
+
+    <div class="angular-ui-tree tree-node-thin" ng-if="!isEdit && treeData.length > 0">
+        <ul>
+            <li ng-repeat="node in treeData" ng-include="'choose_group.html'"></li>
+        </ul>
+    </div>
+
+    <div ng-if="!loading && (!treeData || treeData.length == 0)">
+        暂无分组，点击右上角进行添加
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" ng-click="ok()" class="btn btn-success" ng-if="treeData.length > 0 && !isEdit"
+            data-dismiss="modal">保存
+    </button>
+    <button type="button" ng-if="!isEdit && !fromModal" ng-click="cancel()" class="btn btn-default"
+            data-dismiss="modal">关闭
+    </button>
+    <button type="button" ng-if="isEdit" ng-click="confirm()" class="btn btn-default" data-dismiss="modal">确定</button>
+</div>
+
+<!-- Edit Body End -->
+
+<script type="text/ng-template" id="folderDetailEditModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">编辑分组</h3>
+    </div>
+
+    <div class="modal-body">
+        <!--<custom-form field-list="config.taskForm" entity="calendarData"></custom-form>-->
+        <div class="row form-group">
+            <div class="col-sm-2">
+                <span class="text-red">*</span>
+                <span>分组名称</span>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" maxlength="15" class="form-control" name="title" ng-model="folderData.title">
+            </div>
+            <span ng-if="folderData.invalid" class="has-error">必填项</span>
+        </div>
+
+        <div class="form-group row" ng-if="canShare">
+            <div class="col-sm-2">共享</div>
+            <div class="col-sm-10">
+                <div ng-repeat="item in folderData.shareInfoList track by $index">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <ui-select name="shareType" theme="bootstrap" ng-model="item.shareType"
+                                       append-to-body="true"
+                                       on-select="uiSelectChange($item, $model);changeShareType(item)">
+                                <ui-select-match placeholder="请选择">
+                                    <span>{{shareTypeMap[$select.selected]}}</span>
+                                </ui-select-match>
+                                <ui-select-choices repeat="option in shareTypeList | filter: $select.search"
+                                                   value="{{option}}">
+                                    <div data-ng-bind-html="shareTypeMap[option]"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-sm-6" ng-if="item.shareType==2 || item.shareType==3">
+                            <custom-field entity="item" field-info="fieldsInfo.teamFieldInfo" class="form-field-wrap"
+                                          ng-if="item.shareType==2"></custom-field>
+                            <custom-field entity="item" field-info="fieldsInfo.colleagueFieldInfo"
+                                          class="form-field-wrap" ng-if="item.shareType==3"></custom-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <span ng-if="item.invalid">必填</span>
+                            <span class="glyphicon glyphicon-plus" ng-click="addItem()"></span>
+                            <span class="glyphicon glyphicon-remove" ng-click="removeItem($index)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4" ng-if="canShare">
+                <button ng-if="folderData.shareInfoList.length < 1" class="btn btn-xs btn-default" ng-click="addItem()">
+                    添加
+                </button>
+            </div>
+
+            <i class="glyphicon glyphicon-remove remove-btn" ng-click="removeMulti($index)"
+               ng-if="entity[name].length > 1"></i>
+        </div>
+
+
+        <div class="form-group row" ng-if="folderData.creator">
+            <div class="col-sm-2">创建者</div>
+
+            <div class="col-sm-10">{{folderData.creator | i18n}}</div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" ng-click="ok()" class="btn btn-success" data-dismiss="modal">保存</button>
+        <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+    </div>
+</script>

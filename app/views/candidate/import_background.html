@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                1、批量填充信息（留空则以系统解析结果为准）
+            </div>
+            <form class="panel-body" name="importForm">
+                <custom-form field-list="fields" entity="importTemplate" class="form-horizontal col-sm-11 custom-form-inline"
+                             base-form="importForm"></custom-form>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel panel-default" ng-class="{'panel-loading': loading}">
+            <div class="panel-heading">
+                2、填写路径（服务器上绝对路径）
+            </div>
+            <form class="panel-body" name="dirForm">
+                <div class="col-sm-12">
+                    <div class="row form-group custom-form-group custom-form-inline"
+                         ng-class="{'has-error': dirForm[dir].$invalid && (dirForm[dir].$touched || dirForm.$submitted)}">
+                        <label class="control-label">
+                            <span class="text-red">*</span>
+                            路径
+                        </label>
+                        <input type="text" class="form-control" name="dir" ng-model="dir" required="required">
+                    </div>
+                    <button type="button" class="btn btn-xs btn-default" ng-click="getResumeCount()"
+                            ng-disabled="uploading">
+                        检测
+                    </button>
+                    <span ng-show="resumeCount">当前目录下共有{{resumeCount}}份简历</span>
+                </div>
+            </form>
+        </div>
+        <div class="panel panel-default" ng-class="{'panel-loading': loading}">
+            <div class="panel-body">
+                <button type="button" class="btn btn-success" ng-click="upload()"
+                        ng-disabled="uploading || !dir"
+                        ng-if="!state || (state.sum<1 && state.untreated<1 && state.failed<1)">
+                    <span class="glyphicon glyphicon-upload"></span> 开始导入
+                </button>
+                <button type="button" class="btn btn-success" ng-click="continue()"
+                        ng-if="!!state && (state.failed>0 || state.untreated>0) && !uploading && state.sum-state.duplicate>0">
+                    <span class="glyphicon glyphicon-upload"></span> 继续/重试
+                </button>
+                <button type="button" class="btn btn-warning" ng-click="cancel()"
+                        ng-disabled="canneling" ng-if="uploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> 停止导入
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="clear()"
+                        ng-if="!uploading && !!state && !!state.sum && state.sum > 0">
+                    <span class="glyphicon glyphicon-ban-circle"></span> 清空
+                </button>
+
+            </div>
+
+            <div class="panel-body">
+                <uib-progress max="state.sum">
+                    <uib-bar value="state.success" type="default" ng-show="state.success">
+                        {{state.success}}
+                    </uib-bar>
+                    <uib-bar value="state.failed" type="danger" ng-show="state.failed">
+                        {{state.failed}}
+                    </uib-bar>
+                </uib-progress>
+                <div ng-if="!!state && state.sum > 0">
+                    <p>简历总数:{{state.sum}}</p>
+                    <p>
+                        失败:{{state.failed}}
+                        <span ng-if="state.duplicate > 0">(重复简历:{{state.duplicate}})</span>
+                    </p>
+                    <p>成功:{{state.success}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="7px" height="8px" viewBox="0 0 10 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop" transform="translate(-953.000000, -674.000000)" fill="#373D52">
+            <g id="下拉-(3)" transform="translate(939.000000, 574.000000)">
+                <g id="Group" transform="translate(0.000000, 0.007812)">
+                    <path d="M23.2202173,101.411118 C23.4605743,101.173842 23.5317411,100.820044 23.4019607,100.510036 C23.2721681,100.200861 22.9664744,100 22.6281906,100 L14.8374532,100 C14.4991453,100 14.1934516,100.201695 14.0636832,100.510036 C14.0209783,100.612546 14,100.720048 14,100.826693 C14,101.041626 14.0853978,101.253248 14.2453782,101.411153 L18.1412177,106.257046 C18.2986392,106.412449 18.5113792,106.499278 18.7332685,106.499278 C18.9551578,106.499278 19.1687548,106.411639 19.3253194,106.257046 L23.2202173,101.411118 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

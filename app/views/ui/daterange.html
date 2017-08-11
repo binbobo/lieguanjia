@@ -1,0 +1,18 @@
+<div class="tiger-ui-daterange">
+    <div class="tiger-ui-group">
+        <div class="tiger-ui-input">
+            <tiger-date ng-model="dateRange.Fstart_time" placeholder="开始时间" no-day="!notNoDay"></tiger-date>
+        </div>
+
+        <div class="tiger-ui-input" ng-if="!dateRange.Fnot_ended">
+            <tiger-date ng-model="dateRange.Fend_time" placeholder="结束时间" no-day="!notNoDay"></tiger-date>
+        </div>
+    </div>
+    <div class="tiger-ui-input" ng-if="!notNotEnded" style="margin-top: 8px">
+        <label class="ui-checkbox">
+            <input name="checkbox1" type="checkbox" ng-model="dateRange.Fnot_ended" ng-true-value="1"
+                   ng-false-value="0">
+            <span>至今</span>
+        </label>
+    </div>
+</div>

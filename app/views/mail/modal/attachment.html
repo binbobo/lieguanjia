@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <h3 class="modal-title">选择附件</h3>
+</div>
+
+<div class="modal-body">
+
+    <div class="btn-group panel-body">
+        <a class="btn btn-default" ng-class="{active: selectType == 31}" ng-click="changeType(31)">简历</a>
+        <a class="btn btn-default" ng-class="{active: selectType == 34}" ng-click="changeType(34)">项目</a>
+        <a class="btn btn-default" ng-class="{active: selectType == 35}" ng-click="changeType(35)">公司</a>
+        <!--<a class="btn btn-default" ng-class="{active: selectType == 36}" ng-click="changeType(36)">合同</a>-->
+        <a class="btn btn-default" ng-class="{active: selectType == 0}" ng-click="changeType(0)">本地</a>
+    </div>
+
+    <div class="panel-body">
+        <div ng-if="selectType == 0">
+
+            <label class="control-label">
+                附件
+            </label>
+
+            <input type="file" title="选择文件" ui-file-upload="" nv-file-select uploader="fileUploader">
+            <uib-progressbar value="onFileUpload"
+                             ng-if="onFileUpload >=0 && onFileUpload < 100"></uib-progressbar>
+        </div>
+        <div ng-if="selectType == 31">
+            <custom-field entity="relationItem" field-info="config.mailAttachmentSelectFields.resume"
+                          class="form-field-wrap"></custom-field>
+        </div>
+        <div ng-if="selectType == 34">
+            <custom-field entity="relationItem" field-info="config.mailAttachmentSelectFields.project"
+                          class="form-field-wrap"></custom-field>
+        </div>
+        <div ng-if="selectType == 35">
+            <custom-field entity="relationItem" field-info="config.mailAttachmentSelectFields.company"
+                          class="form-field-wrap"></custom-field>
+        </div>
+        <div ng-if="selectType == 36">
+            <custom-field entity="relationItem" field-info="config.mailAttachmentSelectFields.contract"
+                          class="form-field-wrap"></custom-field>
+        </div>
+    </div>
+
+    <div class="list-group panel-body attachment-list">
+        <div class="list-group-item" ng-repeat="attachmentItem in attachmentList">
+            <label class="pull-left col-lg-1" ng-if="selectType != 0">
+                <input type="checkbox" id={{attachmentItem.id}} ng-checked="isSelected(attachmentItem)"
+                       ng-click="updateSelection($event,attachmentItem)">
+            </label>
+            <img class="pull-left" ng-src="/images/icon/{{config.fileMime2Icon[attachmentItem.fileType]}}.png"
+                 ng-if="config.fileMime2Icon[attachmentItem.fileType]">
+            <h5 class="list-group-item-heading" title="{{attachmentItem.fileName}}">
+                <a target="_blank" ng-href="/api/file/download?id={{attachmentItem.id}}">
+                    {{attachmentItem.fileName}}
+                </a>
+            </h5>
+            <p class="list-group-item-text">
+                <span class="label label-primary" ng-bind="attachmentItem.subTypeItem | i18n"></span>
+                <button type="button" class="btn btn-xs btn-success"
+                        ng-if="config.fileMime2Preview[attachmentItem.fileType]"
+                        ng-click="previewFile(config.fileMime2Preview[attachmentItem.fileType], attachmentItem.id)">
+                    预览
+                </button>
+                <!--<a target="_blank" class="btn btn-xs btn-success"-->
+                <!--ng-if="!config.fileMime2Preview[attachmentItem.fileType]"-->
+                <!--ng-href="/api/file/download?id={{attachmentItem.id}}">下载</a>-->
+                <button type="button" class="btn btn-xs btn-danger" ng-click="removeAttachment($index)"
+                        ng-if="selectType == 0">删除
+                </button>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" ng-click="ok()" class="btn btn-success" data-dismiss="modal">确定</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

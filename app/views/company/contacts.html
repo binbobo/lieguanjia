@@ -1,0 +1,24 @@
+<div class="panel panel-default" ng-class="{'panel-loading':loading}">
+    <div class="btn-group panel-body">
+        <a class="btn btn-default" ng-class="{true:'active'}[isSelectType(1)]" ng-click="updateList(1)">客户联系人
+            {{groupTotal.contacts}}</a>
+        <a class="btn btn-default" ng-class="{true:'active'}[isSelectType(2)]" ng-click="updateList(2)">在职
+            {{groupTotal.onJob}}</a>
+        <a class="btn btn-default" ng-class="{true:'active'}[isSelectType(3)]" ng-click="updateList(3)">离职
+            {{groupTotal.leave}}</a>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <custom-list ng-if="fieldList.length" display-field-key-list="fieldInTable"
+                         title="列表" field-list="fieldList" data="list" on-thead-click="onTheadClick"
+                         sort-by-field="sortByField" sort-by-type="sortByType" page-state="pageState"
+                         loading="" module-id="{{moduleId}}" list-key="companyContacts" operation-func="operation">
+            </custom-list>
+        </div>
+    </div>
+    <div class="panel-body" ng-if="selectType==1">
+        <a ui-sref="candidate_add({companyId:companyId, resumeType: 12})"
+           class="btn btn-success btn-xs waves-effect waves-button waves-float">新增客户联系人</a>
+    </div>
+</div>

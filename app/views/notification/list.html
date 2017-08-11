@@ -1,0 +1,64 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="panel-title">通知列表</h5>
+    </div>
+    <div class="panel-body">
+        <div class="search-condition-group">
+            通知状态：
+            <select class="form-control input-sm" style="width: 150px;" ng-model="condition.read">
+                <option value="-1">不限</option>
+                <option value="0">未读</option>
+                <option value="1">已读</option>
+            </select>
+        </div>
+        <div class="search-condition-group">
+            通知类型：
+            <select class="form-control input-sm" style="width: 150px;" ng-model="condition.selectType">
+                <option value="">不限</option>
+                <option ng-repeat="type in notificationTypeList" ng-value="type.value" ng-bind="type | i18n"></option>
+            </select>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>类型</th>
+                <th>内容</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="notification in notificationList" ng-class="{strong: notification.read == 0}">
+                <td class="text-center">
+                    <em class="fa fa-exclamation-triangle text-danger" ng-if="notification.level >= 30"></em>
+                    <em class="fa fa-exclamation-circle text-warning"
+                        ng-if="notification.level >= 20 && notification.level < 30"></em>
+                    <em class="fa fa-exclamation"
+                        ng-if="notification.level >= 10 && notification.level < 20"></em>
+                </td>
+                <td ng-bind="notification.type | i18n"></td>
+                <td>
+                    <notification-content notification="notification"></notification-content>
+                </td>
+                <td ng-bind="notification.time | tigerDateRecent"></td>
+                <td>
+                    <button class="btn btn-default btn-xs" ng-click="read(notification)" ng-if="notification.read == 0">
+                        设为已读
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="text-center" ng-if="notificationList && notificationList.length == 0">没有通知</p>
+    </div>
+    <div class="panel-footer">
+        <ul uib-pagination total-items="pageState.totalAvailable" items-per-page="pageState.listLength"
+            ng-model="pageState.page" max-size="5" class="pagination-sm" boundary-link-numbers="true"
+            previous-text="<" next-text=">"></ul>
+        <button class="btn btn-default btn-sm pull-right" ng-click="readAll()">全部设置为已读</button>
+    </div>
+
+</div>

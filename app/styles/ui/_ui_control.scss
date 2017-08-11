@@ -1,0 +1,358 @@
+.dev {
+    color: blue;
+}
+
+.panel {
+    &.loading {
+        position: relative;
+
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+    }
+
+    .tiger-loading {
+        position: absolute;
+        left: 50%;
+        margin-left: -20px;
+    }
+
+    &.panel-loading {
+        position: relative;
+
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.3) url('/images/circle-loading-gif.gif') no-repeat center 20px;
+            background-size: 80px;
+            z-index: 10;
+        }
+    }
+
+    > .panel-heading {
+        padding-left: 15px;
+    }
+}
+
+.quick-edit {
+    min-width: 200px;
+
+    &.loading {
+        position: relative;
+
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        .popover-content & {
+            margin: -9px -15px;
+            padding: 9px 15px;
+        }
+    }
+}
+
+.pagination {
+    margin: 0;
+}
+
+treecontrol {
+    li {
+        padding: 0 0 0 8px;
+    }
+}
+
+.tiger-ui-checkbox {
+    margin-bottom: 0;
+}
+
+.tiger-checkbox {
+    margin-right: 4px;
+    color: #01a4a4;
+
+    .tiger-checkbox-item {
+        vertical-align: top;
+
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        padding: 1px 0 1px 2px;
+        font-size: 13px;
+        line-height: 14px;
+
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        background-color: #fff;
+
+        &.fa-minus {
+            padding: 2px 0 0 3px;
+        }
+    }
+
+    .tiger-checkbox-checked {
+        border: 1px solid #01a4a4;
+    }
+}
+
+.fullscreen-btn i {
+    padding: 2px 8px;
+}
+
+.tiger-list-item {
+    .badge {
+        background-color: #cbe3ff;
+    }
+}
+
+.pipeline-status-list li {
+    cursor: pointer;
+}
+
+.operation-list {
+    .right-side {
+        h5 {
+            background-color: #f7f7f7;
+            line-height: 24px;
+            font-size: 13px;
+            padding: 0 8px;
+
+            .addition {
+                font-size: 12px;
+                font-style: normal;
+
+                em {
+                    font-style: normal;
+                }
+            }
+        }
+
+        p {
+            padding-left: 8px;
+            margin: 0;
+            font-size: 12px;
+            color: #999;
+        }
+
+        ul {
+            font-size: 12px;
+            color: #999;
+        }
+    }
+}
+
+.attachment-edit-popover {
+    min-width: 520px;
+    max-height: 320px;
+
+    .close {
+        float: none;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+}
+
+.attachment-edit-panel {
+    padding: 5px;
+    min-width: 480px;
+}
+
+.attachment-list {
+    &.list-panel {
+        max-height: 250px;
+        overflow-y: auto;
+    }
+
+    &.list-group {
+        margin-bottom: 0;
+    }
+
+    .list-group-item {
+        position: relative;
+        margin: 8px 0;
+        padding: 8px;
+
+        min-height: 50px;
+        border: none;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        > img {
+            position: absolute;
+            top: 10px;
+            left: 8px;
+
+            width: 40px;
+        }
+    }
+
+    .list-group-item-heading {
+        padding-left: 58px;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-bottom: 5px;
+        //overflow: hidden;
+    }
+}
+
+.form-error-hint {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.help-hint {
+    display: inline-block;
+    padding: 0 10px;
+
+    i {
+        color: #01a4a4;
+        cursor: pointer;
+        font-size: 120%;
+    }
+
+    .popover-content {
+        font-size: 12px;
+
+        .hint-message {
+
+        }
+        .hint-link {
+            font-size: 10px;
+        }
+    }
+}
+
+.uib-datepicker {
+    &:focus & > div, & > div > div {
+        outline: none;
+    }
+
+    table {
+        &:focus {
+            outline: none;
+        }
+
+        td {
+            padding: 0;
+        }
+    }
+
+    .btn.btn-default {
+        padding: 4px 10px;
+        border: none;
+        box-shadow: none;
+
+        background: #fff;
+
+        &.active {
+            //box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            color: #333;
+            font-weight: bold;
+        }
+    }
+
+    .uib-monthpicker, .uib-yearpicker {
+        .btn.btn-default {
+            padding: 6px 12px;
+        }
+    }
+}
+
+tiger-datetime {
+    .input-group .form-control:first-child {
+        // fix input group
+        border-radius: 4px;
+    }
+}
+
+attachment-list {
+    display: block;
+    position: relative;
+}
+
+attachment-upload {
+    display: block;
+    position: relative;
+
+    attachment-list & {
+        position: static;
+    }
+
+    .attachment-drag-zone-wrap {
+        display: none;
+        //border: 1px solid red;
+
+        position: absolute;
+        top: -10px;
+        bottom: -10px;
+        left: -10px;
+        right: -10px;
+
+        min-height: 34px;
+
+        z-index: 999;
+        border-radius: 2px;
+
+        padding: 10px;
+
+        .panel-body & {
+            top: -25px;
+            bottom: -25px;
+            left: -25px;
+            right: -20px;
+        }
+
+        .popover-content & {
+            top: -25px;
+            bottom: -25px;
+            left: -25px;
+            right: -25px;
+        }
+
+        .attachment-drag-zone {
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, .15);
+        }
+
+        p {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            right: 5px;
+            margin-top: -12px;
+            margin-bottom: 0;
+
+            text-align: center;
+            font-size: 24px;
+            line-height: 24px;
+        }
+
+        .dragging-file & {
+            display: block;
+        }
+    }
+}

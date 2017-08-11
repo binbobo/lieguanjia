@@ -1,0 +1,180 @@
+<div class="row resume-edit bottom-margin">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                简历类型
+            </div>
+            <div class="panel-body">
+                <label ng-repeat="resumeType in resumeTypeList" class="radio-item ui-radio">
+                    <input type="radio" ng-value="resumeType" ng-model="resume.moduleType">
+                    <span>{{resumeType | i18n}}</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <tiger-loading loading="loadResume" parent=".panel"></tiger-loading>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <attachment-list list="attachmentList" relation-id="candidateId" module-id="{{moduleId}}"
+                                         parse-resume="parseResume"
+                                         sub-type-entity="resumeAttachmentTmp" title='上传简历解析'
+                                         on-success="onFileUploadSuccess" on-error="onFileUploadError">
+                        </attachment-list>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="resume-avatar">
+                            <img class="" ng-if="!resume.basicInfo.Favatar" src="/images/avatar/man.png">
+                            <img class="" ng-if="resume.basicInfo.Favatar"
+                                 ng-src="/api/file/download?id={{resume.basicInfo.Favatar}}"
+                                 ng-click="previewFile('image', resume.basicInfo.Favatar)">
+                            <label class="resume-avatar-upload">
+                                <span ng-if="resume.basicInfo.Favatar">修改头像</span>
+                                <span ng-if="!resume.basicInfo.Favatar">上传头像</span>
+                            </label>
+                            <input type="file" nv-file-select uploader="imageUploader">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row duplicate-body" ng-if="duplicateList.length">
+            <help-hint class="pull-right" message="姓名+手机匹配到的重复简历会显示在这里" style="padding:7px 15px 0"></help-hint>
+
+            <h5>
+                重复数据：
+            </h5>
+            <div class="duplicate-list">
+                <div ng-repeat="duplicateItem in duplicateList" class="duplicate-list-item">
+                    <p class="col-sm-9 col-md-8">
+                        <a ng-click="previewFile('resume', duplicateItem.resumeId)">
+                            {{duplicateItem.name}}
+                        </a>
+                        <span>（创建者：{{duplicateItem.creator | i18n}}）</span>
+                        <span style="color: #999">|</span>
+                        <span>手机：{{duplicateItem.phone}}</span>
+                        <span style="color: #999">|</span>
+                        <span>{{duplicateItem.title}}</span>
+                        <span ng-show="duplicateItem.company | i18n">at</span>
+                        <a href="/#/company/{{duplicateItem.company.id}}" target="_blank"
+                           ng-show="duplicateItem.company">
+                            {{duplicateItem.company | i18n}}
+                        </a>
+                    </p>
+                    <div class="col-sm-3">
+                        <a href="/#/candidate/{{duplicateItem.resumeId}}/edit?attachmentId={{parseAttachmentId}}"
+                           target="_blank" class="btn btn-default btn-sm go-edit-btn">
+                            编辑
+                        </a>
+                        <small class="text-muted" ng-if="parseAttachmentId">
+                            （同时附带解析的附件）
+                        </small>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <tiger-loading loading="!basicForm || loadResume" parent=".panel"></tiger-loading>
+
+            <div class="panel-heading">
+                基本信息
+            </div>
+
+            <form class="panel-body" name="resumeBasicInfo">
+                <custom-form field-list="basicForm" entity="resume.basicInfo" class="form-horizontal custom-form-inline"
+                             base-form="resumeBasicInfo"></custom-form>
+            </form>
+        </div>
+
+        <div class="panel panel-default sub-item-list" ng-repeat="info in subItem.infoList">
+            <tiger-loading loading="loadResume" parent=".panel"></tiger-loading>
+
+            <div class="panel-heading">
+                {{info | i18n}}
+            </div>
+
+            <div ng-repeat="item in resume[info.name] track by $index" class="sub-item panel-body">
+                <div>
+                    <button type="button" class="btn btn-link btn-sm" ng-click="editSubItem(info.name, $index)"
+                            ng-if="subItem.editing[info.name] != $index">
+                        <em class="glyphicon glyphicon-pencil"></em>
+                    </button>
+                    <button type="button" class="btn btn-link btn-sm" ng-click="delSubItem(info.name, $index)">
+                        <em class="glyphicon glyphicon-trash"></em>
+                    </button>
+                </div>
+
+                <custom-form-show field-list="info.form" entity="item" class="custom-form-inline"
+                                  ng-if="subItem.editing[info.name] != $index"></custom-form-show>
+
+                <div ng-form="subItem.formList[info.name]" ng-if="subItem.editing[info.name] == $index">
+                    <custom-form field-list="info.form" entity="subItem.tmpData[info.name]"
+                                 base-form="subItem.formList[info.name]" class="custom-form-inline"></custom-form>
+
+                    <div ng-if="subItem.editing[info.name] == $index" style="padding: 20px 0 0 136px;">
+                        <button type="button" class="btn btn-primary"
+                                ng-click="saveSubItem(info.name)">
+                            保存
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="cancelSubItem(info.name)">放弃</button>
+
+                        <form-error-hint tiger-form="subItem.formList[info.name]"
+                                         ng-if="subItem.formList[info.name].$submitted"></form-error-hint>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-item panel-body" ng-if="subItem.editing[info.name] == resume[info.name].length"
+                 ng-form="subItem.formList[info.name]">
+                <custom-form field-list="info.form" entity="subItem.tmpData[info.name]"
+                             base-form="subItem.formList[info.name]"
+                             class="custom-form-inline"></custom-form>
+                <div style="padding: 20px 0 0 136px;">
+                    <button type="button" class="btn btn-primary"
+                            ng-click="saveSubItem(info.name)">
+                        保存
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="cancelSubItem(info.name)">放弃</button>
+
+                    <form-error-hint tiger-form="subItem.formList[info.name]"
+                                     ng-if="subItem.formList[info.name].$submitted"></form-error-hint>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <button type="button" ng-click="addSubItem(info.name)" class="btn btn-link">
+                    <span class="glyphicon glyphicon-plus"></span> 添加 {{info | i18n}}
+                </button>
+            </div>
+        </div>
+
+        <div class="panel panel-default bottom" ng-class="{'loading' : loadResume}">
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary waves-effect waves-button waves-float"
+                        ng-click="saveResume()">
+                    保存简历
+                </button>
+                <button ng-if="resume.id" type="button" class="btn btn-warning waves-effect waves-button waves-float"
+                        ng-click="backView()">
+                    取消编辑
+                </button>
+                <button ng-if="resume.id" type="button" class="btn btn-danger waves-effect waves-button waves-float"
+                        ng-click="deleteResume()">
+                    删除人才
+                </button>
+
+                <form-error-hint tiger-form="resumeBasicInfo" ng-if="resumeBasicInfo.$submitted"></form-error-hint>
+            </div>
+        </div>
+    </div>
+</div>

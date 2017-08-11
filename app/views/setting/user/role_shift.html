@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3>删除角色</h3>
+</div>
+
+<div class="modal-body">
+    <form>
+
+        <div class="form-group">
+            <label class="control-label">
+                <span class="text-red">*</span> 将 {{shiftData.originRoleTitle}} 角色转移到:</label>
+            <div>
+                <ui-select theme="bootstrap" ng-model="shiftData.targetRole" ng-required="true" append-to-body="true">
+                    <ui-select-match placeholder="请选择">
+                        <span>{{$select.selected | i18n}}</span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="option in roleList | filter: $search.search"
+                                       value="{{option}}">
+                        {{option | i18n | highlight: $select.search}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" ng-click="ok()" class="btn btn-primary" data-dismiss="modal">删除并转移</button>
+    <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

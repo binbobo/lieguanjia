@@ -1,0 +1,8 @@
+<div class="date-input-wrap">
+    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="uiDate" name="{{uiName}}"
+           is-open="datePickerPopup.opened" close-text="关闭" clear-text="清除" current-text="今天" ng-required="uiRequired"
+           placeholder="{{placeholder}}" alt-input-formats="['yyyy-M!-d!', 'yyyy-M!']" datepicker-options="dateOptions"
+           datepicker-append-to-body="appendToBody">
+
+    <i class="fa fa-calendar date-picker-btn" ng-click="openDatePicker()"></i>
+</div>

@@ -1,0 +1,8 @@
+<t-row label="{{ctrl.label}}" checkers="{{ctrl.checkers}}">
+    <ui-select multiple ng-model="ctrl.value" theme="bootstrap" close-on-select="false"
+               title="{{ctrl.placeholder}}" checkers="{{ctrl.checkers}}" need-check
+               custom-checker="{{ctrl.customChecker()}}">
+        <ui-select-match placeholder="{{ctrl.placeholder}}">{{$item.text}}</ui-select-match>
+        <ui-select-choices repeat="item in ctrl.options | filter:$select.search"> {{item.text}}</ui-select-choices>
+    </ui-select>
+</t-row>

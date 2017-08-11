@@ -1,0 +1,97 @@
+<!--<div class="page">-->
+<div class="panel panel-default mail-container mail-compose" ng-class="{'panel-loading':loading}">
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-xs-1">
+                    <span class="text-red">*</span>
+                    收件人:
+                </label>
+
+                <div class="col-sm-10">
+                    <tags-input ng-model="mail.receiver" replace-spaces-with-dashes="false"
+                                input="email" allowed-tags-pattern="^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$"
+                                min-length="1" placeholder="点回车确认"></tags-input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-1">抄送:</label>
+
+                <div class="col-sm-10">
+                    <tags-input ng-model="mail.cc" replace-spaces-with-dashes="false" input="email"
+                                allowed-tags-pattern="^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$"
+                                min-length="1" placeholder="点回车确认"></tags-input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-1">密送:</label>
+
+                <div class="col-sm-10">
+                    <tags-input ng-model="mail.bcc" replace-spaces-with-dashes="false" input="email"
+                                allowed-tags-pattern="^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$"
+                                min-length="1" placeholder="点回车确认"></tags-input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mail_subject" class="col-xs-1">
+                    <span class="text-red">*</span>
+                    主题:
+                </label>
+
+                <div class="col-sm-10">
+                    <input type="text" id="mail_subject" class="form-control" data-ng-model="mail.subject">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mail_subject" class="col-xs-1">
+                    模板:
+                </label>
+                <div class="col-sm-4">
+                    <ui-select theme="bootstrap"
+                               ng-model="choseTemplate" on-select="changeTemplate($item, $model)"
+                               append-to-body="needAppendToBody">
+                        <ui-select-match placeholder="请选择">
+                            <span>{{$select.selected | i18n}}</span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in templateList"
+                                           value="{{item.title}}" group-by="uiGroupBy">
+                            <span>{{item.title}}</span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+            </div>
+            <div class="form-group col-sm-10">
+                <button type="button" class="btn btn-xs btn-default" ng-click="addAttachment()">添加附件
+                </button>
+                <div class="list-group-item" ng-repeat="attachmentItem in attachmentList">
+                    <span class="list-group-item-heading">
+                            {{attachmentItem.fileName}}
+                        </span>
+                    <button type="button" class="btn btn-xs btn-success" ng-if="config.fileMime2Preview[attachmentItem.fileType]"
+                            ng-click="previewFile(config.fileMime2Preview[attachmentItem.fileType], attachmentItem.id)">
+                        预览
+                    </button>
+                    <a target="_blank" class="btn btn-xs btn-info" ng-href="/api/file/download?id={{attachmentItem.id}}">下载</a>
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="removeAttachment($index)">删除
+                    </button>
+                </div>
+            </div>
+            <div text-angular data-ng-model="mail.data" class="ui-editor"></div>
+        </form>
+        <div class="mail-actions" ng-if="!template">
+            <button type="button" ng-click="send()" class="btn btn-success">发送</button>
+            <button type="button" ng-click="draft()" class="btn btn-default" ng-if="!isModal">存草稿</button>
+            <button type="button" ng-click="cancel()" class="btn btn-default pull-right"
+                    ng-if="isModal">取消
+            </button>
+            <!--<div class="waves-effect waves-button waves-float waves-default">丢弃</div>-->
+        </div>
+        <div class="mail-actions" ng-if="template">
+            <button type="button" ng-click="saveTemplate()" class="btn btn-default">保存</button>
+            <button type="button" ng-click="cancel()" class="btn btn-default">取消</button>
+            <!--<div class="waves-effect waves-button waves-float waves-default">丢弃</div>-->
+        </div>
+    </div>
+</div>
+<!--</div>-->

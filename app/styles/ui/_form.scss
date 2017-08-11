@@ -1,0 +1,536 @@
+.custom-form-group {
+    position: relative;
+
+    margin-bottom: 10px;
+
+    width: 460px;
+    min-height: 25px;
+    vertical-align: top;
+
+    &.form-group {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .control-label {
+        display: block;
+        vertical-align: top;
+
+        margin-bottom: 5px;
+        padding-top: 0;
+
+        height: 25px;
+
+        text-align: left;
+        line-height: 25px;
+        font-size: 14px;
+        font-weight: normal;
+
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: keep-all;
+        white-space: nowrap;
+
+        span {
+            vertical-align: top;
+            line-height: 25px;
+        }
+    }
+
+    .form-field-wrap {
+        // display: block;
+        // width: 300px;
+        line-height: 25px;
+
+        .glyphicon-plus {
+            cursor: pointer;
+        }
+    }
+
+    .custom-form-inline > &,
+    &.custom-form-inline {
+        display: inline-block;
+        padding: 0 20px 0 136px;
+        margin-bottom: 5px;
+
+        .control-label {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 20px;
+            margin-bottom: 0;
+
+            width: 100px;
+
+            font-weight: normal;
+            text-align: right;
+        }
+    }
+
+    label.radio-item {
+        font-weight: normal;
+        margin-right: 12px;
+
+        span {
+            vertical-align: top;
+        }
+
+        input {
+            margin-top: 6px;
+        }
+    }
+
+    .btn-link {
+        padding: 0;
+    }
+
+    textarea.form-control {
+        height: 100px;
+    }
+
+    .ui-checkbox {
+        margin-top: 5px;
+        line-height: 18px;
+    }
+
+    .ui-select-dropdown {
+        font-size: 12px;
+    }
+
+    .label {
+        font-size: 12px;
+        height: 22px;
+        line-height: 22px;
+        // margin-top: 1px;
+        // margin-right: 4px;
+        margin: 1px 2px;
+        padding: 0 5px;
+        display: inline-block;
+        font-weight: normal;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .error-hint {
+        list-style: none;
+        margin: 2px 1px 4px;
+        padding: 3px 6px 3px 10px;
+        font-size: 10px;
+        color: #bc2d16;
+        border: 1px solid #f4ab9f;
+        background-color: #fadbd6;
+    }
+
+    .error-required {
+    }
+}
+
+.form-field-show-wrap {
+    font-size: 14px;
+    padding: 0;
+}
+
+.custom-form-show-group {
+    margin-bottom: 0;
+
+    .control-label {
+        margin-bottom: 0;
+        font-weight: bold;
+    }
+
+    &.custom-form-inline {
+        .control-label {
+            font-weight: normal;
+        }
+    }
+
+    .quick-edit-btn {
+        border: none;
+
+        text-align: left;
+        white-space: normal;
+
+        em {
+            display: none;
+            font-size: 12px;
+        }
+    }
+
+    &:hover {
+        .quick-edit-btn {
+            text-decoration: underline;
+
+            em {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.custom-form-group {
+    // Control in custom-form-group
+
+    &.custom-form-group-textarea, &.custom-form-group-datetimerange {
+        width: 920px;
+        max-width: 100%;
+    }
+}
+
+.custom-form-show-textarea {
+    display: inline;
+}
+
+.custom-form-show-group {
+    &.custom-form-show-group-textarea {
+        width: auto;
+        min-width: 460px;
+        display: block;
+
+        .form-field-wrap {
+            width: auto;
+        }
+
+        .custom-form-inline & {
+            display: block;
+        }
+    }
+
+    &.custom-form-show-group-daterange, &.custom-form-show-group-datetimerange {
+        width: auto;
+        min-width: 460px;
+        display: block;
+        // padding-left: 70px;
+        font-weight: bold;
+
+        .control-label {
+            display: none;
+        }
+
+        .form-field-show-wrap {
+            font-size: 14px;
+        }
+    }
+}
+
+.form-field-wrap {
+    .form-control {
+        padding: 0 5px;
+        font-size: 14px;
+        height: 28px;
+    }
+
+    .multi-item {
+        position: relative;
+        margin: 5px 0;
+
+        input[type=text] {
+            padding-right: 24px;
+        }
+
+        .remove-btn {
+            position: absolute;
+            padding: 3px 6px;
+            right: 3px;
+            top: 0;
+
+            cursor: pointer;
+
+            //font-size: 24px;
+            line-height: 20px;
+        }
+    }
+
+    .tree-selector-input {
+        height: auto;
+    }
+
+    tiger-select {
+        input.ui-select-search {
+            padding-left: 10px;
+        }
+
+        .ui-select-toggle.form-control {
+            padding: 1px 10px;
+        }
+    }
+
+    .input-group-btn {
+        &, &.dropdown {
+            .btn {
+                font-size: 12px;
+                line-height: 18px;
+                padding: 4px 10px;
+                box-shadow: none;
+
+                > i.fa {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        &:last-child {
+            .btn {
+                margin-left: -2px;
+                border-radius: 0 4px 4px 0;
+            }
+        }
+    }
+}
+
+.custom-form-group input.ng-invalid.ng-touched,
+.ng-submitted input.ng-invalid,
+.ng-submitted textarea.ng-invalid {
+    border: 1px solid #a94442;
+
+    &:focus {
+        border-color: #843534;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+    }
+}
+
+.ui-select-container.form-control {
+    z-index: 3;
+}
+
+small.no-name {
+    color: #aaa;
+}
+
+.tiger-ui-daterange {
+    .ui-checkbox {
+        display: inline-block;
+        margin-top: 3px;
+        margin-bottom: 2px;
+
+        line-height: 18px;
+    }
+}
+
+.form-group .left {
+    float: left;
+    text-align: right;
+    width: 30%;
+}
+
+.form-group .right {
+    margin-left: 10px;
+    float: left;
+    text-align: left;
+    width: 65%;
+}
+
+.require:before {
+    content: "*";
+    padding: 0 3px;
+    color: #f00;
+    text-align: right;
+}
+
+.checker-activated {
+    &.checker-tipped, .checker-tipped {
+        border: 1px solid #f00;
+        &:focus {
+            border: 1px solid #f00;
+        }
+    }
+}
+
+.input-group .form-control {
+    z-index: 0;
+}
+
+.ui-tooltip {
+    background: #666;
+    color: white;
+    border: none;
+    padding: 0;
+    opacity: 1;
+
+    &.error-hint {
+        background: #f00;
+    }
+}
+
+.ui-tooltip-content {
+    position: relative;
+    padding: 5px 10px;
+}
+
+.ui-tooltip-content::after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    display: block;
+    width: 0;
+    border-color: #666;
+
+    .error-hint & {
+        border-color: #f00;
+    }
+
+    .right & {
+        top: 50%;
+        margin-top: -10px;
+        left: -10px;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-width: 10px 10px 10px 0;
+    }
+
+    .left & {
+        top: 50%;
+        margin-top: -10px;
+        right: -10px;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-width: 10px 0 10px 10px;
+
+    }
+
+    .top & {
+        bottom: -10px;
+        left: 50%;
+        margin-left: -10px;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-width: 10px 10px 0;
+    }
+
+    .bottom & {
+        top: -10px;
+        left: 50%;
+        margin-left: -10px;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-width: 0 10px 10px;
+    }
+}
+
+.ui-checkbox {
+    &.vertical {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    &.has-selected input[type="checkbox"] + span:after {
+        content: "\f068";
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: -1px;
+        left: -13px;
+        color: #01a4a4;
+        font-family: FontAwesome;
+        background-size: 14px 14px;
+        display: block;
+    }
+}
+
+.angular-ui-tree {
+    & .ui-checkbox input[type="checkbox"]:checked + span:after {
+        top: -2px;
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.custom-field {
+    &.custom-field-multiselect .form-control {
+        height: auto;
+        min-height: 28px;
+    }
+}
+
+.date-input-wrap {
+    position: relative;
+
+    .date-picker-btn {
+        position: absolute;
+        top: 2px;
+        right: 4px;
+
+        padding: 5px 8px;
+        cursor: pointer;
+    }
+}
+
+tiger-select {
+    display: block;
+
+    .input-group {
+        width: 100%;
+
+        &.fixed-input-group {
+            table-layout: fixed;
+        }
+
+        // fix radius
+        &.fixed-input-group {
+            .ui-select-container, .ui-select-toggle {
+                &.form-control {
+                    border-radius: 4px;
+                }
+            }
+        }
+
+        .ui-select-container, .ui-select-toggle {
+            &.form-control {
+                border-radius: 4px 0 0 4px;
+            }
+        }
+
+        > .input-group-btn {
+            .btn:last-child {
+                border-radius: 0 4px 4px 0;
+                box-shadow: none;
+            }
+        }
+    }
+
+    .ui-select-toggle.form-control {
+        padding: 3px 12px;
+        box-shadow: none;
+    }
+
+    input.ui-select-search {
+        padding-left: 12px;
+        line-height: 28px;
+    }
+
+    .ui-select-match-text > span,
+    .ui-select-placeholder,
+    .ui-select-placeholder span {
+        vertical-align: middle;
+        line-height: 23px;
+    }
+
+    .ui-select-multiple.ui-select-bootstrap.ui-select-multiple {
+        padding: 2px 4px 4px;
+
+        .ui-select-search {
+            padding-left: 6px;
+        }
+
+        .ui-select-match {
+            &, & > span {
+                display: inline-block;
+            }
+
+            .close {
+                line-height: 0.9em;
+            }
+        }
+
+        .ui-select-match-item {
+            margin: 0 3px 0 0;
+        }
+
+        input.ui-select-search {
+            margin-bottom: 0;
+        }
+    }
+}

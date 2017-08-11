@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <small ng-if="$root.tigerInfo.dev && debugReport == 0" class="pull-right" ng-click="openReportDebug()">Debug</small>
+    <h3 class="modal-title">生成推荐报告</h3>
+</div>
+<div class="modal-body">
+    <custom-form field-list="config.recReportForm" entity="recReportData" class="custom-form-inline"></custom-form>
+</div>
+<div class="modal-body" ng-if="debugReport > 0">
+    <h4>临时推荐报告</h4>
+    <form id="report-debug-form" method="post" target="_blank" enctype="multipart/form-data"
+          action="/api/resume/recReport/generate/temp">
+        <input type="file" name="file" ui-file-upload title="选择文件">
+        <input type="hidden" name="resumeId" ng-value="{{resumeId}}">
+        <input type="hidden" name="projectId" value="{{recReportData.project.id}}">
+        <button class="btn btn-primary" style="margin: 10px 0;">生成</button>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="ok()">确定</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">取消</button>
+</div>

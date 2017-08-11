@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{calendarData.id ? '编辑提醒' : '添加提醒'}}</h3>
+</div>
+<form class="modal-body" name="taskForm">
+    <custom-form field-list="config.taskForm" entity="calendarData" base-form="taskForm"
+                 class="custom-form-inline"></custom-form>
+</form>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">保存</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">取消</button>
+    <button class="btn btn-danger pull-left" type="button" ng-click="delete()" ng-if="calendarData.id">删除</button>
+</div>

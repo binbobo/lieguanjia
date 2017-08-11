@@ -1,0 +1,90 @@
+<ng-switch on="::dataType" data-type="{{::dataType}}">
+    <!--<div ng-switch-when="money" ng-show="entity[name]">-->
+    <!--{{tmp[name].value}}-->
+    <!--<ng-switch on="tmp[name].valueType">-->
+    <!--<span ng-switch-when="10000">万元</span>-->
+    <!--<span ng-switch-when="1000">千元</span>-->
+    <!--<span ng-switch-when="1">元</span>-->
+    <!--</ng-switch>-->
+    <!--</div>-->
+
+    <!--<div ng-switch-when="date">-->
+    <!--{{entity[name] | tigerDate}}-->
+    <!--</div>-->
+
+    <!--<div ng-switch-when="datetime">-->
+    <!--{{entity[name] | tigerDatetime}}-->
+    <!--</div>-->
+
+    <!--<span ng-switch-when="select">-->
+    <!--<span ng-if="entity[name]">-->
+    <!--{{entity[name] | i18n}}-->
+    <!--</span>-->
+    <!--<span ng-if="!entity[name] && attributeData.secondField">-->
+    <!--{{entity[attributeData.secondField]}}-->
+    <!--</span>-->
+    <!--</span>-->
+
+    <!--<span ng-switch-when="multiselect">-->
+    <!--<p ng-repeat="item in entity[name] track by $index" ng-bind="item | i18n"></p>-->
+    <!--</span>-->
+
+    <!--<span ng-switch-when="multivalue">-->
+    <!--<p ng-repeat="value in entity[name] track by $index" ng-bind="value"></p>-->
+    <!--</span>-->
+
+    <div ng-switch-when="datetimerange">
+        <!-- 这里有bug -->
+        <p>开始时间：{{entity[name].startTime *1000 | date : 'yyyy-MM-dd H:mm:ss'}}</p>
+        <p ng-if="!entity[name].not_ended">结束时间：{{entity[name].endTime*1000 | date : 'yyyy-MM-dd H:mm:ss'}}</p>
+        <p ng-if="entity[name].not_ended">全天</p>
+    </div>
+
+    <span ng-switch-when="daterange">
+        <span ng-if="entity.Fstart_time" ng-bind="entity.Fstart_time * 1000 | date: 'yyyy-MM'"></span>
+        <span ng-if="!entity.Fstart_time" class="text-muted" style="font-size: 75%">（未知）</span>
+        <span ng-if="!entity.Fnot_ended && entity.Fend_time">
+             -
+            {{entity.Fend_time * 1000 | date: 'yyyy-MM'}}
+        </span>
+        <span ng-show="entity.Fnot_ended">至今</span>
+    </span>
+
+    <!--<span ng-switch-when="checkbox">-->
+    <!--<span ng-show="entity[name]">是</span>-->
+    <!--<span ng-show="!entity[name]">否</span>-->
+    <!--</span>-->
+
+    <div ng-switch-when="textarea" ng-bind-html="entity[name] | trustAsHtml | textareaShow"
+         class="custom-form-show-textarea">
+    </div>
+
+    <div ng-switch-when="tag">
+        <span ng-repeat="tag in entity[name]" ng-bind="tag.text" class="label label-yellow"></span>
+    </div>
+
+    <!--<div ng-switch-when="treeselect">-->
+    <!--<p ng-if="entity[name].length" ng-repeat="item in entity[name]" ng-bind="item | i18n"></p>-->
+    <!--<p ng-if="!entity[name].length" ng-bind="entity[name] | i18n"></p>-->
+    <!--</div>-->
+
+    <div ng-switch-when="url">
+        <a ng-href="{{entity[name]}}" target="_blank"> {{entity[name]}}</a>
+    </div>
+
+    <!--<div ng-switch-when="percent" class="input-group">-->
+    <!--<span ng-if="!!entity[name]">{{entity[name]}}%</span>-->
+    <!--</div>-->
+
+    <!--<div ng-switch-when="fileSize" class="input-group">-->
+    <!--{{entity[name] | fileSize}}-->
+    <!--</div>-->
+    <!--<div ng-switch-when="age" class="input-group">-->
+    <!--{{entity[name] | age}}岁-->
+    <!--</div>-->
+
+    <span ng-switch-default>
+        <span ng-bind-html="entity | showValueByFieldItem : fieldInfo | nl2br"></span>
+        <small ng-if="placeholder && !entity[name]" class="no-name">({{placeholder}})</small>
+    </span>
+</ng-switch>

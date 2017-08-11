@@ -1,0 +1,5 @@
+<t-row label="{{ctrl.label}}" checkers="{{ctrl.checkers}}">
+    <textarea class="form-control" rows="{{ctrl.rows}}" ng-model="ctrl.value" checkers="{{ctrl.checkers}}"
+              need-check></textarea>
+    <span class="help-block" ng-if="ctrl.help">{{ctrl.help}}</span>
+</t-row>

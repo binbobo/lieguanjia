@@ -1,0 +1,76 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <img class="pull-left" width="64" height="64" style="margin-right:10px;"
+             ng-src="/api/file/download?id={{resume.basicInfo.Favatar}}"
+             ng-if="resume.basicInfo.Favatar">
+        <img class="pull-left" width="64" height="64" style="margin-right:10px;"
+             ng-src="/images/avatar/man.png" ng-if="!resume.basicInfo.Favatar">
+        <div data-ng-controller="candidateOperationCtrl">
+            <div class="btn-group pull-right" uib-dropdown is-open="status.isopen">
+                <button type="button"
+                        class="btn btn-default btn-xs waves-effect waves-button waves-float pull-right"
+                        uib-dropdown-toggle ng-disabled="disabled">
+                    操作<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu " style="min-width: 100px" uib-dropdown-menu role="menu">
+                    <li>
+                        <a data-ng-click="addComment(resume.id)">添加备注</a>
+                    </li>
+                    <li>
+                        <a ng-click="addTask(resume)">添加提醒</a>
+                    </li>
+                    <li>
+                        <a data-ng-click="composeMail(resume, 1)">发送邮件</a>
+                    </li>
+                    <li>
+                        <a data-ng-click="joinFolder(resume.id, 1)">分组</a>
+                    </li>
+                    <li>
+                        <a data-ng-click="joinProject(resume.id)">加入项目</a>
+                    </li>
+                    <li>
+                        <a data-ng-click="generateReport(resume)">生成推荐报告</a>
+                    </li>
+                    <li>
+                        <a data-ng-click="deleteResume(resume.id)">删除</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <a ui-sref="candidate_edit( {candidateId: candidateId} )"
+           class="btn btn-default btn-xs waves-effect waves-button waves-float pull-right target_blank">编辑</a>
+        <h4 class="media-heading">
+            <span ng-bind="resume.basicInfo.Fname"></span>
+            <small>
+                ({{resume.moduleType | i18n}})
+                <span ng-if="resume.basicInfo.Fmpc" class="label label-primary">MPC</span>
+            </small>
+        </h4>
+        <p ng-if="resume.occupationList && resume.occupationList.length > 0" style="margin-bottom: 0">
+            {{resume.occupationList[0].Ftitle}} |
+            <a ui-sref="company_view( {companyId: resume.occupationList[0].Fcompany_id.id} )" class="target_blank">
+                {{resume.occupationList[0].Fcompany_id | i18n}}
+            </a>
+        </p>
+        <p>
+            创建时间：{{resume.time | tigerDate}} | 创建者： <a>{{resume.creator | i18n}}</a>
+        </p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="btn-group panel-body catogary-tab">
+        <a ui-sref=".default" class="btn btn-default" ui-sref-active-eq="active">基本</a>
+        <a ui-sref=".attachment" class="btn btn-default" ui-sref-active-eq="active">附件
+            {{resume.stats.attachmentCount}}</a>
+        <a ui-sref=".mailList" class="btn btn-default" ui-sref-active-eq="active">邮件</a>
+        <a ui-sref=".commentList" class="btn btn-default" ui-sref-active-eq="active">
+            备注 {{resume.stats.commentCount}}
+        </a>
+        <a ui-sref="candidate_view.update_logs" class="btn btn-default" ui-sref-active-eq="active">
+            日志
+        </a>
+    </div>
+</div>
+
+

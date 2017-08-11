@@ -1,0 +1,319 @@
+<div class="row dashboard-page">
+    <div class="col-sm-12">
+        <div ng-if="systemInfo.saas.isTrial" class="banner clearfix">
+            <div class="pull-right">
+                <div class="trial-info">
+                    <span>试用期剩余</span>
+                    <strong>{{deadline}}</strong>
+                    <span>天</span>
+                </div>
+                <button type="button" class="btn btn-default button-buy" ng-click="jumpToBuy()" ng-if="account.id == 1">
+                    立即购买
+                </button>
+            </div>
+
+            <div ng-if="account.id == 1" style="display: inline-block">
+                <button ng-if="preset.status == config.presetStatus.notPreset" type="button"
+                        class="btn btn-primary button-invite" ng-click="preset.addPresetData()">
+                    领取试用数据
+                </button>
+                <button ng-if="preset.status == config.presetStatus.presetting" type="button"
+                        class="btn btn-primary button-invite" disabled>
+                    试用数据加载中...
+                </button>
+                <button ng-if="preset.status == config.presetStatus.hasPreset" type="button"
+                        class="btn btn-primary button-invite" disabled>
+                    已领取试用数据
+                </button>
+            </div>
+        </div>
+
+        <div class="banner clearfix banner-alert"
+             ng-if="account.id == 1 && preset.status == config.presetStatus.hasPreset && !systemInfo.saas.isTrial && !preset.isHideHint">
+            <div class="pull-right">
+                <div class="close-btn" ng-click="preset.hideHint()">
+                    <i class="iconfont icon-x"></i>
+                </div>
+            </div>
+
+            <span>
+                恭喜您成为猎管家的正式用户！为保证您的系统数据真实、准确，建议您删除我们为您添加的试用数据，您是否需要删除？
+            </span>
+
+            <button type="button" class="btn btn-primary button-invite" ng-click="preset.deletePresetData()">删除</button>
+        </div>
+    </div>
+
+    <div class="col-sm-9">
+        <div class="panel panel-default real-time-nav">
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <td ui-sref="search({moduleId:2, quick: 10010})">
+                            <a>{{realTimeData.processProject}}</a>
+                            <h5>进展中的项目</h5>
+                        </td>
+                        <td ui-sref="search({moduleId: 10, pipeline: 'recommend'})">
+                            <a>{{realTimeData.recommendCount}}</a>
+                            <h5>简历推荐</h5>
+                        </td>
+                        <td ui-sref="search({moduleId: 10, pipeline: 'interview'})">
+                            <a>{{realTimeData.interviewCount}}</a>
+                            <h5>候选人面试</h5>
+                        </td>
+                        <td ui-sref="search({moduleId: 10, pipeline: 'offer'})">
+                            <a>{{realTimeData.offerCount}}</a>
+                            <h5>候选人 Offer</h5>
+                        </td>
+                        <td ui-sref="search({moduleId: 9, quick: 10029})">
+                            <a>{{realTimeData.invoiceSent}}</a>
+                            <h5>已邮寄发票</h5>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel panel-default day-task-list">
+            <div class="panel-body">
+                <div class="task-date-picker-wrap">
+                    <div uib-datepicker ng-model="taskDate" datepicker-options="taskCalOptions"></div>
+                </div>
+                <div class="task-list-wrap">
+                    <h4>
+                        {{taskDate | date : 'yyyy.M.d'}}
+                        提醒
+                    </h4>
+
+                    <div class="task-list-main">
+                        <task-item ng-repeat="task in taskList" event="task" only-start-time="1"></task-item>
+                        <div ng-if="!taskList.length" class="task-list-empty">
+                            <img src="/images/dashboard/task_empty.png">
+                            <p>
+                                没有待办提醒呦~
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>
+                    {{timeStr}}，{{$root.account.name}}
+                </h4>
+                <h5 style="color: #86939f">
+                    今天是 {{dateStr}}
+                </h5>
+            </div>
+
+            <div class="panel-body kpi-list">
+                <img class="image img-responsive" src="/images/dashboard/curr_month_kpi.png">
+                <table>
+                    <tr>
+                        <td>
+                            <h4>￥{{kpiData.achievement | number : 0}}</h4>
+                            <h5>业绩</h5>
+                        </td>
+                        <td>
+                            <h4>{{kpiData.new_communication_count | number : 0}}</h4>
+                            <h5>新增候选人</h5>
+                        </td>
+                        <td>
+                            <h4>{{kpiData.new_project_count | number : 0}}</h4>
+                            <h5>新增项目</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>{{kpiData.recommend_count | number : 0}}</h4>
+                            <h5>简历推荐</h5>
+                        </td>
+                        <td>
+                            <h4>{{kpiData.interview_count | number : 0}}</h4>
+                            <h5>面试</h5>
+                        </td>
+                        <td>
+                            <h4>{{kpiData.offer_count | number : 0}}</h4>
+                            <h5>Offer</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>{{kpiData.entry_count | number : 0}}</h4>
+                            <h5>入职</h5>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="panel-body kpi-list-footer">
+                <a ui-sref="kpiInfo({dateType: 2})">查看更多 KPI</a>
+            </div>
+        </div>
+
+        <div class="panel panel-default wechat-qr">
+            <div class="panel-body">
+                <img src="/images/wechat.png">
+
+                <p>微信扫一扫<br>关注猎管家</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel panel-default pipeline-shortcut" ng-class="{'panel-loading': sec1Loading}">
+            <ul class="nav nav-pills pipeline-nav">
+                <li ng-repeat="(key, item) in sec1List" ng-class="{active: sec1Choose == key}"
+                    ng-click="changeSec1Choose(key)" class="dashboard-section-list-item">
+                    <a ng-bind="item | i18n"> </a>
+                </li>
+            </ul>
+
+            <!--<form class="input-group input-group-sm search-control pipeline-search" style="max-width: 200px"-->
+            <!--ng-submit="searchSec1()">-->
+            <!--<input type="text" class="form-control" ng-model="sec1SearchKeyword">-->
+            <!--<div class="input-group-btn">-->
+            <!--<button class="btn btn-default" type="submit">搜索</button>-->
+            <!--</div>-->
+            <!--</form>-->
+
+            <div class="panel-body" style="overflow-x: auto">
+                <table class="table" ng-if="sec1Data.project">
+                    <thead>
+                    <tr>
+                        <td>项目名称</td>
+                        <td>公司名称</td>
+                        <td>年薪</td>
+                        <td>简历总数</td>
+                        <td>已推荐</td>
+                        <td>面试</td>
+                        <td>签订 Offer</td>
+                        <td>进展天数</td>
+                        <td>最近更新</td>
+                        <td>优先级</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in sec1Data.project.list">
+                        <td>
+                            <a ui-sref="project_view.info({projectId: item.id})" a-link-target
+                               ng-bind-html="item.basicInfo.Fproject_name | highlight : sec1SearchedKeyword">
+                            </a>
+                        </td>
+                        <td>
+                            <a ui-sref="company_view({companyId: item.basicInfo.Fcompany_id.value})" a-link-target
+                               ng-bind-html="item.basicInfo.Fcompany_id | i18n | highlight : sec1SearchedKeyword">
+                            </a>
+                        </td>
+                        <td>{{item.basicInfo.Fannual_salary | tigerMoney}}</td>
+                        <td>
+                            <a ui-sref="project_view.pipeline({projectId: item.id, pipeline: 'all'})">
+                                {{item.stats.allResumeCount}}
+                            </a>
+                        </td>
+                        <td>
+                            <a ui-sref="project_view.pipeline({projectId: item.id, pipeline: 'recommend'})">
+                                {{item.stats.recommendCount}}
+                            </a>
+                        </td>
+                        <td>
+                            <a ui-sref="project_view.pipeline({projectId: item.id, pipeline: 'interview'})">
+                                {{item.stats.interviewCount}}
+                            </a>
+                        </td>
+                        <td>
+                            <a ui-sref="project_view.pipeline({projectId: item.id, pipeline: 'offer'})">
+                                {{item.stats.offerCount}}
+                            </a>
+                        </td>
+                        <td>{{item.basicInfo.Fstart_time | tigerDays}}</td>
+                        <td>{{item.updateTime | tigerDateRecent}}</td>
+                        <td>{{item.basicInfo.Fpriority | i18n}}</td>
+                    </tr>
+                    <tr ng-if="sec1Data.project.list.length == 0" class="no-data">
+                        <td colspan="10">暂无数据</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            <a ui-sref="search({moduleId: 2, quick: 10010})" ng-if="sec1Data.project.total > 5">查看更多</a>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+                <table class="table" ng-if="sec1Data.project_resume">
+                    <thead>
+                    <tr>
+                        <td>姓名</td>
+                        <td>项目</td>
+                        <td>工作经验</td>
+                        <td>项目流程</td>
+                        <td>最近更新</td>
+                        <td>创建者</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in sec1Data.project_resume.list">
+                        <td>
+                            <a href="/#/candidate/{{item.resumeId}}?project_id={{item.projectId}}" a-link-target
+                               ng-bind-html="item.resume.basicInfo.Fname | highlight : sec1SearchedKeyword">
+                            </a>
+                        </td>
+                        <td>
+                            <a ui-sref="project_view.pipeline({
+                                projectId: item.projectId,
+                                pipeline: sec1Choose == 'pipeline_offer' ? 'offer' : 'interview'}
+                            )" a-link-target
+                               ng-bind-html="item.project.basicInfo.Fproject_name | highlight : sec1SearchedKeyword">
+                            </a>
+                        </td>
+                        <td>{{item.resume.basicInfo | showValueByFieldItem : {dataType: 'workExperience', name:
+                            'Fwork_year'} }} 年
+                        </td>
+                        <td>
+                            {{item.lastOperation.status | i18n}}
+                            <span ng-if="item.lastOperation.data.interviewCount">: {{item.lastOperation.data.interviewCount}}面</span>
+                        </td>
+                        <td>
+                            {{item.updateTime | tigerDateRecent}}
+                        </td>
+                        <td>{{item.creator | i18n}}</td>
+                    </tr>
+                    <tr ng-if="sec1Data.project_resume.list.length == 0" class="no-data">
+                        <td colspan="10">暂无数据</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            <div ng-if="sec1Data.project_resume.total > 5">
+                                <a ui-sref="search({moduleId: 10, pipeline: 'interview', quick: 10000})"
+                                   ng-if="sec1Choose == 'pipeline_interview_1'">查看更多</a>
+                                <a ui-sref="search({moduleId: 10, pipeline: 'interview', quick: 10000})"
+                                   ng-if="sec1Choose == 'pipeline_interview_2'">查看更多</a>
+                                <a ui-sref="search({moduleId: 10, pipeline: 'interview', quick: 10000})"
+                                   ng-if="sec1Choose == 'pipeline_interview_more'">查看更多</a>
+                                <a ui-sref="search({moduleId: 10, pipeline: 'offer', quick: 10000})"
+                                   ng-if="sec1Choose == 'pipeline_offer'">查看更多</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

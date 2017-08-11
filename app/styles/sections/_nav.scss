@@ -1,0 +1,183 @@
+/*===============================
+  :: Nav
+  ===============================*/
+#nav-container {
+    ul {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    > .nav-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.nav-container {
+    .nav {
+        margin: 0;
+        padding: 0;
+        border-right: 1px solid #000000;
+        -webkit-overflow-scrolling: touch;
+
+        > li > a > i {
+            display: inline-block;
+            width: 16px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        a {
+            font-size: 13px;
+            color: #fff;
+
+            &:focus {
+                text-decoration: none;
+            }
+        }
+
+        > li {
+            position: relative;
+            margin: 0;
+            text-align: left;
+            > .iconfont {
+                color: $white;
+            }
+
+            &.active {
+                > a {
+                    background-color: $brand-primary;
+                    &:hover, &:focus {
+                        background: $brand-primary !important;
+                    }
+                }
+            }
+
+            &.open {
+                > ul {
+                    background: rgba(0, 0, 0, 0.15) !important;
+                }
+            }
+
+            > a {
+                position: relative;
+                display: block;
+                font-weight: normal;
+                padding: 9px 0px 9px 15px;
+
+                > i {
+                    font-size: 16px;
+
+                    ~ i {
+                        position: absolute;
+                        right: 3px;
+                        transform: scale(0.3);
+                    }
+                }
+
+                > span {
+                    width: 130px;
+                    line-height: 16px;
+                    overflow: hidden;
+                    display: inline-block;
+                    padding-top: 3px;
+                    margin-left: 15px;
+                    position: absolute;
+                    white-space: nowrap;
+                    @include transition(width .4s linear);
+                }
+
+                &.toggle-min {
+                    padding: 0;
+                    height: 20px;
+                    line-height: 20px;
+                    background-color: #515A79 !important;
+                    text-align: center;
+                    font-weight: 600;
+
+                    > i {
+                        transform: scale(0.6);
+                        width: auto;
+                        line-height: 19px;
+                        font-size: 10px;
+                    }
+
+                    &:hover {
+                        background: rgba(0, 0, 0, 0.15) !important;
+                    }
+
+                }
+            }
+        }
+
+        // sub menu
+        ul {
+            display: none;
+            a {
+                font-size: 13px;
+                text-transform: capitalize;
+                &:focus {
+                    background: transparent !important;
+                }
+            }
+
+            li {
+                position: relative;
+                padding: 0;
+                &:last-child > a {
+                    border-bottom: 0;
+                }
+
+                &.active {
+                    background-color: #515A79;
+
+                    > a {
+                        &:focus {
+                            background: transparent !important;
+                        }
+                    }
+                }
+
+                > a {
+                    position: relative;
+                    display: block;
+                    padding: 10px 0px 10px 46px;
+                    @include transition(all .2s ease-in-out);
+                    &:first-child {
+                        border-top: none;
+                    }
+                }
+
+                &.menu-title {
+                    background: $brand-primary !important;
+                    heigtht: 40px;
+                    display: none;
+
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 15px;
+                        left: -5px;
+                        border-top: 5px solid transparent;
+                        border-bottom: 5px solid transparent;
+                        border-right: 5px solid $brand-primary;
+                        display: block;
+                        width: 0;
+                        height: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.nav .open {
+    > a {
+        background-color: transparent;
+        border-color: #337ab7;
+        &:hover, &:focus {
+            background: transparent;
+        }
+    }
+}

@@ -1,0 +1,337 @@
+<div class="second-menu" ng-if="moduleId != 100">
+    <div class="panel panel-default" data-slim-scroll>
+        <div class="menu-title" ng-if="!!menuTitle">
+            {{menuTitle}}
+        </div>
+        <div class="panel-heading" ng-if="!!moduleTitle">
+            <p>
+                <span>{{moduleTitle}}</span>
+            </p>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item quick-search-item tiger-list-item" ng-if="defaultSearchParam"
+                ng-click="selectSearchParam(defaultSearchParam)" ng-class="{active: selectedSearchParam.id == -2}">
+                <span>{{defaultSearchParam.title}}</span>
+            </li>
+
+            <li class="list-group-item quick-search-item tiger-list-item"
+                ng-repeat="param in searchParamPrimaryList"
+                ng-click="selectSearchParam(param)" ng-class="{active: selectedSearchParam.id == param.id}">
+                <span class="badge" title="{{param.count}}">{{param.count > 9999 ? '9999+' : param.count}}</span>
+                <span>{{param.title}}</span>
+            </li>
+        </ul>
+
+        <div class="panel-heading menu-hover" ng-if="!hideFolder">
+            <p>
+                <span>分组</span>
+                <button class="pull-right btn btn-default btn-xs" ng-click="editFolder()" ng-if="options.canEditFolder">
+                    编辑
+                </button>
+            </p>
+        </div>
+        <treecontrol class="tree-classic folder-item tiger-list-item" tree-model="folderList"
+                     options="treeOpts" on-selection="chooseFolder(node, selected)"
+                     expanded-nodes="expandedFolders" selected-node="selectedFolder"
+                     ng-if="folderList.length">
+            <span class="badge pull-right" ng-bind="node.permissionType == 0 ? 0 : node.count"></span>
+            <span class="title" ng-bind="node | i18n"></span>
+            <i ng-if="node.shareInfoList && node.creator.id == account.id" class="iconfont icon-arrow-share"
+               data-toggle="popover" title="共享给他人"></i>
+            <i ng-if="node.shareInfoList && node.creator.id !== account.id" class="iconfont icon-arrow-accpet"
+               data-toggle="popover" title="他人共享给我"></i>
+        </treecontrol>
+        <script id="treeControlTemplate.html" type="text/ng-template" save-content="external-template-tmpl">
+            <ul {{options.ulClass}}>
+                <li tiger-tree-control-list ng-click="onNodeSelection($event)"
+                    ng-repeat="node in node.{{options.nodeChildren}} | filter:filterExpression:filterComparator {{options.orderBy}}"
+                    ng-class="headClass(node)"
+                    {{options.liClass}}
+                    set-node-to-data>
+                    <i class="tree-branch-head" ng-class="iBranchClass()"></i>
+                    <i class="tree-leaf-head {{options.iLeafClass}}"></i>
+                    <div class="tree-label {{options.labelClass}}" ng-class="[selectedClass(), unselectableClass()]"
+                         tree-transclude></div>
+                    <treeitem ng-show="nodeExpanded()"></treeitem>
+                </li>
+            </ul>
+        </script>
+
+        <div class="panel-heading">
+            <p>
+                <span>快速搜索</span>
+            </p>
+            <!--<help-hint message="点击右侧的“添加”按钮可以保存当前搜索条件"></help-hint>-->
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item quick-search-item tiger-list-item menu-hover"
+                ng-repeat="param in searchParamList"
+                ng-click="selectSearchParam(param)" ng-class="{active: selectedSearchParam.id == param.id}">
+                <i ng-if="options.canEditQuickSearch"
+                   ng-click="deleteSearchParam(param, $event)"
+                   class="iconfont icon-x"></i>
+                <span class="badge" title="{{param.count}}">{{param.count > 9999 ? '9999+' : param.count}}</span>
+                <span>{{param.title}}</span>
+            </li>
+        </ul>
+    </div>
+    <span data-second-menu-toggle-collapsed>
+        <i class="iconfont icon-pull"></i>
+    </span>
+</div>
+
+<div>
+    <div class="panel panel-default" ng-class="{'panel-loading':loading}">
+        <form class="panel-body" ng-submit="updateList(true)">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="请输入姓名、公司、职位等关键词进行搜索，多个关键词用空格分隔"
+                       ng-model="keyword">
+                <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                    </span>
+            </div>
+        </form>
+
+        <div class="panel-body condition-edit-list">
+            <div ng-repeat="fieldItem in fieldList | filter : {canSearch: 1} track by $index"
+                 class="condition-edit-list-item condition-edit-list-item-{{$index}} ">
+                <button type="button" class="btn btn-link btn-sm" ng-click="showConditionEdit(fieldItem)">
+                    {{fieldItem | i18n}}
+                </button>
+                <form class="row condition-edit-form f-item-{{fieldItem | fieldItem2SearchType}}"
+                      ng-class="{right: conditionOnRight}"
+                      style="padding-right: 10px"
+                      ng-if="conditionEditShow == fieldItem.moduleItem + '.' + fieldItem.name + '.'+conditionTimeStamp"
+                      ng-submit="addSearchCondition(fieldItem)" ng-init="calcConditionPosition($index)">
+
+                    <div class="col-sm-3" style="padding-right: 0">
+                        {{fieldItem | i18n}}
+                    </div>
+                    <ng-switch on="fieldItem | fieldItem2SearchType" class="col-sm-9"
+                               ng-init="field4Search(fieldItem)">
+
+                        <div ng-switch-when="match_phrase">
+                            <input type="text" ng-model="tmp[fieldItem.name]" class="form-control"
+                                   ng-disabled="tmpSearchType[fieldItem.name].queryNull"
+                                   ng-init="focusThis($index)" focus-this>
+                            <div style="margin-top: 10px;">
+                                <label class="ui-checkbox">
+                                    <input type="checkbox" ng-model="tmpSearchType[fieldItem.name].queryNull">
+                                    <span>查找空的</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div ng-switch-when="generalItemText">
+                            <input type="text" ng-model="tmp[fieldItem.name]" class="form-control"
+                                   ng-init="focusThis($index)" focus-this>
+                        </div>
+
+                        <div ng-switch-when="wildcard">
+                            <input type="text" ng-model="tmp[fieldItem.name]" class="form-control"
+                                   ng-disabled="tmpSearchType[fieldItem.name].queryNull"
+                                   ng-init="focusThis($index)" focus-this>
+                            <div style="margin-top: 10px;">
+                                <label class="ui-checkbox">
+                                    <input type="checkbox" ng-model="tmpSearchType[fieldItem.name].queryNull">
+                                    <span>查找空的</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div ng-switch-when="listText">
+                            <input type="text" ng-model="tmp[fieldItem.name]" class="form-control"
+                                   ng-init="focusThis($index)" focus-this>
+                            <tiger-include
+                                template-path="views/search/ui/advance_condition.html"></tiger-include>
+                        </div>
+
+                        <div ng-switch-when="listGeneralItemText">
+                            <input type="text" ng-model="tmp[fieldItem.name]" class="form-control"
+                                   ng-init="focusThis($index)" focus-this>
+                            <tiger-include
+                                template-path="views/search/ui/advance_condition.html"></tiger-include>
+                        </div>
+
+                        <div ng-switch-when="number" class="input-group condition-edit-number">
+                            <input type="number" ng-model="tmp[fieldItem.name].gte"
+                                   class="form-control"
+                                   focus-this>
+                            <span class="input-group-addon"> - </span>
+                            <input type="number" ng-model="tmp[fieldItem.name].lte"
+                                   class="form-control">
+                            <span class="input-group-addon"
+                                  ng-if="tmpFieldInfo[fieldItem.name].unit">{{tmpFieldInfo[fieldItem.name].unit | i18n}}</span>
+
+                        </div>
+
+                        <div ng-switch-when="daterange" ng-init="tmp[fieldItem.name]={}">
+                            <daterange ng-model="tmp[fieldItem.name]" not-not-ended="1" not-no-day="1"></daterange>
+                        </div>
+
+                        <div ng-switch-when="generalItem">
+                            <custom-field entity="tmp"
+                                          field-info="tmpFieldInfo[fieldItem.name]"></custom-field>
+                            <div style="margin-top: 10px;">
+                                <label class="ui-checkbox">
+                                    <input type="checkbox" ng-model="tmpSearchType[fieldItem.name].queryNull">
+                                    <span>查找空的</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div ng-switch-when="generalItemRange">
+                            <custom-field entity="tmp" field-info="tmpFieldInfo[fieldItem.name]"></custom-field>
+                            <div style="margin-top: 10px;">
+                                <label class="ui-checkbox">
+                                    <input type="checkbox" ng-model="tmpSearchType[fieldItem.name].above">
+                                    <span>以上</span>
+                                </label>
+                                <help-hint message="“以上”会按照设置中的选项排序搜索当前选择及之后的所有匹配项"></help-hint>
+                            </div>
+                        </div>
+
+                        <div ng-switch-when="checkbox" class="condition-edit-checkbox">
+                            <label class="ui-radio ui-radio-sm">
+                                <input type="radio" ng-model="tmp[fieldItem.name]" ng-value="1">
+                                <span>是</span>
+                            </label>
+
+                            <label class="ui-radio ui-radio-sm">
+                                <input type="radio" ng-model="tmp[fieldItem.name]" ng-value="0">
+                                <span>否</span>
+                            </label>
+                        </div>
+
+                        <div ng-switch-when="tag">
+                            <input type="text" ng-model="tmp[fieldItem.name]" class="form-control"
+                                   focus-this>
+                        </div>
+                    </ng-switch>
+                    <div class="col-sm-offset-3 col-sm-9" style="margin-top: 10px;">
+                        <button type="submit" class="btn  btn-primary submit-btn">搜索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel-body condition-list" ng-if="conditionList.length">
+            <div class="label label-success condition-list-item"
+                 ng-repeat="conditionItem in conditionList track by $index">
+                {{conditionItem | i18n}}
+                <small ng-if="conditionItem.advance.latest > 0">(最近)</small>
+                :
+                <small ng-if="conditionItem.advance.queryNull">(空)</small>
+                <ng-switch on="conditionItem.condition_type">
+                        <span ng-switch-when="term">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="match">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="match_phrase">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="wildcard">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="listGeneralItemText">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="listText">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="generalItemText">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="terms">
+                            {{conditionItem.condition | i18n}} {{conditionItem.advance.above ? "及以上" : ""}}
+                        </span>
+                    <span ng-switch-when="generalItem">
+                            {{conditionItem.condition | i18n}} {{conditionItem.advance.above ? "及以上" : ""}}
+                        </span>
+                    <span ng-switch-when="generalItemRange">
+                            {{conditionItem.condition | i18n}} {{conditionItem.advance.above ? "及以上" : ""}}
+                        </span>
+                    <span ng-switch-when="number">
+                            <span ng-if="conditionItem.condition.gte>=0 && conditionItem.condition.lte>=0">
+                                {{conditionItem.condition.gte }}{{conditionItem.unit | i18n}}
+                                -
+                                {{conditionItem.condition.lte}}{{conditionItem.unit | i18n}}
+                            </span>
+                            <span ng-if="conditionItem.condition.gte >=0 && conditionItem.condition.lte==undefined">
+                                {{conditionItem.condition.gte }}{{conditionItem.unit | i18n}}以上
+                            </span>
+                            <span ng-if="conditionItem.condition.gte==undefined && conditionItem.condition.lte>=0">
+                                {{conditionItem.condition.lte}}{{conditionItem.unit | i18n}}以下
+                            </span>
+                        </span>
+                    <span ng-switch-when="range">
+                            <span ng-if="conditionItem.condition.gte>=0 && conditionItem.condition.lte>=0">
+                                {{conditionItem.condition.gte }}{{conditionItem.unit | i18n}}
+                                -
+                                {{conditionItem.condition.lte}}{{conditionItem.unit | i18n}}
+                            </span>
+                            <span ng-if="conditionItem.condition.gte >=0 && conditionItem.condition.lte==undefined">
+                                {{conditionItem.condition.gte }}{{conditionItem.unit | i18n}}以上
+                            </span>
+                            <span ng-if="conditionItem.condition.gte==undefined && conditionItem.condition.lte>=0">
+                                {{conditionItem.condition.lte}}{{conditionItem.unit | i18n}}以下
+                            </span>
+                        </span>
+                    <span ng-switch-when="tag">
+                            {{conditionItem.condition}}
+                        </span>
+                    <span ng-switch-when="checkbox">
+                            {{conditionItem.condition > 0 ? '是' : '否'}}
+                        </span>
+                    <span ng-switch-when="daterange">
+                            <span ng-if="conditionItem.condition.Fstart_time">
+                                {{conditionItem.condition.Fstart_time | tigerDate}}
+                            </span>
+                            <span ng-if="conditionItem.condition.Fstart_time && conditionItem.condition.Fend_time">
+                                -
+                            </span>
+                            <span ng-if="conditionItem.condition.Fend_time">
+                                {{conditionItem.condition.Fend_time | tigerDate}}
+                            </span>
+                            <span ng-if="!conditionItem.condition.Fend_time">
+                                至今
+                            </span>
+                            <span ng-if="!conditionItem.condition.Fstart_time">
+                                之前
+                            </span>
+                        </span>
+                </ng-switch>
+                <span class="remove-btn" ng-click="removeConditionItem($index)">×</span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-xs" ng-click="updateSearchParam(selectedSearchParam)"
+                    ng-if="options.canEditQuickSearch">
+                    <span
+                        ng-if="!!selectedSearchParam.title&&selectedSearchParam.primary==1||!selectedSearchParam.title">添加</span>
+                <span ng-if="!!selectedSearchParam.title&&selectedSearchParam.primary!=1">保存</span>
+            </button>
+
+            <button type="button" class="btn btn-link btn-xs clear-btn" ng-click="clearCondition()"
+                    ng-if="conditionList.length > 0">
+                清除
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-if="moduleId == 10" style="margin-bottom:10px;">
+        <tiger-include template-path="views/project/pipeline_nav.html" class="panel-body"
+                       style="padding: 0"></tiger-include>
+    </div>
+
+    <!-- init table field list need fieldList loaded -->
+    <custom-list ng-if="fieldList.length" display-field-key-list="fieldInTable"
+                 list-title="列表" field-list="fieldList" data="list" on-thead-click="sortBy"
+                 sort-by-field="sortByField" sort-by-type="sortByType" page-state="pageState"
+                 loading="loadList" module-id="{{moduleId}}" list-key="{{moduleId}}" operation-func="operation"
+                 search-param="currentSearchParam" page-size-editable="1" has-highlight="1"
+                 quick-edit-func="quickEditFunc">
+    </custom-list>
+</div>

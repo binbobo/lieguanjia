@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+    <!-- todo 去除掉这个 -->
+    <div class="panel-body list-group attachment-list" ng-repeat="attachmentItemSubList in attachmentList"
+         ng-if="attachmentList">
+        <span ng-bind="attachmentItemSubList.info | i18n" ng-if="attachmentItemSubList.info"></span>
+        <div class="list-group-item" ng-repeat="attachmentItem in attachmentItemSubList.list">
+            <img class="pull-left" ng-src="/images/icon/{{config.fileMime2Icon[attachmentItem.fileType]}}.png"
+                 ng-if="config.fileMime2Icon[attachmentItem.fileType]">
+
+            <div class="list-group-item-heading mr-5" title="{{attachmentItem.fileName}}">
+                <a target="_blank"
+                   ng-href="/api/file/download?id={{attachmentItem.id}}&type={{31}}&rid={{candidateId}}">
+                    {{attachmentItem.fileName}}
+                </a>
+
+                <div class="list-group-item-text clearfix mt-10 mr-5">
+                    <button type="button" class="btn btn-xs btn-success"
+                            ng-if="config.fileMime2Preview[attachmentItem.fileType]"
+                            ng-click="previewFile(config.fileMime2Preview[attachmentItem.fileType], attachmentItem.id,candidateId)">
+                        预览
+                    </button>
+                    <a target="_blank" class="btn btn-xs btn-success"
+                       ng-if="!config.fileMime2Preview[attachmentItem.fileType]"
+                       ng-href="/api/file/download?id={{attachmentItem.id}}&type={{31}}&rid={{candidateId}}">下载</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="row">
+
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <span class="panel-body">
+                <ul>
+                    <li>解析内容：基本信息、联系方式、教育信息、工作经历、项目经历、语言等简历信息，准确率96%以上</li>
+                    <li>支持格式：xls、xlsx</li>
+                </ul>
+            </span>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                1、批量填充信息（留空则以系统解析结果为准）
+            </div>
+            <form class="panel-body" name="importForm">
+                <custom-form field-list="fields" entity="importTemplate"
+                             class="form-horizontal col-sm-11 custom-form-inline"
+                             base-form="importForm"></custom-form>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-sm-12" nv-file-drop uploader="uploader">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                2、选择Excel文件
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-4">
+                    <input type="file" title="选择文件" nv-file-select="" ui-file-upload uploader="uploader" multiple/>
+                </div>
+                <div class="col-sm-8">
+                    <div class="well my-drop-zone" nv-file-over="" uploader="uploader"
+                         style="margin-bottom: 0; min-height: 100px">
+                        拖动文件到这里上传
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-success" ng-click="checkRequired()"
+                        ng-disabled="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> 开始上传
+                </button>
+                <button type="button" class="btn btn-warning" ng-click="uploader.cancelAll()"
+                        ng-disabled="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> 取消上传
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="clearQueue()"
+                        ng-disabled="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-ban-circle"></span> 清空
+                </button>
+
+                <div class="pull-right">
+                    <label class="ui-checkbox" ng-show="!!importTemplate.duplicateOperation&&!!importTemplate.type">
+                        <input type="checkbox" ng-model="uploader.autoUpload">
+                        <span>自动导入</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <uib-progress max="uploader.queue.length" ng-if="uploader.queue.length">
+                    <uib-bar value="state.finish" type="default" ng-show="state.finish">
+                    </uib-bar>
+                    <uib-bar value="state.error" type="danger" ng-show="state.error">
+                    </uib-bar>
+                </uib-progress>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tbody>
+                    <tr ng-repeat="item in uploader.queue" style="vertical-align: top">
+                        <th width="20%">
+                            {{item.file.name}}
+                        </th>
+                        <th width="20%">
+                            {{item.file.size | fileSize}}
+                        </th>
+                        <th width="5%">
+                            <span class="label label-success"
+                                  style="margin-bottom:0"
+                                  ng-if="item.isSuccess && item.formData[0].success">成功</span>
+                            <span class="label label-danger" style="margin-bottom:0"
+                                  ng-if="item.isError || item.formData[0].error">失败</span>
+                        </th>
+                        <th width="50%">
+                            <span ng-if="item.isUploading && item.progress < 100">上传中</span>
+                            <span ng-if="item.isUploading && item.progress >= 100">处理中</span>
+                            <span ng-if="item.isSuccess && item.formData[0].success" style="vertical-align: top">导入成功
+                                    <span>新增人才:{{item.formData[0].importNum}}  重复简历:{{item.formData[0].duplicateNum}}<br>
+                                      <a ng-repeat="resume in item.formData[0].duplicateResumeList"
+                                         ng-href="/#/candidate/{{resume.resumeId}}">
+                                          {{resume.name}}
+                                      </a>
+                                    </span>
+                            </span>
+                            <span ng-if="item.isSuccess && item.formData[0].error">
+                                导入失败
+                                <span ng-if="item.formData[0].info">{{item.formData[0].info}}</span>
+                            </span>
+                            <span ng-if="item.isError">导入失败</span>
+                        </th>
+                        <th width="5%">
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()"
+                                    ng-if="!item.isUploading && !item.isUploaded">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

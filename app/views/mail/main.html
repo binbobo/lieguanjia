@@ -1,0 +1,69 @@
+<div class="row mail-nav" ng-class="{'mail-btn-group-loading':refreshing}" ng-if="!lossMailConfig">
+    <div class="pageheader col-sm-12">
+        <h2><i class="fa fa-envelope"></i> 邮件</h2>
+    </div>
+
+    <div class="col-sm-12 page">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="mail-categories">
+                    <div class="btn-header-group">
+                        <a class="btn btn-header waves-effect waves-button waves-float waves-default"
+                           ng-click="refresh()" ng-disabled="refreshing">
+                            <i class="fa fa-inbox"></i> <span>收信</span>
+                        </a>
+                        <a ui-sref="mail.compose({ emailId: 0, sendType: 0 })"
+                           class="btn btn-header waves-effect waves-button waves-float waves-default"
+                           ng-disabled="refreshing">
+                            <i class="fa fa-edit"></i> <span data-i18n="mail compose"></span>
+                        </a>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item tiger-list-item">
+                            <a ui-sref="mail.inbox({ type: 1 })">
+                                <i class="fa fa-inbox"></i>
+                                <span data-i18n="mail inbox"></span>
+                                <span class="badge pull-right">{{groupCount.type_1}}</span>
+                            </a>
+                        </li>
+                        <li class="list-group-item tiger-list-item">
+                            <a ui-sref="mail.inbox({ type: 2 })">
+                                <i class="fa fa-envelope-o"></i>
+                                <span data-i18n="mail send"></span>
+                                <span class="badge pull-right">{{groupCount.type_2}}</span>
+                            </a>
+                        </li>
+                        <!--<li class="list-group-item tiger-list-item">-->
+                        <!--<a href="#/email/inbox/99">-->
+                        <!--<i class="fa fa-star"></i>-->
+                        <!--<span data-i18n="mail starred"></span>-->
+                        <!--<span class="badge pull-right">{{groupCount.type_99}}</span>-->
+                        <!--</a>-->
+                        <!--</li>-->
+                        <li class="list-group-item tiger-list-item">
+                            <a ui-sref="mail.inbox({ type: 3 })">
+                                <i class="fa fa-pencil"></i>
+                                <span data-i18n="mail draft"></span>
+                                <span class="badge pull-right">{{groupCount.type_3}}</span>
+                            </a>
+                        </li>
+                        <li class="list-group-item tiger-list-item">
+                            <a ui-sref="mail.inbox({ type: 4 })">
+                                <i class="fa fa-trash-o"></i>
+                                <span>已删除</span>
+                                <span class="badge pull-right">{{groupCount.type_4}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div ui-view class="col-sm-9"></div>
+        </div>
+    </div>
+</div>
+<div ng-if="lossMailConfig" class="panel panel-body">
+    <div class="col-xs-6 col-md-4 mail-config-lose">
+        <h4 class="center">您还未配置邮箱,请先配置后再使用</h4>
+        <a class="btn btn-primary" ui-sref="profile.mail.account">去配置</a>
+    </div>
+</div>

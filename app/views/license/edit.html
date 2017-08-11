@@ -1,0 +1,7 @@
+<form class="lock-wrapper" style="text-align: center; margin-top:60px;" ng-submit="updateSerialNumber()">
+    <h3>请输入注册码</h3>
+    <input type="text" class="form-control input-lg" ng-model="newSerialNumber">
+    <button type="submit" class="btn btn-primary btn-lg waves-effect waves-button waves-float">提交</button>
+    <h4 ng-if="loading">验证中</h4>
+    <h4 ng-if="errorMsg">{{errorMsg}}</h4>
+</form>

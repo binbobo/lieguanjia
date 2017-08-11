@@ -1,0 +1,140 @@
+.login-page {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: no-repeat center;
+    background-size: cover;
+    transition: background-image 0.5s ease-in-out;
+
+    text-align: center;
+
+    .black-mask {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        z-index: 10;
+
+        opacity: 0.15;
+        background: #000;
+    }
+
+    .login-box {
+        margin: 0 0 120px;
+        z-index: 100;
+        width: 350px;
+        color: #fff;
+        text-align: left;
+
+        .header {
+            font-size: 32px;
+            line-height: 32px;
+            margin-bottom: 30px;
+
+            img {
+                display: inline-block;
+                height: 32px;
+                vertical-align: bottom;
+            }
+
+            small {
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 4px;
+                padding-left: 8px;
+
+                border-left: 1px solid #fff;
+
+                font-size: 14px;
+                line-height: 20px;
+            }
+        }
+
+        .iconic-input {
+            position: relative;
+
+            color: #999;
+
+            i.fa {
+                left: 0;
+                top: 0;
+                font-size: 18px;
+                margin: 14px 0;
+                padding: 0 12px 0 16px;
+                border-right: 1px solid #999;
+                width: 44px;
+            }
+
+            input {
+                height: 46px;
+                font-size: 20px;
+                line-height: 20px;
+                padding: 8px 10px 8px 60px !important;
+                border-radius: 0;
+            }
+        }
+
+        .ui-checkbox {
+            input + span::before {
+                background: #fff;
+            }
+        }
+
+        .btn {
+            margin: 15px 0;
+            padding: 12px 0;
+        }
+    }
+    .invite-box {
+        z-index: 100;
+        .invite-form {
+
+            width: 350px;
+            color: #fff;
+            text-align: left;
+            margin-left: auto;
+            margin-right: auto;
+
+            .header {
+                font-size: 32px;
+                line-height: 32px;
+                margin-bottom: 30px;
+                text-align: center;
+
+                small {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 4px;
+                    padding-left: 8px;
+                    margin-top: 15px;
+
+                    font-size: 14px;
+                    line-height: 20px;
+                }
+            }
+
+            input {
+                height: 46px;
+                font-size: 20px;
+                line-height: 20px;
+                padding: 8px 10px 8px 10px !important;
+                border-radius: 0;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 12px 5px;
+            }
+        }
+    }
+
+}

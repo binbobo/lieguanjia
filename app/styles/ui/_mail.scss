@@ -1,0 +1,50 @@
+.mail-compose {
+    label {
+        text-align: right;
+        font-size: 12px;
+        padding-top: 6px;
+        padding-right: 0;
+    }
+}
+
+.mail-nav{
+    .btn-header{
+        width: 49%;
+    }
+    .btn-header-group{
+        padding-bottom: 5px;
+    }
+}
+
+
+.mail-btn-group-loading:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 10;
+}
+
+.mail-config-lose {
+    float: none;
+    display: block;
+    margin: 200px auto 400px;
+
+  a {
+        position: relative;
+        margin-top: 30px;
+        width: 100px;
+        right: 50px;
+        margin-left: 50%;
+    }
+}
+
+.mail-sing-btn {
+    margin-top: 10px;
+    margin-left: 5px;
+    width: 70px;
+}
