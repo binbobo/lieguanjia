@@ -211,6 +211,10 @@ tbody.angular-ui-tree-nodes {
     border: 1px solid #ccc;
     z-index: 1040;
 
+    &.from-preview {
+        z-index: 1050;
+    }
+
     .modal-open & {
         z-index: 5040;
     }

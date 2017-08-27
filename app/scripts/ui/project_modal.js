@@ -16,25 +16,7 @@ angular.module('tiger.ui.project_modal', []).service('projectResumeModal', funct
                 $scope.projectSelected = null;
                 $scope.joinedProjectList = null;
                 $scope.resumeId = resumeId;
-
-                projectService.listCanJoinProject(resumeId, key).then(function (data) {
-                    $scope.itemList = data;
-                });
-                if (resumeId) {
-                    projectService.listJoinedProjectWithCompany(resumeId).then(function (data) {
-                        $scope.joinedProjectList = data;
-                    });
-                }
-
-                $scope.uiSelectChange = function ($item, $model) {
-                    $scope.projectSelected = $item;
-                };
-
-                $scope.selectRefresh = function (keyword) {
-                    return projectService.listCanJoinProject(resumeId, keyword).then(function (data) {
-                        $scope.itemList = data;
-                    });
-                };
+                $scope.attributeData = {"unionQuery": 1, "type": "3", "resumeId": resumeId};
 
                 $scope.ok = function () {
                     if (!$scope.projectSelected) {

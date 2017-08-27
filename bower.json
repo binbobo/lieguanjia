@@ -60,7 +60,8 @@
     "angular-bootstrap-contextmenu": "^0.9.9",
     "bourbon": "^4.3.4",
     "text-encoding": "^0.6.4",
-    "push.js": "^1.0.3"
+    "push.js": "^1.0.3",
+    "jquery-qrcode": "jquery.qrcode#^v0.14.0"
   },
   "devDependencies": {
     "bourbon": "^4.2.7"

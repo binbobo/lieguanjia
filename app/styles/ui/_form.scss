@@ -1,9 +1,10 @@
+$custom-form-group-min-width: 361px;
 .custom-form-group {
     position: relative;
 
     margin-bottom: 10px;
 
-    width: 460px;
+    min-width: $custom-form-group-min-width;
     min-height: 25px;
     vertical-align: top;
 
@@ -23,7 +24,8 @@
 
         text-align: left;
         line-height: 25px;
-        font-size: 14px;
+        font-size: 13px;
+        color: #8CA0B3;
         font-weight: normal;
 
         text-overflow: ellipsis;
@@ -185,7 +187,7 @@
 .custom-form-show-group {
     &.custom-form-show-group-textarea {
         width: auto;
-        min-width: 460px;
+        min-width: $custom-form-group-min-width;
         display: block;
 
         .form-field-wrap {
@@ -199,13 +201,13 @@
 
     &.custom-form-show-group-daterange, &.custom-form-show-group-datetimerange {
         width: auto;
-        min-width: 460px;
+        min-width: $custom-form-group-min-width;
         display: block;
         // padding-left: 70px;
-        font-weight: bold;
+        //font-weight: bold;
 
         .control-label {
-            display: none;
+            //display: none;
         }
 
         .form-field-show-wrap {
@@ -454,6 +456,16 @@ small.no-name {
         right: 4px;
 
         padding: 5px 8px;
+        cursor: pointer;
+    }
+}
+
+.multiphone-group {
+    display: inline-block;
+
+    .multiphone-item {
+        display: block;
+        color: $link-color;
         cursor: pointer;
     }
 }

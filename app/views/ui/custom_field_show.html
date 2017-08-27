@@ -33,6 +33,15 @@
     <!--<p ng-repeat="value in entity[name] track by $index" ng-bind="value"></p>-->
     <!--</span>-->
 
+    <div ng-switch-when="multiphone" class="multiphone-group">
+        <div ng-repeat="phone in entity[name] track by $index" class="multiphone-item"
+             uib-popover-template="'views/ui/phone_popover.html'"
+             popover-placement="top" popover-trigger="'outsideClick'"
+             popover-class="{{ inPreview ? 'from-preview' : '' }}"
+             popover-append-to-body="true">{{phone}}
+        </div>
+    </div>
+
     <div ng-switch-when="datetimerange">
         <!-- 这里有bug -->
         <p>开始时间：{{entity[name].startTime *1000 | date : 'yyyy-MM-dd H:mm:ss'}}</p>

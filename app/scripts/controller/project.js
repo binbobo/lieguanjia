@@ -325,7 +325,9 @@ angular.module('tiger.ctrl.project', ['tiger.api.project']).config(function ($st
                 data.value, candidateId, 1, null
             );
         }).then(function (data) {
-            // $state.reload();
+            if ($state.current.name.indexOf('candidate_view') > -1) {
+                $state.reload();
+            }
             return {
                 projectId: joinedProjectId
             }

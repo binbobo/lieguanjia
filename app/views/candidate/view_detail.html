@@ -1,75 +1,101 @@
 <div class="panel panel-default">
-    <div class="panel-body">
-        <img class="pull-left" width="64" height="64" style="margin-right:10px;"
-             ng-src="/api/file/download?id={{resume.basicInfo.Favatar}}"
-             ng-if="resume.basicInfo.Favatar">
-        <img class="pull-left" width="64" height="64" style="margin-right:10px;"
-             ng-src="/images/avatar/man.png" ng-if="!resume.basicInfo.Favatar">
-        <div data-ng-controller="candidateOperationCtrl">
-            <div class="btn-group pull-right" uib-dropdown is-open="status.isopen">
-                <button type="button"
-                        class="btn btn-default btn-xs waves-effect waves-button waves-float pull-right"
-                        uib-dropdown-toggle ng-disabled="disabled">
-                    操作<span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu " style="min-width: 100px" uib-dropdown-menu role="menu">
-                    <li>
-                        <a data-ng-click="addComment(resume.id)">添加备注</a>
-                    </li>
-                    <li>
-                        <a ng-click="addTask(resume)">添加提醒</a>
-                    </li>
-                    <li>
-                        <a data-ng-click="composeMail(resume, 1)">发送邮件</a>
-                    </li>
-                    <li>
-                        <a data-ng-click="joinFolder(resume.id, 1)">分组</a>
-                    </li>
-                    <li>
-                        <a data-ng-click="joinProject(resume.id)">加入项目</a>
-                    </li>
-                    <li>
-                        <a data-ng-click="generateReport(resume)">生成推荐报告</a>
-                    </li>
-                    <li>
-                        <a data-ng-click="deleteResume(resume.id)">删除</a>
-                    </li>
-                </ul>
+    <div class="panel-body resume-header tiger-resume-border clearfix">
+        <div class="header-left pull-left clearfix">
+            <div class="pull-left">
+                <img width="86" height="86" ng-src="/api/file/download?id={{resume.basicInfo.Favatar}}"
+                     ng-if="resume.basicInfo.Favatar">
+                <img width="86" height="86" ng-src="/images/avatar/man.png" ng-if="!resume.basicInfo.Favatar">
+            </div>
+            <div class="abstract pull-left">
+                <p class="abstract-fir">
+                    <span class="name" ng-bind="resume.basicInfo.Fname"></span>
+                    <span class="attachments">
+                        <i class="iconfont icon-attachment"></i>
+                        {{resume.stats.attachmentCount}} 附件
+                    </span>
+                    <span class="type tiger-resume-radius" ng-bind="resume.moduleType | i18n"></span>
+                    <span class="status tiger-resume-radius" ng-bind="resume.basicInfo.Fstatus.title"></span>
+                    <span class="mpc tiger-resume-radius" ng-if="resume.basicInfo.Fmpc">MPC</span>
+                </p>
+                <p class="abstract-sec" ng-if="resume.occupationList && resume.occupationList.length > 0">
+                    <a ui-sref="company_view( {companyId: resume.occupationList[0].Fcompany_id.id} )"
+                       class="target_blank">
+                        {{resume.occupationList[0].Fcompany_id | i18n}}
+                    </a>
+                    &nbsp;| &nbsp;
+                    <span class="title" ng-bind="resume.occupationList[0].Ftitle"></span>
+                </p>
+                <p>
+                    <span ng-bind="resume.creator | i18n"></span> &nbsp;| &nbsp;
+                    <span ng-bind="resume.time | tigerDate"></span> &nbsp;| &nbsp;
+                    <span ng-bind="resume.original.title"></span>
+                </p>
             </div>
         </div>
-        <a ui-sref="candidate_edit( {candidateId: candidateId} )"
-           class="btn btn-default btn-xs waves-effect waves-button waves-float pull-right target_blank">编辑</a>
-        <h4 class="media-heading">
-            <span ng-bind="resume.basicInfo.Fname"></span>
-            <small>
-                ({{resume.moduleType | i18n}})
-                <span ng-if="resume.basicInfo.Fmpc" class="label label-primary">MPC</span>
-            </small>
-        </h4>
-        <p ng-if="resume.occupationList && resume.occupationList.length > 0" style="margin-bottom: 0">
-            {{resume.occupationList[0].Ftitle}} |
-            <a ui-sref="company_view( {companyId: resume.occupationList[0].Fcompany_id.id} )" class="target_blank">
-                {{resume.occupationList[0].Fcompany_id | i18n}}
-            </a>
-        </p>
-        <p>
-            创建时间：{{resume.time | tigerDate}} | 创建者： <a>{{resume.creator | i18n}}</a>
-        </p>
+        <div class="header-right pull-right">
+            <div class="resume-actions" data-ng-controller="candidateOperationCtrl">
+                <a ui-sref="candidate_edit( {candidateId: candidateId} )"
+                   class="btn tiger-action-button target_blank">编辑简历</a>
+                <button class="btn tiger-action-button" ng-click="joinProject(resume.id)">
+                    加入项目
+                </button>
+                <div class="btn-group" uib-dropdown is-open="status.isopen">
+                    <button class="btn tiger-action-button" uib-dropdown-toggle
+                            ng-disabled="disabled" ng-click="toggleDropdown(status)">
+                        操作
+                        <i class="iconfont icon-caret-right top"></i>
+                        <i class="iconfont icon-caret-right down"></i>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                        <li>
+                            <a data-ng-click="addComment(resume.id)">添加备注</a>
+                        </li>
+                        <li>
+                            <a data-ng-click="composeMail(resume, 1)">发邮件</a>
+                        </li>
+                        <li>
+                            <a ng-click="addTask(resume)">添加提醒</a>
+                        </li>
+                        <li>
+                            <a data-ng-click="joinFolder(resume.id, 1)">添加分组</a>
+                        </li>
+                        <li>
+                            <a data-ng-click="generateReport(resume)">生成推荐报告</a>
+                        </li>
+                        <li>
+                            <a data-ng-click="deleteResume(resume.id)">删除简历</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="btn-group panel-body catogary-tab">
-        <a ui-sref=".default" class="btn btn-default" ui-sref-active-eq="active">基本</a>
-        <a ui-sref=".attachment" class="btn btn-default" ui-sref-active-eq="active">附件
-            {{resume.stats.attachmentCount}}</a>
-        <a ui-sref=".mailList" class="btn btn-default" ui-sref-active-eq="active">邮件</a>
-        <a ui-sref=".commentList" class="btn btn-default" ui-sref-active-eq="active">
-            备注 {{resume.stats.commentCount}}
-        </a>
-        <a ui-sref="candidate_view.update_logs" class="btn btn-default" ui-sref-active-eq="active">
-            日志
-        </a>
+<div class="panel">
+    <div class="catogary-tab tiger-nav-tab">
+        <ul>
+            <li ui-sref-active-eq="active">
+                <a ui-sref=".default">简历</a>
+            </li>
+            <li ui-sref-active-eq="active">
+                <a ui-sref=".attachment">附件
+                    {{resume.stats.attachmentCount}}</a>
+            </li>
+            <li ui-sref-active-eq="active">
+                <a ui-sref=".mailList">邮件</a>
+            </li>
+            <li ui-sref-active-eq="active">
+                <a ui-sref=".commentList">
+                    备注 {{resume.stats.commentCount}}
+                </a>
+            </li>
+            <li ui-sref-active-eq="active">
+                <a ui-sref=".update_logs">
+                    日志
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
 

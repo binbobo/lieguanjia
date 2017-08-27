@@ -113,11 +113,13 @@ angular.module('tiger.ui.mail_modal', []).service('mailModal', [
 
             var receiver = "";
             var projectId = 0;
+            var relationId = 0;
             switch (type) {
                 //简历列表/详情页发送
                 case 1:
                     receiver = !data.basicInfo.Femail ? [] : data.basicInfo.Femail;
                     template.recipient = data.basicInfo.Fname;
+                    relationId = data.id;
                     break;
                 //pipeline列表,向简历发送
                 case 2:
@@ -149,7 +151,9 @@ angular.module('tiger.ui.mail_modal', []).service('mailModal', [
                         : type == 2 && operationStatus == 4 ? 10008
                         : type == 3 && operationStatus == 2 ? 10005 : 0;
                     receiver = type == 2 && !!data.resume.basicInfo.Femail ? data.resume.basicInfo.Femail : [];
-                    projectId = !data.project.basicInfo ? 0 : data.project.basicInfo.Fid ;
+                    projectId = !data.project.basicInfo ? 0 : data.project.basicInfo.Fid;
+                    debugger
+                    relationId = data.resume.id;
                     break;
             }
 
@@ -167,6 +171,8 @@ angular.module('tiger.ui.mail_modal', []).service('mailModal', [
                             projectId: projectId,
                             templateData: template,
                             templateId: templateId,
+                            moduleId: 1,
+                            relationId: relationId,
                             type: type
                         };
                     }

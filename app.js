@@ -1,7 +1,7 @@
-
-var express = require('express')
-    , http = require('http')
-    , proxy = require('express-http-proxy');
+"use strict";
+var express = require('express'),
+    http = require('http'),
+    proxy = require('express-http-proxy');
 
 var config = require('./config/config.json');
 

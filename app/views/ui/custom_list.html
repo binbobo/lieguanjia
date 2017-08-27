@@ -73,6 +73,10 @@
         <div ng-switch="listKey" class="batch-operation" ng-if="operationFunc.batch">
             <div ng-switch-when="1">
                 <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
+                        ng-click="operationFunc.batch.batchViewing(getSelectList())">
+                    批量查看
+                </button>
+                <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"
                         ng-click="operationFunc.batch.joinProject(getSelectList())">
                     加入项目
                 </button>
@@ -106,10 +110,10 @@
                 </button>
             </div>
             <!--<div ng-switch-when="9">-->
-                <!--<button class="btn btn-danger btn-xs" ng-disabled="selectCount <= 0"-->
-                        <!--ng-click="operationFunc.batch.deleteInvoice(getSelectList())">-->
-                    <!--删除发票-->
-                <!--</button>-->
+            <!--<button class="btn btn-danger btn-xs" ng-disabled="selectCount <= 0"-->
+            <!--ng-click="operationFunc.batch.deleteInvoice(getSelectList())">-->
+            <!--删除发票-->
+            <!--</button>-->
             <!--</div>-->
             <div ng-switch-when="12">
                 <button class="btn btn-primary btn-xs" ng-disabled="selectCount <= 0"

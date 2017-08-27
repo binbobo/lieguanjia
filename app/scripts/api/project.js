@@ -88,7 +88,7 @@ angular.module('tiger.api.project', ['tiger.api.base']).service('projectService'
                 query: query,
                 sort: sort,
             },
-            source: 'project'
+            source: 'normal'
         }).then(function (data) {
             return data.project_resume;
         });

@@ -40,7 +40,7 @@
                 </li>
 
                 <li>
-                    <a ui-sref="search({ moduleId: 1 })" ui-sref-active="active">
+                    <a ui-sref="search({ moduleId: 1 })" ui-sref-active="active" ui-sref-opts="{inherit: false}">
                         <span data-i18n="Candidate List"></span>
                     </a>
                 </li>
@@ -81,7 +81,7 @@
                 </li>
 
                 <li>
-                    <a ui-sref="search({ moduleId: 3 })" ui-sref-active="active">
+                    <a ui-sref="search({ moduleId: 3 })" ui-sref-active="active" ui-sref-opts="{inherit: false}">
                         <span data-i18n="Company List"></span>
                     </a>
                 </li>
@@ -109,7 +109,7 @@
                 </li>
 
                 <li>
-                    <a ui-sref="search({ moduleId: 2 })" ui-sref-active="active">
+                    <a ui-sref="search({ moduleId: 2 })" ui-sref-active="active" ui-sref-opts="{inherit: false}">
                         <span data-i18n="Project List"></span>
                     </a>
                 </li>
@@ -124,7 +124,8 @@
 
 
         <li>
-            <a ui-sref="search({ moduleId: 10 })" ui-sref-active="active" uib-popover="Pipeline"
+            <a ui-sref="search({ moduleId: 10 })" ui-sref-active="active" ui-sref-opts="{inherit: false}"
+               uib-popover="Pipeline"
                popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
                popover-append-to-body="true" popover-enable="{{popoverEnable}}">
                 <i class="iconfont icon-p"></i>
@@ -134,7 +135,8 @@
 
 
         <li>
-            <a ui-sref="search({ moduleId: 8 })" ui-sref-active="active" uib-popover="合同"
+            <a ui-sref="search({ moduleId: 8 })" ui-sref-active="active" ui-sref-opts="{inherit: false}"
+               uib-popover="合同"
                popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
                popover-append-to-body="true" popover-enable="{{popoverEnable}}">
                 <i class="iconfont icon-contract"></i>
@@ -143,7 +145,8 @@
         </li>
 
         <li>
-            <a ui-sref="search({ moduleId: 9 })" ui-sref-active="active" uib-popover="发票"
+            <a ui-sref="search({ moduleId: 9 })" ui-sref-active="active" ui-sref-opts="{inherit: false}"
+               uib-popover="发票"
                popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
                popover-append-to-body="true" popover-enable="{{popoverEnable}}">
                 <i class="iconfont icon-invoice"></i>
@@ -180,7 +183,8 @@
         </li>
 
         <li>
-            <a ui-sref="search({ moduleId: 12 })" ui-sref-active="active" uib-popover="文档"
+            <a ui-sref="search({ moduleId: 12 })" ui-sref-active="active" ui-sref-opts="{inherit: false}"
+               uib-popover="文档"
                popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
                popover-append-to-body="true" popover-enable="{{popoverEnable}}">
                 <i class="iconfont icon-file"></i>
@@ -189,7 +193,8 @@
         </li>
 
         <li>
-            <a ui-sref="channel" ui-sref-active="active" uib-popover="渠道"
+            <a ui-sref="channel" ui-sref-active="active" ui-sref-opts="{inherit: false}"
+               uib-popover="渠道"
                popover-trigger="{'mouseenter': 'mouseleave'}" popover-placement="right"
                popover-append-to-body="true" popover-enable="{{popoverEnable}}">
                 <i class="iconfont icon-trench"></i>

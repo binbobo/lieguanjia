@@ -747,7 +747,11 @@ angular.module('tiger.ctrl.setting', ['ui.tree', 'tiger.api.setting']).config(fu
             ngToast.success("上传成功");
             $scope.getRecReportList();
         },
-        onErrorItem: function (item) {
+        onErrorItem: function (item, response) {
+            if (response.code === 2303) {
+                uiModalService.alert(response.result.error);
+                return;
+            }
             if (item.isError) {
                 ngToast.warning("上传失败");
             }

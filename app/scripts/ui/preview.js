@@ -45,7 +45,7 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
         } else if (resourceType == 'image') {
             setResourceSrc('/api/file/download?id=' + resourceId);
             $scope.showType = 'image';
-        } else if (resourceType == 'resume') {
+        } else if (resourceType == 'resume' || resourceType == 'resumeComment') {
             $scope.showType = 'resume';
 
             // 自定义resume数据改变事件, 用于更新视图
@@ -67,7 +67,12 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
             });
 
             $timeout(function () {
-                resumePreview(resourceId, rid, 0);
+                var defautlActive = 0;
+                if (resourceType === 'resumeComment') {
+                    // resumeComment 表示人才列表页面中的备注预览
+                    defautlActive = 3;
+                }
+                resumePreview(resourceId, rid, defautlActive);
             });
         } else if (resourceType == 'comment') {
             $scope.showType = 'comment';
@@ -124,6 +129,7 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
         $scope.previewLoading = false;
     };
 
+    // 清除预览窗口自动消失定时器
     function clearPreviewTimeout() {
         if (angular.isDefined(previewTimeoutId)) {
             $timeout.cancel(previewTimeoutId);
@@ -131,26 +137,35 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
         }
     }
 
-    // showType为comment相关
+    /*-------showType为comment逻辑START---------*/
+
+    //初始化备注数据
     function initCommentData(resourceId) {
         setCommentRouteParams(resourceId);
         $controller('commentListCtrl', {$scope: $scope});
         $scope.previewLoading = false;
     }
 
+    //设置备注控制器所需参数
     function setCommentRouteParams(resourceId) {
         $scope.relationId = resourceId.itemId;
         $scope.moduleId = resourceId.moduleId;
     }
 
-    // showType为resume相关
+    /*-------showType为comment逻辑END---------*/
+
+
+    /*-------showType为resume逻辑START---------*/
+
+    //设置人才详情页面控制器所需参数
     function setResumeRouteParams(resourceId, rid) {
         $scope.candidateId = resourceId;
         $scope.relationId = $scope.candidateId;
         $scope.moduleId = 4;
-        $scope.projectId = rid;
+        $scope.projectId = rid || 0;
     }
 
+    // 异步获取人才详情页面子视图模板
     function getTemplateAsync(url, controllerName, resourceId, rid) {
         setResumeRouteParams(resourceId, rid);
 
@@ -163,6 +178,7 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
         });
     }
 
+    // 预览逻辑,事件处理
     function resumePreview(resourceId, rid, index) {
         // 记录当前激活的子视图索引
         $scope.currIndex = index;
@@ -175,7 +191,7 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
             var template, $btnGroup, $links, $_blankLinks;
             template = angular.element(html);
 
-            // 点击跳转到新页面的链接 隐藏preview弹框
+            // 点击_blank链接 隐藏preview弹框
             $_blankLinks = template.find('.target_blank');
             $_blankLinks.off('click').on('click', function (evt) {
                 $scope.previewShow = false;
@@ -199,7 +215,7 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
                     self.addClass('active');
 
                     var curLink = self.html().trim();
-                    if (curLink.indexOf('基本') > -1) {
+                    if (curLink.indexOf('简历') > -1) {
                         getTemplateAsync('views/candidate/view_main.html', 'candidateViewCtrl', resourceId, rid);
                     } else if (curLink.indexOf('附件') > -1) {
                         getTemplateAsync('views/attachment/attachment_list.html', 'candidateAttachmentCtrl', resourceId, rid);
@@ -222,6 +238,8 @@ angular.module("tiger.ui.preview", []).directive('previewWrap', function () {
             $previewHeader.html($compile(template)($scope));
         })
     }
+
+    /*-------showType为resume逻辑END---------*/
 
     // 工具函数
     function isMouseOutside(evt) {

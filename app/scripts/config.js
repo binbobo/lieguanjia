@@ -146,7 +146,8 @@ angular.module('tiger.config', []).constant('config', {
             dataType: "multiselect",
             title: "提醒人",
             required: true,
-            listType: 2001
+            listType: 2001,
+            number: 99
         }
     ],
     recReportForm: [

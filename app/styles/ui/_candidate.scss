@@ -163,12 +163,20 @@
     }
 
     .old-value {
-        color: #ccc;
-        text-decoration: line-through;
-
         .label {
             background-color: #ccc;
         }
+
+        &, & * {
+            color: #ccc !important;
+            text-decoration: line-through !important;
+        }
+    }
+
+    .old-value, .new-value {
+        display: inline-block;
+
+        vertical-align: top;
     }
 
     .label {
@@ -219,4 +227,307 @@
 .bottom-margin {
     margin-bottom: 20px;
 }
+
+// 简历详情页面头部样式
+$resume-text-color: #373D52;
+.resume-header {
+    height: 110px;
+    padding: 12px;
+    overflow: hidden;
+    min-width: 725px;
+
+    .header-left {
+
+        .abstract {
+            padding-left: 15px;
+
+            > p {
+                height: 20px;
+                margin: 0;
+                padding: 0;
+
+                &.abstract-fir {
+                    margin-bottom: 21px;
+
+                    > span {
+                        font-size: 11px;
+                        text-align: center;
+                        margin-right: 10px;
+                        margin-bottom: 30px;
+
+                        &.name {
+                            font-size: 16px;
+                            color: #000000;
+                        }
+
+                        &.attachments {
+                            color: #2E69BF;
+                            position: relative;
+                            padding-left: 10px;
+
+                            > i {
+                                display: inline-block;
+                                transform: scale(0.6);
+                                position: absolute;
+                                left: -5px;
+                            }
+                        }
+
+                        &.type {
+                            border: 1px solid #7AB1FF;
+                            color: #7AB1FF;
+                        }
+
+                        &.status {
+                            background: #F2F2F2;
+                            color: $resume-text-color;
+                        }
+
+                        &.mpc {
+                            background: #FF912E;
+                            color: #FFFFFF;
+                        }
+                    }
+                }
+
+                &.abstract-sec {
+                    margin-bottom: 7px;
+
+                    > a {
+                        font-size: 13px;
+                        color: $resume-text-color;
+                        text-decoration: underline;
+                    }
+
+                    > span {
+                        &.title {
+                            color: $resume-text-color;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    .header-right {
+        .resume-actions {
+            > a, button {
+                margin-left: 10px;
+            }
+            .btn-group {
+                > button {
+                    position: relative;
+                    background: white;
+                    color: $resume-text-color;
+                    padding-right: 20px;
+
+                    > i {
+                        position: absolute;
+                        display: inline-block;
+                        color: #8CA0B3;
+
+                        &.top {
+                            transform: scale(0.5) rotate(-90deg);
+                            top: -3px;
+                        }
+
+                        &.down {
+                            transform: scale(0.5) rotate(90deg);
+                            bottom: -3px;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+// 简历信息面板样式
+.resume-info-panel {
+    margin-top: -10px;
+    background: white;
+    //min-width: 722px;
+    //overflow: hidden;
+
+    .heading {
+        opacity: 0.8;
+        background: #F2F2F2;
+        height: 40px;
+        font-size: 14px;
+        color: #373D52;
+        line-height: 40px;
+        padding-left: 15px;
+    }
+}
+
+// 通用的导航tab样式类, 符合设计规范
+.tiger-nav-tab {
+    border: 1px solid #DAE2E9;
+    height: 36px;
+    overflow: hidden;
+
+    > ul {
+        padding: 0;
+
+        > li {
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            min-width: 50px;
+
+            &:after {
+                content: '|';
+                height: 10px;
+                color: #D4E1EC;
+            }
+
+            &.active {
+                background: #00A4A5;
+
+                &:after {
+                    content: '';
+                }
+
+                > a {
+                    color: white;
+                }
+            }
+
+            > a {
+                font-size: 13px;
+                color: #8CA0B3;
+                padding: 9px 20px;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+// 操作按钮样式
+.tiger-action-button {
+    padding: 3px 10px;
+    font-size: 13px;
+    color: white;
+    background: #2760B2;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+
+    &:focus, &:hover {
+        outline: none;
+        color: white;
+    }
+}
+
+.tiger-resume-border {
+    border: 1px solid #DAE2E9;
+}
+
+// 通用有一定圆角的span
+.tiger-resume-radius {
+    border-radius: 66px;
+    padding: 1px 5px;
+}
+
+// 批量查看导航组件样式
+.batch-view-nav-container {
+    position: relative;
+    background: white;
+
+    .btn-wrapper {
+        position: absolute;
+        width: 50px;
+        text-align: right;
+
+        &:first-child {
+            text-align: left;
+        }
+
+        > button {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #F7F7F7;
+            border: 1px solid rgba(0, 0, 0, 0.10);
+
+            > i {
+                display: inline-block;
+                transform: scale(0.7);
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        &.next {
+            right: 0;
+            top: 0;
+        }
+
+        &.pre {
+            left: 0;
+        }
+
+        &.next-item {
+            right: 50px;
+            top: 0;
+        }
+
+        &.disabled {
+            > button {
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .nav-wrapper {
+        margin: 0px 100px 0px 50px;
+
+        .batch-nav {
+            width: 10001px;
+            visibility: hidden;
+
+            > li {
+                > i {
+                    display: none;
+                    position: absolute;
+                    right: -3px;
+                    top: 5px;
+                    transform: scale(0.5);
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    background: #DAE2E9;
+                    font-size: 13px;
+                    color: $resume-text-color;
+                    padding: 5px;
+                }
+
+                &:hover {
+                    > i {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 批量查看简历视图  页面样式
+.candidates-view-container {
+    // 固批住量查看导航栏组件
+    .nav-container-fixed {
+        position: fixed;
+        width: 100%;
+        top: 50px;
+        z-index: 10; // 不能大于左侧导航栏的z-index
+        left: 0;
+    }
+
+    .candidate-view-container {
+        margin-top: 50px;
+    }
+}
+
 

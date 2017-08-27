@@ -1,0 +1,11 @@
+<div class="candidates-view-container">
+    <div class="nav-container-fixed" batch-view-nav-fixed>
+        <!--批量查看导航组件-->
+        <batch-view-nav ng-if="resumes && resumes.length" data="resumes" active-item-id="activeResumeId" empty-name="没有姓名" item-click="switchResume" item-close="removeResume"></batch-view-nav>
+    </div>
+
+    <div class="candidate-view-container">
+        <!-- uiview显示具体的某个简历视图 -->
+        <ui-view></ui-view>
+    </div>
+</div>

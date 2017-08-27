@@ -4,7 +4,7 @@
 
 .second-menu {
     > div.slimScrollDiv {
-        z-index: 7;
+        z-index: 15;
 
         > div.panel {
             position: relative;
@@ -59,7 +59,7 @@
                     }
 
                     > treeitem {
-                        /*li：hover时子树不高亮*/
+                        // li：hover时子树不高亮
                         > ul {
                             margin: 0;
                             background: white;

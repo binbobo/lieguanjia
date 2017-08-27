@@ -489,8 +489,7 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
                         return apiService.getDataListBySearch($scope.listType, keyword, 0, 100).then(function (data) {
                             $scope.itemList = data.list;
                             if ($scope.attributeData.canDirectlyAdd &&
-                                keyword.length > 0 &&
-                                !$scope.isContainItem(keyword, $scope.itemList)) {
+                                keyword.length > 0 && !$scope.isContainItem(keyword, $scope.itemList)) {
 
                                 $scope.itemList.splice(0, 0, {
                                     title: keyword,
@@ -501,21 +500,24 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
                         });
                     };
                 } else if ($scope.attributeData.unionQuery) {
-                    $scope.getListByUnionQuery = function () {
+                    $scope.getListByUnionQuery = function (keyword) {
                         var searchKey;
-                        if (typeof $scope.unionQuery === 'function') {
-                            searchKey = $scope.unionQuery();
+                        if (!keyword) {
+                            if (typeof $scope.unionQuery === 'function') {
+                                searchKey = $scope.unionQuery();
+                            } else {
+                                searchKey = $scope.unionQuery;
+                            }
                         } else {
-                            searchKey = $scope.unionQuery;
+                            searchKey = keyword;
                         }
-
                         apiService.getDataListBySearch(
                             $scope.listType, searchKey, 0, 100,
                             angular.toJson($scope.attributeData)
                         ).then(function (data) {
                             $scope.itemList = data.list;
 
-                            if (data.list.length < 1 && $scope.attributeData.type === 2) {
+                            if (data.list.length < 1 && $scope.attributeData.type === '2') {
                                 $scope.itemList.splice(0, 0, {
                                     hint: "暂无联系人"
                                 });
@@ -529,6 +531,10 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
                     $scope.selectClick = function () {
                         $scope.getListByUnionQuery();
                     };
+
+                    if ($scope.attributeData.type === '3') {
+                        $scope.selectRefresh = $scope.getListByUnionQuery;
+                    }
                 } else {
                     apiService.getDataList($scope.listType).then(function (data) {
                         $scope.itemList = data.list;
@@ -1010,6 +1016,10 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
             });
 
             $scope.$watch('tmpMoney.value', function () {
+                if (isNaN($scope.tmpMoney.value)) {
+                    ngModel.$setViewValue(null);
+                    return;
+                }
                 $scope.tmpMoney.value =
                     Math.round($scope.tmpMoney.value * $scope.tmpMoney.valueType * 100) / 100 / $scope.tmpMoney.valueType;
                 ngModel.$setViewValue($scope.tmpMoney.value * $scope.tmpMoney.valueType);
@@ -1185,6 +1195,9 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
                     valueType: valueType
                 };
             }
+
+            scope.inPreview = !!element.closest('.preview-wrap').length;
+
             if (attr.placeholder || isNaN(attr.placeholder)) {
                 scope.placeholder = attr.placeholder;
             }
@@ -1325,7 +1338,7 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
         'radio',
         'multiselect',
         'multitext',
-        'multiphone',
+        // 'multiphone',
         'multiemail',
         'email',
         'textarea',
@@ -1350,7 +1363,7 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
         dateFilter = $filter('date'),
         fileSizeFilter = $filter('fileSize'),
         nl2brFilter = $filter('nl2br')
-    ;
+        ;
     return function (entity, fieldItem) {
         if (entity === null || angular.isUndefined(fieldItem) || angular.isUndefined(entity)) {
             return null;
@@ -1462,6 +1475,21 @@ angular.module('tiger.ui.custom_form', []).service('customFormHelper', function 
                 } else {
                     return null;
                 }
+        }
+    };
+}).directive('phoneQr', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'views/ui/phone_qr.html',
+        link: function ($scope, $element, $attr) {
+            $attr.$observe('phone', function (value) {
+                if (!value) {
+                    return;
+                }
+                $scope.phone = value;
+                $element.find('.phone-qr').empty()
+                    .qrcode({size: 100, text: 'http://wechat.dev.lieguanjia.com/api/phone?phone=' + value});
+            });
         }
     };
 });

@@ -10,33 +10,59 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
         }
     });
 
-    $stateProvider.state('candidate_view', {
-        url: '/candidate/{candidateId:int}?{project_id:int}',
-        templateUrl: 'views/candidate/view.html',
-        controller: 'candidateViewCtrl',
-        data: {
-            title: '查看人才',
-            originTitle: '查看人才'
+    // 路由视图, 批量查看和单个查看共享
+    var views = {
+        'candidates': {
+            url: '/candidates',
+            templateUrl: 'views/candidate/batch_view.html',
+            controller: 'candidatesViewCtrl',
+            data: {
+                title: '查看人才',
+                originTitle: '查看人才'
+            }
         },
-        abstract: true
-    });
+        'candidateView': {
+            url: '/candidate/{candidateId:int}?{project_id:int}',
+            templateUrl: 'views/candidate/view.html',
+            controller: 'candidateViewCtrl',
+            data: {
+                title: '查看人才',
+                originTitle: '查看人才'
+            },
+            abstract: true
+        },
 
-    $stateProvider.state('candidate_view.default', {
-        url: '',
-        templateUrl: 'views/candidate/view_main.html'
-    });
+        'candidateViewDefault': {
+            url: '',
+            templateUrl: 'views/candidate/view_main.html',
 
-    $stateProvider.state('candidate_view.attachment', {
-        url: '/attachment',
-        templateUrl: 'views/attachment/attachment_list.html',
-        controller: 'candidateAttachmentCtrl'
-    });
+        },
 
-    $stateProvider.state('candidate_view.update_logs', {
-        url: '/updateLogs',
-        templateUrl: 'views/candidate/update_logs.html',
-        controller: 'candidateLogCtrl'
-    });
+        'candidateViewAttachment': {
+            url: '/attachment',
+            templateUrl: 'views/attachment/attachment_list.html',
+            controller: 'candidateAttachmentCtrl'
+        },
+
+        'candidateViewUpdateLogs': {
+            url: '/updateLogs',
+            templateUrl: 'views/candidate/update_logs.html',
+            controller: 'candidateLogCtrl'
+        }
+    };
+
+    // 批量查看路由
+    $stateProvider.state('candidates', views.candidates);
+    $stateProvider.state('candidates.candidate_view', views.candidateView);
+    $stateProvider.state('candidates.candidate_view.default', views.candidateViewDefault);
+    $stateProvider.state('candidates.candidate_view.attachment', views.candidateViewAttachment);
+    $stateProvider.state('candidates.candidate_view.update_logs', views.candidateViewUpdateLogs);
+
+    // 单个查看路由
+    $stateProvider.state('candidate_view', angular.copy(views.candidateView));
+    $stateProvider.state('candidate_view.default', angular.copy(views.candidateViewDefault));
+    $stateProvider.state('candidate_view.attachment', angular.copy(views.candidateViewAttachment));
+    $stateProvider.state('candidate_view.update_logs', angular.copy(views.candidateViewUpdateLogs));
 
     $stateProvider.state('candidate_edit', {
         url: '/candidate/{candidateId:int}/edit?{attachmentId:int}',
@@ -350,7 +376,7 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
                     $scope.resume[index] = item;
                 }
             });
-
+            parseData
             $scope.loadResume = false;
         }, function (data) {
             $scope.loadResume = false;
@@ -642,17 +668,26 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
     }
 
 }).controller('candidateViewCtrl', function ($rootScope, $scope, $state, $stateParams,
-                                             apiService, candidateService, $controller) {
+                                             apiService, candidateService, candidateCommonService) {
+
     $scope.candidateId = $stateParams.candidateId || $scope.candidateId;// 取路由参数或者通过preview传递过来的参数
+
+    $scope.resume = {};
+
     if (!$scope.candidateId) {
         return;
+    }
+
+    if (candidateCommonService.isBatchViewing()) {
+        // 通知批量查看视图更新当前激活id
+        $rootScope.$broadcast('candidates.candidate.stateParamsUpdated', {candidateId: $scope.candidateId});
     }
 
     candidateService.getCandidate($scope.candidateId).then(function (data) {
         if (angular.isDefined($state.current.data.originTitle)) {
             $state.current.data.title = $state.current.data.originTitle + " - " + data.basicInfo.Fname;
         }
-        $scope.resume = data;
+        angular.merge($scope.resume, data);
 
         if (!data.moduleType) {
             data.moduleType = {
@@ -662,7 +697,7 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
 
         return candidateService.getCandidateFields(data.moduleType);
     }, function () {
-        if ($state.current.name.indexOf('candidate_view') === -1) {
+        if (!candidateCommonService.isCandidateViewing()) {
             $rootScope.$broadcast('$getResumeDataError', {
                 type: 'candidate_basic_info'
             });
@@ -672,8 +707,118 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
     });
 
     $scope.quickEditFunc = function (moduleItemName, fieldItem, itemId, value) {
-        return candidateService.updateField(moduleItemName, fieldItem.name, itemId, value, $scope.candidateId);
+        return candidateService.updateField(moduleItemName, fieldItem.name, itemId, value, $scope.candidateId).then(function () {
+            // 修改姓名的时候， 更新批量查看页面当前激活项名称
+            if (fieldItem.name == 'Fname') {
+                if (candidateCommonService.isBatchViewing()) {
+                    $rootScope.$broadcast('candidates.candidate.nameUpdated', {newName: value});
+                }
+            }
+            // $state.reload();  //修改基础信息后刷新页面
+        });
     };
+}).controller('candidatesViewCtrl', function ($scope, localStorageService) {
+
+    // 获取当前查看的简历列表
+    $scope.resumes = JSON.parse(localStorageService.get('batchViewing.resumeList'));
+    if (!$scope.resumes || !$scope.resumes.length) {
+        return;
+    }
+
+    // 切换导航菜单
+    $scope.switchResume = function (resume) {
+        _.debounce(function () {
+            if (resume.id != $scope.activeResumeId) {
+                goBatchView(resume);
+            }
+        }, 300)();
+    }
+
+    // 路由到批量查看视图
+    function goBatchView(resume) {
+        if (!resume) return;
+
+        $scope.activeResumeId = resume.id;
+        $state.go('candidates.candidate_view.default', {
+            candidateId: resume.id,
+            project_id: resume.projectId
+        });
+    }
+
+    // 更新localStorage
+    function updateStorageResumes() {
+        localStorageService.set('batchViewing.resumeList', JSON.stringify($scope.resumes));
+    }
+
+    // 移除导航栏中的项
+    $scope.removeResume = function (resume) {
+        var index = findResumeById(resume.id);
+        if (index === -1) return;
+
+        $scope.resumes.splice(index, 1);
+        updateStorageResumes();
+
+        if ($scope.resumes.length) {
+            // 如果当前关闭的为激活项，激活相邻项目
+            if (resume.id == $scope.activeResumeId) {
+                var nextActiveResume;
+
+                if (index > 0) {
+                    nextActiveResume = $scope.resumes[index - 1];// pre
+                } else {
+                    nextActiveResume = $scope.resumes[index];// next
+                }
+                goBatchView(nextActiveResume);
+            }
+        } else {
+            $state.go('search', {
+                moduleId: 1
+            });
+        }
+    }
+
+    // 根据简历id获取索引
+    function findResumeById(id) {
+        if (!$scope.resumes) {
+            return -1;
+        }
+        for (var i = 0, len = $scope.resumes.length; i < len; i++) {
+            if ($scope.resumes[i].id == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // 自定义更新参数事件
+    $scope.$on('candidates.candidate.joinNewProject', updateResumeProjectId);
+    $scope.$on('candidates.candidate.stateParamsUpdated', updateActiveResumeId);
+    $scope.$on('candidates.candidate.nameUpdated', updateResumeName);
+
+
+    // 页面加载时, 记录当前激活的简历id
+    function updateActiveResumeId(event, params) {
+        $scope.activeResumeId = params.candidateId;
+    }
+
+    // 加入新项目时, 更新projectId
+    function updateResumeProjectId(event, params) {
+        var index = findResumeById($scope.activeResumeId);
+        if (index !== -1 && $scope.resumes[index].projectId != params.projectId) {
+            $scope.resumes[index].projectId = params.projectId;
+            updateStorageResumes();
+        }
+    }
+
+    // 姓名修改时, 更新导航栏显示名称
+    function updateResumeName(event, params) {
+        var index = findResumeById($scope.activeResumeId);
+        if (index !== -1 && $scope.resumes[index].name != params.newName) {
+            $scope.resumes[index].name = params.newName;
+            updateStorageResumes();
+        }
+    }
+
 }).controller('candidateAttachmentCtrl', function ($scope, $stateParams, attachmentService) {
     $scope.candidateId = $stateParams.candidateId || $scope.candidateId;// 取路由参数或者通过preview传递过来的参数
     if (!$scope.candidateId) {
@@ -703,8 +848,8 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
     candidateService.getUpdateLogs($scope.candidateId).then(function (data) {
         $scope.updateLogs = data;
     });
-}).controller('candidateProjectCtrl', function ($scope, $state, $stateParams, projectService, uiModalService,
-                                                pipelineOperationService, projectResumeModal, ngToast) {
+}).controller('candidateProjectCtrl', function ($rootScope, $scope, $state, $stateParams, projectService, uiModalService,
+                                                pipelineOperationService, candidateCommonService) {
     $scope.uiModalService = uiModalService;
     $scope.operationFunc = {
         pipeline: pipelineOperationService,
@@ -714,6 +859,9 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
                     $scope.candidateId
                 ).then(function (data) {
                     $scope.projectId = data.projectId;
+                    if (candidateCommonService.isBatchViewing()) {
+                        $rootScope.$broadcast('candidates.candidate.joinNewProject', {projectId: data.projectId});
+                    }
                     updateProjectList();
                 });
             },
@@ -724,10 +872,18 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
                 }).then(function () {
                     return projectService.remove(pipelineItem.projectId, pipelineItem.resumeId);
                 }).then(function () {
-                    $state.go('candidate_view.default', {
-                        candidateId: $scope.candidateId,
-                        project_id: 0
-                    }, {reload: true});
+                    if (candidateCommonService.isBatchViewing()) {
+                        $rootScope.$broadcast('candidates.candidate.joinNewProject', {projectId: 0});
+                        $state.go('candidates.candidate_view.default', {
+                            candidateId: $scope.candidateId,
+                            project_id: 0
+                        }, {reload: true});
+                    } else {
+                        $state.go('candidate_view.default', {
+                            candidateId: $scope.candidateId,
+                            project_id: 0
+                        }, {reload: true});
+                    }
                 })
             }
         }
@@ -773,6 +929,8 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
 
         $scope.projectId = item.value;
         $stateParams.project_id = item.value;
+
+        $stateParams.candidates = $scope.resumes;
 
         $state.go($state.current.name, $stateParams, {
             notify: false,
@@ -963,6 +1121,16 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
     }
 
     getState();
+}).service('candidateCommonService', function ($state) {
+    // 是否为批量查看
+    this.isBatchViewing = function () {
+        return $state.current.name.indexOf('candidates.candidate_view') > -1;
+    }
+    // 是否为人才查看 包括批量查看和单个查看
+    this.isCandidateViewing = function () {
+        return $state.current.name.indexOf('candidate_view') > -1;
+    }
+
 }).service('candidateOperationService', function ($uibModal) {
     this.editRecReport = function (item, resumeItem) {
         var cacheItem = angular.extend({}, item);
@@ -991,7 +1159,7 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
 
 }).controller('candidateOperationCtrl', function ($rootScope, $scope, $uibModal, $state, config, uiModalService, folderModalService,
                                                   candidateService, mailOperationService, candidateOperationService,
-                                                  pipelineOperationService, taskOperationService) {
+                                                  pipelineOperationService, taskOperationService, candidateCommonService) {
 
     $scope.generateReport = function (resumeItem) {
         candidateOperationService.editRecReport({}, resumeItem);
@@ -1006,11 +1174,20 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
     };
 
     function resumeInfoChangeSuccess() {
-        if ($state.current.name.indexOf('candidate_view') > -1) {
+        if (candidateCommonService.isCandidateViewing()) {
             $state.reload();
         } else {
             // for preview
             $rootScope.$broadcast('$resumeInfoChange');
+        }
+    }
+
+    // 操作下拉菜单出现的时候， 设置父面板overflow:visible
+    $scope.toggleDropdown = function (status) {
+        if (status.isopen) {
+            $('.resume-header').css('overflow', 'visible');
+        } else {
+            $('.resume-header').css('overflow', 'hidden');
         }
     }
 
@@ -1025,7 +1202,7 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
         }).then(function () {
             return candidateService.deleteCandidate({id: resumeId});
         }).then(function (data) {
-            if ($state.current.name.indexOf('candidate_view') > -1) {
+            if (candidateCommonService.isCandidateViewing()) {
                 $state.go('search', {
                     moduleId: 1
                 });
@@ -1041,11 +1218,19 @@ angular.module('tiger.ctrl.candidate', ['tiger.api.candidate']).config(function 
         pipelineOperationService.join(
             resumeId
         ).then(function (data) {
-            if ($state.current.name.indexOf('candidate_view') > -1) {
-                $state.go('candidate_view.default', {
-                    candidateId: $scope.candidateId,
-                    project_id: data.projectId
-                });
+            if (candidateCommonService.isCandidateViewing()) {
+                if (candidateCommonService.isBatchViewing()) {
+                    $rootScope.$broadcast('candidates.candidate.joinNewProject', {projectId: data.projectId});
+                    $state.go('candidates.candidate_view.default', {
+                        candidateId: $scope.candidateId,
+                        project_id: data.projectId
+                    });
+                } else {
+                    $state.go('candidate_view.default', {
+                        candidateId: $scope.candidateId,
+                        project_id: data.projectId
+                    });
+                }
             }
         });
     };

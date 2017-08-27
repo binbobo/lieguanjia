@@ -1,7 +1,7 @@
 <!--<t-search-bar ng-model="key" search-func="search"></t-search-bar>-->
 <div ui-tree="options" data-drag-delay="200" ng-style="treeStyle" class="t-ui-tree-editor">
     <ol ui-tree-nodes data-ng-model="list">
-        <li data-ng-repeat="item in list" ui-tree-node data-ng-include="'items_renderer.html'" collapsed="item.children.length > 0 && collapsedNode"></li>
+        <li data-ng-repeat="item in list" ui-tree-node data-ng-include="'items_renderer.html'" ng-init="childrenLength = item.children.length" collapsed="childrenLength > 0 && collapsedNode"></li>
     </ol>
 </div>
 
@@ -66,6 +66,6 @@
         </div>
     </div>
     <ol ui-tree-nodes="options" data-ng-model="item.children">
-        <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'items_renderer.html'" ng-if="!collapsed" collapsed="item.children.length > 0 && collapsedNode"></li>
+        <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'items_renderer.html'" ng-if="!collapsed" ng-init="childrenLength = item.children.length" collapsed="childrenLength > 0 && collapsedNode"></li>
     </ol>
 </script>

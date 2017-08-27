@@ -90,6 +90,10 @@ angular.module("app.nav", [])
 
                 $(window).on('resize', updatePos);
 
+                ele.on('$destroy', function () {
+                    $(window).off('resize');
+                });
+
                 return ele.on("click", function (e) {
                     if (!$secMenu.hasClass('collapsed')) {
                         collapsedStyles();
@@ -105,7 +109,7 @@ angular.module("app.nav", [])
      :: Collapse Nav Directive
      *******************************************/
 
-    .directive("collapseNav", function ($rootScope, userSessionStorageService) {
+    .directive("collapseNav", function ($rootScope, $state, userSessionStorageService) {
         return {
             restrict: "A",
             link: function (scope, ele, attrs) {
@@ -235,6 +239,11 @@ angular.module("app.nav", [])
 
                         fixEleInitPos($nav, 'width', 50);
                         toggleCollapsedAnimate($nav, {width: "180px"});
+                    }
+
+                    // 如果当前是批量查看页面, 通知导航组件重新渲染
+                    if($state.current.name.indexOf('candidates.candidate_view') > -1) {
+                        $rootScope.$broadcast('batchView.navToggleCollapsed');
                     }
                 }
 

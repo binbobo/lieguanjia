@@ -5,6 +5,24 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
     function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.when("/email", "/email/inbox/1");
 
+        var candidateViewMailList = {
+            url: '/mailList',
+            templateUrl: 'views/candidate/mail_list.html',
+            controller: 'candidateViewMailCtrl',
+            data: {
+                key: 'candidateId',
+                moduleId: 4
+            }
+        };
+        var candidateViewMailList2 = {
+            url: '/mailList',
+            templateUrl: 'views/candidate/mail_list.html',
+            controller: 'candidateViewMailCtrl',
+            data: {
+                key: 'candidateId',
+                moduleId: 4
+            }
+        };
         $stateProvider.state('mail', {
             url: '/email',
             templateUrl: 'views/mail/main.html',
@@ -33,15 +51,10 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
             data: {
                 title: '写邮件'
             }
-        }).state('candidate_view.mailList', {
-            url: '/mailList',
-            templateUrl: 'views/candidate/mail_list.html',
-            controller: 'candidateViewMailCtrl',
-            data: {
-                key: 'candidateId',
-                moduleId: 4
-            }
-        }).state('setting.mail_template', {
+        })
+        .state('candidate_view.mailList', candidateViewMailList)
+        .state('candidates.candidate_view.mailList', angular.copy(candidateViewMailList))
+        .state('setting.mail_template', {
             url: '/mailTemplate/list',
             templateUrl: 'views/mail/template_list.html',
             controller: 'mailTemplateListCtrl',
@@ -284,6 +297,8 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
         $scope.templateData = recReportData.templateData;
         $scope.templateId = recReportData.templateId;
         $scope.type = recReportData.type;
+        $scope.moduleId = recReportData.moduleId;
+        $scope.relationId = recReportData.relationId;
         $scope.sendOk = false;
 
         mailService.getConfig().then(function (data) {
@@ -299,10 +314,9 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
                 if ($scope.type == 3) {
                     $scope.mail.receiver = !data.Femail ? [] : data.Femail;
                     $scope.templateData.recipient = data.Fname;
+                    $scope.relationId = data.id;
                 }
-
                 $scope.templateData.phone = !data.Fphone ? "" : data.Fphone[0];
-
             });
         }
 
@@ -338,6 +352,7 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
         if (!$scope.mail.receiver) {
             $scope.mail.receiver = [];
         }
+        $scope.mail.data = "";
         $scope.mail.cc = [];
         $scope.mail.bcc = [];
         $scope.attachmentList = [];
@@ -393,7 +408,7 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
             mailService.getSign().then(function (data) {
                 $scope.mailSign = data.sign;
                 if (!!$scope.mailSign) {
-                    $scope.mail.data = signSeparator + $scope.mailSign;
+                    $scope.mail.data = $scope.mail.data + signSeparator + $scope.mailSign;
                 }
             });
         }
@@ -475,6 +490,10 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
             $scope.changeTemplate($scope.choseTemplate);
         }, true);
 
+        $scope.$watch('templateData.phone', function () {
+            $scope.changeTemplate($scope.choseTemplate);
+        }, true);
+
         $scope.changeTemplate = function (mailTemplate) {
             if (!mailTemplate) {
                 return;
@@ -535,6 +554,9 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
                     content += "面试地点:" + originalTemplateData.interview.address + "\n";
                 }
             }
+            $scope.mail.data += '<p style="font-size: 14px;text-align: left;">&nbsp;&nbsp; &nbsp; &nbsp; =======================================</p>'
+            $scope.mail.data += '<p style="font-size: 14px;text-align: left;">&nbsp;&nbsp; &nbsp; &nbsp; 双击附件可以将本面试安排添加到您的日历中&nbsp; ^_^</p>'
+            $scope.mail.data += '<p style="font-size: 14px;text-align: left;">&nbsp;&nbsp; &nbsp; &nbsp; =======================================</p>'
             taskService.generateIcsFile($scope.mail.subject, originalTemplateData.interview.timestamp, originalTemplateData.interview.timestamp + 60 * 60, content).then(function (data) {
                 data.current_ics = true;
                 var contains = false;
@@ -548,9 +570,6 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
                     return;
                 }
                 $scope.attachmentList.push(data);
-                $scope.mail.data += '<p style="font-size: 14px;text-align: left;">&nbsp;&nbsp; &nbsp; &nbsp; =======================================</p>'
-                $scope.mail.data += '<p style="font-size: 14px;text-align: left;">&nbsp;&nbsp; &nbsp; &nbsp; 双击附件可以将本面试安排添加到您的日历中&nbsp; ^_^</p>'
-                $scope.mail.data += '<p style="font-size: 14px;text-align: left;">&nbsp;&nbsp; &nbsp; &nbsp; =======================================</p>'
 
             });
         }
@@ -607,7 +626,7 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
             });
         };
 
-        $scope.$watch('pageState', function () {
+        $scope.$watch('pageState.page', function () {
             $scope.updateList();
         }, true);
     }
@@ -657,12 +676,14 @@ angular.module('tiger.ctrl.mail', ['ngTable', 'ui.router', 'tiger.api.mail', 'ti
             $scope.emailTypeList = ["163", "126", "sina", "sohu", "qq", "其它"];
 
             mailService.getConfig().then(function (data) {
+                $scope.loading = false;
                 if (data.result) {
                     $scope.emailConfig = data.result;
                     $scope.emailType = data.result.emailType;
-                    $scope.emailConfig.hint = config.emailConfig[$scope.emailType].hint;
+                    if (!!config.emailConfig[$scope.emailType]) {
+                        $scope.emailConfig.hint = config.emailConfig[$scope.emailType].hint;
+                    }
                 }
-                $scope.loading = false;
             });
 
             $scope.uiSelectChange = function ($item, $model) {

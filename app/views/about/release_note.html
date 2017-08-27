@@ -4,18 +4,56 @@
         <h4>what's new</h4>
     </div>
 
-    <release-note version-main="2.0.2" version-sub="2017-08-11">
-        <release-part part-name="系统预览窗口">
-            <li>人才预览页面可编人才信息</li>
-            <li>鼠标离开一段时间之后， 窗口自动消失</li>
-            <li>修复预览窗口右上角友情提示框被遮挡的问题</li>
+    <release-note version-main="2.0.4" version-sub="2017-08-24">
+        <release-part part-name="简历列表页面">
+            <li>新增批量查看简历功能</li>
+            <dev>
+                <li>新增批量查看视图页面</li>
+                <li>
+                    封装导航组件，实现如下功能：
+                    <ol>
+                        <li>导航栏固定在顶部</li>
+                        <li>可以上下翻一整页</li>
+                        <li>移除导航栏中的某一项</li>
+                        <li>逐个查看功能，依次查看下一项</li>
+                    </ol>
+                </li>
+            </dev>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="2.0.3" version-sub="2017-08-23">
+        <release-part part-name="简历列表页面">
+            <li>备注预览跳转到简历预览页面，并且激活备注对应选项</li>
+        </release-part>
+        <release-part part-name="渠道">
+            <li>修复同步中状态显示异常的问题</li>
+            <li>修复好猎友同步失败的问题</li>
+        </release-part>
+        <release-part part-name="推荐报告">
+            <li>错误推荐报告上传时检查报错</li>
+        </release-part>
+        <release-part part-name="其他">
+            <li>优化文件的预览， 提高预览成功率</li>
+        </release-part>
+    </release-note>
+
+    <release-note version-main="2.0.2" version-sub="2017-08-18">
+        <release-part part-name="预览">
+            <li>人才预览页面可编辑人才信息</li>
+            <li>优化窗口显示/隐藏逻辑， 新增自动消失功能</li>
+            <li>修复预览窗口右上角友情提示框被遮挡Bug</li>
             <dev>
                 <li>人才信息页面视图封装</li>
-                <li>人才详情页面，优化默认激活第一个子路由的实现方式</li>
+                <li>简历详情页面，优化默认激活第一个子路由的实现方式</li>
                 <li>将附件信息从人才信息中抽离出来，放到单独的控制器</li>
                 <li>优化备注类型处理逻辑，复用已有的控制器</li>
                 <li>窗口拖拽功能替换为jquery-ui提供的方式，避免重复造轮子</li>
             </dev>
+        </release-part>
+
+        <release-part part-name="其他">
+            <li>人才的电话字段支持手机扫码呼出</li>
         </release-part>
     </release-note>
 

@@ -1,7 +1,6 @@
 "use strict";
 angular.module('tiger.ctrl.comment', ['ngTable', 'tiger.api.comment']).config(function ($stateProvider) {
-    //4
-    $stateProvider.state('candidate_view.commentList', {
+    var candidateViewCommentList = {
         url: '/commentList',
         templateUrl: 'views/comment/list.html',
         controller: 'commentListCtrl',
@@ -9,7 +8,10 @@ angular.module('tiger.ctrl.comment', ['ngTable', 'tiger.api.comment']).config(fu
             key: 'candidateId',
             moduleId: 4
         }
-    });
+    };
+    //4
+    $stateProvider.state('candidate_view.commentList',candidateViewCommentList);
+    $stateProvider.state('candidates.candidate_view.commentList', angular.copy(candidateViewCommentList));
 
     //6
     $stateProvider.state('company_view.commentList', {
@@ -178,7 +180,7 @@ angular.module('tiger.ctrl.comment', ['ngTable', 'tiger.api.comment']).config(fu
     };
 
     function commentChangeSuccess() {
-        if ($state.current.name === 'candidate_view.commentList') {
+        if ($state.current.name.indexOf('candidate_view.commentList') > -1) {
             $state.reload();
         } else if ($scope.showType === 'resume') {
             // resume

@@ -24,7 +24,8 @@ angular.module('tiger.ctrl.search', ['tiger.api.search']).config(function ($stat
                         // 排序
                         $stateParams.s = undefined;
                         $stateParams.st = undefined;
-
+                        // Pipeline
+                        $stateParams.pipeline = undefined;
                     }
 
                     if ($stateParams.q) {
@@ -142,7 +143,7 @@ angular.module('tiger.ctrl.search', ['tiger.api.search']).config(function ($stat
             if (isTargetInContainer('.condition-edit-list')) {
                 return;
             }
-            if(isTargetInContainer('.tree-selector-wrap') || isTargetInContainer('.ui-select-container')) {
+            if (isTargetInContainer('.tree-selector-wrap') || isTargetInContainer('.ui-select-container')) {
                 // for $templateRequest
                 return;
             }
@@ -252,6 +253,7 @@ angular.module('tiger.ctrl.search', ['tiger.api.search']).config(function ($stat
     };
 
     $scope.field4Search = function (fieldItem) {
+        // 实际是 field for
         var tmp = angular.extend({}, fieldItem);
         if (fieldItem.name === 'Fcity' || fieldItem.name === 'Ffunction') {
             tmp.number = $scope.moduleId === 1 ? 3 : 1;
@@ -480,19 +482,21 @@ angular.module('tiger.ctrl.search', ['tiger.api.search']).config(function ($stat
                         bool: {must_not: [tmp2]}
                     });
                 }
-            } else if (item.condition_type === 'generalItem'
-                || item.condition_type === 'generalItemRange'
-                || item.condition_type === 'terms'
+            } else if (item.condition_type === 'generalItem' ||
+                item.condition_type === 'generalItemRange' ||
+                item.condition_type === 'terms'
             ) {
                 var termsValueList;
                 if (item.advance.above) {
+                    // 以上
                     termsValueList = [];
                     angular.forEach(item.item_list, function (selectItem) {
                         if (selectItem.order >= item.condition.order) {
                             termsValueList.push(selectItem.value);
                         }
-                    })
+                    });
                 } else if (typeof item.condition.value === 'undefined') {
+                    // 多选
                     termsValueList = $.map(item.condition, function (item) {
                         return item.value;
                     });
@@ -1037,7 +1041,7 @@ angular.module('tiger.ctrl.search', ['tiger.api.search']).config(function ($stat
                                                candidateOperationService, contractOperationService,
                                                pipelineOperationService, mailOperationService,
                                                documentOperationService, achievementOperationService,
-                                               invoiceOperationService, taskOperationService) {
+                                               invoiceOperationService, taskOperationService, localStorageService) {
 
     $scope.operation = {
         batch: {},
@@ -1108,10 +1112,15 @@ angular.module('tiger.ctrl.search', ['tiger.api.search']).config(function ($stat
             moduleId = 4;
         }
 
-        $rootScope.previewFile('comment', {
-            itemId: itemId,
-            moduleId: moduleId,
-        });
+        // 如果是简历列表页面 跳转到简历预览页面并且激活备注选项页
+        if (moduleId === 4) {
+            $rootScope.previewFile('resumeComment', itemId);
+        } else {
+            $rootScope.previewFile('comment', {
+                itemId: itemId,
+                moduleId: moduleId,
+            });
+        }
     };
 
     $scope.operation.folder.addFolder = function (item) {
@@ -1136,6 +1145,46 @@ angular.module('tiger.ctrl.search', ['tiger.api.search']).config(function ($stat
             $scope.loadSearchParam();
         }, function () {
             $scope.loadList = false;
+        });
+    };
+
+    // 人才列表, 点击批量查看按钮, 处理程序
+    $scope.operation.batch.batchViewing = function (list) {
+        if(!list || !angular.isArray(list.ids)) return;
+
+        var resumes, tmp;
+        resumes = [], tmp = [];
+
+        // 过滤所有当前选择的人才记录
+        angular.forEach(list.ids, function (id) {
+            var resume = $scope.list.find(function (item) {
+                return item.id == id;
+            });
+            tmp.push(resume);
+        });
+
+        // 按照更新时间倒叙排列
+        tmp.sort(function (r1, r2) {
+            return r2.updateTime - r1.updateTime;
+        });
+
+        // 获取 id,projectId,name 等信息
+        // projectId,name需要在后续操作中实时更新: projectId在加入新项目时更新, name在修改姓名时更新
+        resumes = tmp.map(function (resume) {
+            return {
+                id: resume.id,
+                projectId: undefined, // 初次不需要传 默认会选中最新加入的项目
+                name: resume.basicInfo.Fname
+            };
+        });
+
+        // 在localStorage中存储当前查看的简历列表
+        localStorageService.set('batchViewing.resumeList', JSON.stringify(resumes));
+
+        // 跳转批量查看简历页面 默认激活第一个
+        $state.go('candidates.candidate_view.default', {
+            candidateId: resumes[0].id,
+            project_id: resumes[0].projectId
         });
     };
 

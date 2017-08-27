@@ -1,0 +1,27 @@
+<div class="batch-view-nav-container">
+    <div class="btn-wrapper pre" ng-class="{'disabled': isFirstPage()}">
+        <button ng-click="preBtnClick()" ng-disabled="isFirstPage()">
+            <i class="iconfont icon-angle-double-left"></i>
+        </button>
+    </div>
+    <div class="nav-wrapper tiger-nav-tab">
+        <ul class="batch-nav">
+            <li ng-class="{'active': item.id==activeItemId}" ng-repeat="item in data"
+                ng-click="navItemClick(item, $event)">
+                <a href="" ng-bind="item.name || emptyName"></a>
+                <i class="iconfont icon-x"></i>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-wrapper next-item" ng-class="{'disabled': isLastItem()}">
+        <button ng-click="nextItem()" ng-disabled="isLastItem()">
+            <i class="iconfont icon-angle-right"></i>
+        </button>
+
+    </div>
+    <div class="btn-wrapper next" ng-class="{'disabled': isLastPage()}">
+        <button ng-click="nextBtnClick()" ng-disabled="isLastPage()">
+            <i class="iconfont icon-angle-double-right"></i>
+        </button>
+    </div>
+</div>

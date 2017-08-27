@@ -94,12 +94,14 @@ gulp.task('replace-template', ['compile'], function () {
 gulp.task('replace-micro-service-url', ['replace-template'], function () {
     return gulp.src('dist/scripts/tiger*.js')
         .pipe(replace('http://t.dev.lieguanjia.com/v1', 'https://t.lieguanjia.com/v1'))
+        .pipe(replace('http://wechat.dev.lieguanjia.com', 'https://wechat.lieguanjia.com'))
         .pipe(gulp.dest('dist/scripts'));
 });
 
 gulp.task('compile-index', ['compile'], function () {
     return gulp.src('dist/index.html')
         .pipe(replace(/ng-include=['"] *['"]views([^'"]*)\.html['"] *['"]/g, 'ng-include="\'views$1.html?_t=' + t + '\'"'))
+        .pipe(replace(/ng-include="'version'"/g, 'ng-include="\'version?_t=' + t + '\'"'))
         .pipe(htmlminPipe)
         .pipe(gulp.dest('dist'));
 });

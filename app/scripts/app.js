@@ -76,6 +76,7 @@ angular.module('TigerApp', [
     'tiger.ui.common',
     'tiger.ui.t',
     'tiger.ui.quick_search',
+    'tiger.ui.batch_view_nav',
 
     'tiger.widget.guide',
 
